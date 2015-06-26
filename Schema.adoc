@@ -1,0 +1,2195 @@
+JSON Schema Tutorial
+====================
+:Author:                Aowss Ibrahim
+:Email:                 <aowss@yahoo.com>
+:Date:                  June 2015
+:Revision:              version 1.0.1
+:source-highlighter:    highlightjs
+:source-language:       json
+:toc2:
+:toclevels:             5
+:icons:                 font
+
+[[json-schema]]
+== JSON Schema
+
+MIME Type : `application/schema+json`
+
+As explained, in the http://json-schema.org/[JSON Schema web site] or
+https://github.com/json-schema/json-schema[JSON Schema github
+repository], there are 3 specifications around JSON Schema :
+
+* http://tools.ietf.org/html/draft-zyp-json-schema-04[JSON Schema Core]
+defines the basic foundation of JSON Schema
+* http://tools.ietf.org/html/draft-fge-json-schema-validation-00[JSON
+Schema Validation] defines the validation keywords of JSON Schema
+* http://tools.ietf.org/html/draft-luff-json-hyper-schema-00[JSON
+Hyper-Schema] defines the hyper-media keywords of JSON Schema
+
+Confusingly, these three documents can also be found at
+http://json-schema.org/latest/json-schema-core.html,
+http://json-schema.org/latest/json-schema-validation.html and
+http://json-schema.org/latest/json-schema-hypermedia.html.
+
+[WARNING]
+At the time of this writing ( {Date} ), the status of all these
+specifications is `Internet-Draft`.
+
+[[the-simplest-schema-ever]]
+=== The Simplest Schema Ever !
+
+[source]
+----
+{}
+----
+
+Any well-formed JSON text will pass the validation against the above
+schema :
+
+[source]
+----
+false
+----
+[source]
+----
+42
+----
+[source]
+----
+false
+----
+[source]
+----
+"string"
+----
+[source]
+----
+null
+----
+[source]
+----
+{ "key" : "value" }
+----
+[source]
+----
+[ "value1", 12, { "key" : "value" } ]
+----
+
+[NOTE]
+http://rfc7159.net/rfc7159[RFC 7159] and
+http://www.ecma-international.org/publications/standards/Ecma-404.htm[Standard
+ECMA-404 : The JSON Data Interchange Format] mention that the first four
+cases are valid even though
+`certain previous specifications of JSON constrained a JSON text to be an object or an array`
+( See https://www.ietf.org/rfc/rfc4627.txt[RFC 4627] ).
+
+[[is-this-even-a-schema]]
+==== Is this even a schema ?
+
+A JSON Schema is just a JSON document that conforms to the
+http://json-schema.org/draft-04/schema[JSON Schema's Schema].
+
+A `$schema` keyword *can* be used to explicitly specify that a JSON
+document is a schema.
+
+[source]
+----
+{ "$schema": "http://json-schema.org/schema#" }
+----
+
+Note that you can specify the version of the specification or even the
+specification the schema adheres to :
+
+* `http://json-schema.org/hyper-schema#`
+
+JSON Schema hyperschema written against the
+http://tools.ietf.org/html/draft-luff-json-hyper-schema-00[current
+version of the specification].
+
+* `http://json-schema.org/draft-04/schema#`
+
+JSON Schema written against
+http://tools.ietf.org/html/draft-zyp-json-schema-04[draft 4 of the
+specification].
+
+[[types]]
+=== Specifying Types
+
+The `type` keyword is used to specify the type of a value or a structure :
+
+Schema :
+
+[source]
+----
+{ "type" : "string" }
+----
+
+Instances :
+
+[source]
+----
+"string"
+----
+
+[source]
+.invalid
+----
+42
+----
+
+The valid values for the `type` keyword are :
+
+* `string` +
+* `integer` and `number` +
+* `boolean` [ `true`, `false` ] +
+* `object` and `array` +
+* `null` [ `null` ]
+
+[[choice]]
+==== You have a choice
+
+The `type` keyword can have a value that is an array of the allowed
+types.
+
+Schema :
+
+[source]
+----
+{ "type": ["number", "string"] }
+----
+
+Instances :
+
+[source]
+----
+42
+----
+
+[source]
+.invalid
+----
+false
+----
+
+[[be-more-specific]]
+==== Be more specific
+
+The `enum` keyword can be used in conjunction with the `type` keyword to
+restrict the set of valid values to a subset of the valid values for the
+`type`.
+
+Schema :
+
+[source]
+----
+{
+    "type": "string",
+    "enum": ["red", "amber", "green"]
+}
+----
+
+Instances :
+
+[source]
+----
+"red"
+----
+
+[source]
+.invalid
+----
+"black"
+----
+
+[[consistency]]
+===== Consistency
+
+If the `enum` keyword is used in conjunction with the `type` keyword,
+the values specified should be valid values for the `type`.
+
+Schema :
+
+[source]
+.inconsistent
+----
+{
+    "type": "number",
+    "enum": ["zero", 1, 2]
+}
+----
+
+Instances :
+
+[source]
+.invalid
+----
+"zero"
+----
+
+[[no-type]]
+===== No Type
+
+The `enum` keyword can be used on its own. In this case the set of valid
+values can be of any type.
+
+Schema :
+
+[source]
+----
+{
+    "enum": ["zero", 1, 2.0, null]
+}
+----
+
+Instances :
+
+[source]
+----
+"zero"
+----
+
+[source]
+----
+null
+----
+
+[source]
+----
+1
+----
+
+[source]
+----
+1.0
+----
+
+[source]
+----
+2
+----
+
+[NOTE]
+The last 2 cases are valid because JSON, as opposed to JSON Schema, does
+not make any difference between a `number` and an `integer`.
+
+[[specific-arrays]]
+===== Specific Arrays
+
+The `enum` keyword can be used to enumerate valid arrays.
+
+Schema :
+
+[source]
+----
+{
+    "type": "array",
+    "enum": [ ["A", "B"], [1,2] ]
+}
+----
+
+Instances :
+
+[source]
+----
+["A", "B"]
+----
+
+[source]
+.invalid
+----
+["A"]
+----
+
+[[excluding-types]]
+==== Excluding Types
+
+The `not` keyword can be used to specify that a document is valid if it
+doesn't conform to a certain schema. +
+*The value must be a schema.*
+
+Schema :
+
+[source]
+----
+{
+    "not" : {
+        "type": "string",
+        "enum": ["red", "amber", "green"]
+    }
+}
+----
+
+or
+
+[source]
+----
+{
+    "type": "string",
+    "not" : {
+        "enum": ["red", "amber", "green"]
+    }
+}
+----
+
+Instances :
+
+[source]
+----
+"black"
+----
+
+[source]
+.invalid
+----
+"red"
+----
+
+[[specifying-formats]]
+==== Specifying Formats
+
+The `format` keyword can be used to define specific formats. +
+The following are the built-in formats :
+
+* `date-time`
+
+Schema :
+
+[source]
+----
+{
+    "type": "string",
+    "format": "date-time"
+}
+----
+
+Instances :
+
+[source]
+----
+"2015-11-11T23:45:00Z"
+----
+
+[source]
+.invalid
+----
+"2015-11-11T23:45:00"
+----
+
+* `date`
+
+Schema :
+
+[source]
+----
+{
+    "type": "string",
+    "format": "date"
+}
+----
+
+Instances :
+
+[source]
+----
+"2015-11-11"
+----
+
+[source]
+.invalid
+----
+"2015-11-11T23:45:00Z"
+----
+
+* `email` +
+* `hostname` +
+* `ipv4` and `ipv6` +
+* `uri`
+
+[WARNING]
+====
+Note that there are significant differences between draft 3 and
+draft 4 of the specification regarding formats.
+
+For example, draft 4 of the specification ( the current version at the
+time of the writting ) :
+
+* doesn't mention the `date`, `time`, `utc-millisec`, `regex`, `color`,
+`style` or `phone` formats, +
+* renames `ip-address` to `ipv4` and `host-name` to `hostname`, +
+* only mentions `string` formats. +
+====
+
+[[what-about-user-defined-formats]]
+===== What about user-defined formats ?
+
+It is not possible to define your own format à la http://relaxng.org/[RELAX NG].
+
+[[specifying-constraints]]
+==== Specifying Constraints
+
+The following keywords can be used to further constrain the set of valid
+values within the specified `type`.
+
+*`string`*
+
+* `minLength` and `maxLength`
+
+Schema :
+
+[source]
+----
+{
+    "type": "string",
+    "minLength": 2,
+    "maxLength": 3
+}
+----
+
+Instances :
+
+[source]
+----
+"AB"
+----
+
+[source]
+.invalid
+----
+"A"
+----
+
+* `pattern` [
+http://www.ecma-international.org/ecma-262/5.1/#sec-15.10[JavaScript
+regex format] ]
+
+Schema :
+
+[source]
+----
+{
+    "type": "string",
+    "pattern": "^(\\([0-9]{3}\\))?[0-9]{3}-[0-9]{4}$"
+}
+----
+
+Instances :
+
+[source]
+----
+"(888)555-1212"
+----
+
+[source]
+.invalid
+----
+"(888)5551212"
+----
+
+*`integer`* and *`number`*
+
+* `multipleOf` +
+* `minimum`, `exclusiveMinimum`, `maximum` and `exclusiveMaximum`
+
+Schema :
+
+[source]
+----
+{
+    "type": "number",
+    "multipleOf" : 1.5,
+    "minimum": 1.5,
+    "maximum": 6,
+    "exclusiveMaximum": true
+}
+----
+
+Instances :
+
+[source]
+----
+1.5
+----
+[source]
+----
+3
+----
+
+[source]
+.invalid
+----
+6.0
+----
+
+[[combine]]
+==== Combining Schemas
+
+Schemas can be combined to create more complex schemas using the
+`allOf`, `anyOf` and `oneOf` keywords. +
+*The value must be an array of schemas.*
+
+* `anyOf`
+
+Schema :
+
+[source]
+----
+{
+    "anyOf": [
+        { "type": "string", "maxLength": 5 },
+        { "type": "integer", "maximum": 99999 }
+    ]
+}
+----
+
+Instances :
+
+[source]
+----
+"413"
+----
+[source]
+----
+"test"
+----
+[source]
+----
+413
+----
+
+[source]
+.invalid
+----
+100000
+----
+[source]
+.invalid
+----
+"100000"
+----
+
+* `allOf`
+
+Schema :
+
+[source]
+----
+{
+    "allOf": [
+        { "type": "string", "maxLength": 5 },
+        { "type": "string", "minLength": 2 }
+    ]
+}
+----
+
+Instances :
+
+[source]
+----
+"413"
+----
+
+[source]
+.invalid
+----
+"1"
+----
+
+Schema :
+
+[source]
+.inconsistent
+----
+{
+    "allOf": [
+        { "type": "string", "maxLength": 5 },
+        { "type": "integer", "maximum": 99999 }
+    ]
+}
+----
+
+The combined schemas must be combinable since the value will have to
+adhere to all the schemas at the same time.
+
+* `oneOf`
+
+Schema :
+
+[source]
+----
+{
+    "oneOf": [
+        { "type": "number", "multipleOf": 5 },
+        { "type": "number", "multipleOf": 3 }
+    ]
+}
+----
+
+Instances :
+
+[source]
+----
+10
+----
+
+[source]
+.invalid
+----
+15
+----
+
+[[arrays]]
+=== Defining Arrays
+
+[[element-types]]
+==== Element Types
+
+The `items` keyword is used to describe array elements. +
+*The value must be a schema.*
+
+This is done in the same way as <<types,above>>.
+
+Schema :
+
+[source]
+----
+{
+    "type": "array",
+    "items": {
+        "type": "number"
+    }
+}
+----
+
+Instances :
+
+[source]
+----
+[1, 2, 3, 4, 5]
+----
+[source]
+----
+[]
+----
+
+[source]
+.invalid
+----
+["1", "2", "3", "4", "5"]
+----
+
+Schema :
+
+[source]
+----
+{
+    "type": "array",
+    "items": {
+        "type": "string",
+        "format": "date"
+    }
+}
+----
+
+Instances :
+
+[source]
+----
+["2015-11-11", "2015-11-12", "2015-11-13", "2015-11-14", "2015-11-15"]
+----
+
+Schema :
+
+[source]
+----
+{
+    "type": "array",
+    "items": {
+        "type": ["number", "string"]
+    }
+}
+----
+
+Instances :
+
+[source]
+----
+[1, 2, 3, 4, 5]
+----
+[source]
+----
+["1", "2", "3", "4", "5"]
+----
+[source]
+----
+["1", 2, "3", 4, "5"]
+----
+
+Schema :
+
+[source]
+----
+{
+    "type": "array",
+    "items": {
+        "type": "string",
+        "enum": ["red", "amber", "green"]
+    }
+}
+----
+
+Instances :
+
+[source]
+----
+["red", "green"]
+----
+
+[source]
+.invalid
+----
+["red", "blue"]
+----
+
+Schema :
+
+[source]
+----
+{
+    "type": "array",
+    "items": {
+        "type": "string",
+        "minLength": 2,
+        "maxLength": 3
+    }
+}
+----
+
+Instances :
+
+[source]
+----
+["AA", "AB"]
+----
+
+[source]
+.invalid
+----
+["A", "AA"]
+----
+
+[[list-size]]
+==== List Size
+
+The size of the array can be specified using `minItems` and `maxItems`.
+
+Schema :
+
+[source]
+----
+{
+    "type": "array",
+    "minItems": 2,
+    "maxItems": 3,
+    "items": {
+        "type": "string"
+    }
+}
+----
+
+Instances :
+
+[source]
+----
+["AA", "AB"]
+----
+
+[source]
+.invalid
+----
+["AA"]
+----
+
+[[sets]]
+==== Sets
+
+It is possible to mandate that each element in the list be unique using
+the `uniqueItems` keyword.
+
+Schema :
+
+[source]
+----
+{
+    "type": "array",
+    "uniqueItems": true
+}
+----
+
+Instances :
+
+[source]
+----
+["AA", "AB"]
+----
+
+[source]
+.invalid
+----
+["AA", "AA"]
+----
+
+Note that the unique items can be arrays or objects. +
+
+[TIP]
+The objects are considered unique if at least one of their properties is
+different; the order of the properties is irrelevant.
+
+[[tuples]]
+==== Tuples
+
+A tuple is an array where each item has a different meaning and
+therefore type, similar to a database row. +
+To cater for this, the value of the `items` keyword can be *an array of
+schemas* instead of a single schema.
+
+Schema :
+
+[source]
+----
+{
+    "type": "array",
+    "items": [
+        {
+            "type": "string",
+            "enum": ["maths", "physics", "french", "other"]
+        },
+        {
+            "type": "number"
+        }
+    ]
+}
+----
+
+Instances :
+
+[source]
+----
+["maths", 82.5]
+----
+
+[source]
+.invalid
+----
+["english"]
+----
+
+But, as opposed to objects where xref:object_order[property order is
+irrelevant], here, order matters !
+
+[source]
+.invalid
+----
+[82.5, "maths"]
+----
+
+But, as is the case with objects, xref:optional[nothing is mandatory by
+default] :
+
+[source]
+----
+["maths"]
+----
+
+Unfortunately, as opposed to objects where xref:mandatory[required
+elements can be specified], there is no way to specify which elements of
+the tuple are required.
+
+But, as is the case with objects, xref:lax[additional elements are
+allowed by default] :
+
+[source]
+----
+["maths", 82.5, "additional text"]
+----
+
+[[array_strict]]
+===== Strict Definition
+
+The `additionalItems` keyword is used **in tuples**, to enforce that
+only elements specified in the schemas are allowed to appear.
+
+Schema :
+
+[source]
+----
+{
+    "type": "array",
+    "items": [
+        {
+            "type": "string",
+            "enum": ["maths", "physics", "french", "other"]
+        },
+        {
+            "type": "number"
+        }
+    ],
+    "additionalItems" : false
+}
+----
+
+Instances :
+
+[source]
+.invalid
+----
+["maths", 82.5, "additional text"]
+----
+
+[[advanced-control]]
+===== Looser Definition
+
+[[additional_schema]]
+====== Conform to a Schema
+
+It is possible to allow only additional items that conform to a given schema. +
+
+In this case, *the value of the `additionalItems` keyword must be a schema.*
+
+Schema :
+
+[source]
+----
+{
+    "type": "array",
+    "items": [
+        {
+            "type": "string",
+            "enum": ["maths", "physics", "french", "other"]
+        },
+        {
+            "type": "number"
+        }
+    ],
+    "additionalItems" : {
+        "type": "string",
+        "format": "date-time"
+    }
+}
+----
+
+Instances :
+
+[source]
+----
+["maths", 82.5, "2015-11-11T23:45:00Z"]
+----
+
+[source]
+.invalid
+----
+["maths", 82.5, "additional text"]
+----
+
+Note that this only works for tuples.
+
+[[objects]]
+=== Specifying Structures
+
+The *`object`* type is the only strcutured type which structure is
+user-defined.
+
+[[whats-the-structure]]
+==== What's the structure ?
+
+The `properties` keyword is used to define the structure of an object.
+
+Schema :
+
+[source]
+----
+{
+    "type": "object",
+    "properties": {
+        "name": { "type": "string" },
+        "gender": { "type": "string", "enum": ["male", "female"] },
+        "birthday": { "type": "string", "format": "date" }
+    }
+}
+----
+
+Instances :
+
+[source]
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "birthday": "1973-01-24"
+}
+----
+
+[[object_order]]
+As you can see, <<order,order>> is not enforced :
+
+[source]
+----
+{
+    "gender": "male",
+    "name": "aowss",
+    "birthday": "1973-01-24"
+}
+----
+
+[[optional]]
+As you can see, nothing is <<mandatory,mandatory>> :
+
+[source]
+----
+{}
+----
+
+[[lax]]
+As you can see, you can <<strict,add>> properties :
+
+[source]
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "nationality": "french",
+    "birthday": "1973-01-24"
+}
+----
+
+[source]
+.invalid
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "birthday": false <1>
+}
+----
+
+<1> [red]##the `birthday` property has been declared to be of type `string` in the schema and the instance specifies a `boolean` property.##
+
+[[mandatory]]
+==== What is required ?
+
+The `required` keyword is used to specify which properties are
+mandatory.
+
+Schema :
+
+[source]
+----
+{
+    "type": "object",
+    "properties": {
+        "name": { "type": "string" },
+        "gender": { "type": "string", "enum": ["male", "female"] },
+        "birthday": { "type": "string", "format": "date" }
+    },
+    "additionalProperties": false,
+    "required": ["name", "gender"]
+}
+----
+
+Instances :
+
+[source]
+----
+{
+    "name": "aowss",
+    "gender": "male"
+}
+----
+
+[source]
+.invalid
+----
+{} <1>
+----
+
+<1> [red]##The schema declares that `name` and `gender` are mandatory and the instance doesn't specify these properties.##
+
+[[default-values]]
+==== Default Values
+
+The `default` keyword is used to specify default values. +
+Default values are values that are set in case the document does not
+contain the property.
+
+Schema :
+
+[source]
+----
+{
+    "type": "object",
+    "properties": {
+        "name": { "type": "string" },
+        "gender": { "type": "string", "enum": ["male", "female"], default": "Male" }, <1>
+        "birthday": { "type": "string", "format": "date" },
+        "nationality": { "type": "string", default": "french" }
+    },
+    "additionalProperties": false,
+    "required": ["name", "gender", "nationality"]
+}
+----
+
+<1> The `default` value doesn't have to comply to the schema. +
+As you can see `Male` is not a valid value for the following :
+`"enum": ["male", "female"]`.
+
+Instances :
+
+[source]
+----
+{
+    "name": "aowss"
+     <1>
+}
+----
+
+<1> Even though the `gender` property is mandatory, it doesn't have to be specified since it has a `default` value.
+
+[source]
+.invalid
+----
+{
+    "name": "aowss",
+    "gender": "" <1>
+}
+----
+
+<1> [red]##If the property is present, it must conform to the schema, i.e. its value must be `"male"` or `"female"`.##
+
+[[order]]
+==== Enforce Order
+
+It is currently not possible to enforce order. +
+There is no equivalent to XML Schema's `sequence`.
+
+[[strict]]
+==== Strict Definition
+
+The `additionalProperties` keyword is used to enforce that only
+properties specified in the schema are allowed to appear.
+
+Schema :
+
+[source]
+----
+{
+    "type": "object",
+    "properties": {
+        "name": { "type": "string" },
+        "gender": { "type": "string", "enum": ["male", "female"] },
+        "birthday": { "type": "string", "format": "date" }
+    },
+    "additionalProperties": false
+}
+----
+
+Instances :
+
+[source]
+.invalid
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "nationality": "french", <1>
+    "birthday": "1973-01-24"
+}
+----
+
+<1> [red]##The schema doesn't allow any property that has not been declared to appear in the instance.##
+
+[[advanced-control-1]]
+==== Looser Definition
+
+[[additional_schema-1]]
+===== Conform to a Schema
+
+<<additional_schema,As is the case with tuples>>, it is possible to allow only additional properties that conform to a given schema.
+
+In this case, *the value of the `additionalProperties` keyword must be a schema.*
+
+Schema :
+
+[source]
+----
+{
+    "type": "object",
+    "properties": {
+        "name": { "type": "string" },
+        "gender": { "type": "string", "enum": ["male", "female"] }
+    },
+    "additionalProperties": { "type": "string", "format": "date" }
+}
+----
+
+Instances :
+
+[source]
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "dob": "1973-01-24"
+}
+----
+
+[source]
+.invalid
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "dob": 1973 <1>
+}
+----
+
+<1> [red]##The schema allows non declared properties to be specified in the instance but **their type** must be `string` and their format must be `date`.##
+
+===== Restrict the number
+
+The `minProperties` &`maxProperties` keywords are used to enforce the number of properties.
+
+Schema :
+
+[source]
+----
+{
+    "type": "object",
+    "minProperties": 2,
+    "maxProperties": 3
+}
+----
+
+Instances :
+
+[source]
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "birthday": "1973-01-24"
+}
+----
+
+[source]
+.invalid
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "nationality": "french",
+    "birthday": "1973-01-24" <1>
+}
+----
+
+<1> [red]##The schema doesn't allow for more than 3 properties.##
+
+The value of the `maxProperties` keyword must be greater than the number
+of required properties :
+
+Schema :
+
+[source]
+.inconsistent
+----
+{
+    "type": "object",
+    "properties": {
+        "name": { "type": "string" },
+        "gender": { "type": "string", "enum": ["male", "female"] },
+        "birthday": { "type": "string", "format": "date" },
+        "nationality": { "type": "string", "default": "french" }
+    },
+    "additionalProperties": false,
+    "maxProperties": 2, <1>
+    "required": ["name", "gender", "nationality"] <1>
+}
+----
+
+<1> [red]##The maximum number of properties is less than the number of required properties !##
+
+If the `additionalProperties` keyword is specified with a value of
+`false`, these keywords only make sense to restrict the number of
+optional properties that can be specified.
+
+===== Only these names
+
+The `patternProperties` keyword is used to enforce a given pattern for the **name** of a property. +
+It's the property's name that must conform to the pattern. +
+The property's value must conform to the provided schema. +
+This therefore goes one step further than xref:additional_schema[just
+specifying the schema to which additional properties must conform]
+
+Allow additional boolean properties that begin with an `_` :
+
+Schema :
+
+[source]
+----
+{
+    "type": "object",
+    "properties": {
+        "name": { "type": "string" },
+        "gender": { "type": "string", "enum": ["male", "female"] }
+    },
+    "patternProperties": {
+        "^_": { "type": "boolean" }
+    }
+}
+----
+
+Instances :
+
+[source]
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "_member": true,
+    "_loggedIn": false
+}
+----
+
+[source]
+.invalid
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "member": true <1>
+}
+----
+
+<1> [red]##The schema allows non declared properties to be specified in the instance but **their name** must be begin with `_`.##
+
+[TIP]
+`patternProperties` can be used in conjunction with `additionalProperties`. +
+In that case, `additionalProperties` will refer to any properties that
+are not explicitly listed in `properties` and don’t match any of the `patternProperties`.
+
+[[make-sure-its-an-object]]
+===== Make sure it's an object
+
+[CAUTION]
+Note that if you don't specify that the type is `object`, then any other type will be valid.
+
+Schema :
+
+[source]
+----
+{
+     <1>
+    "properties": {
+        "name": { "type": "string" },
+        "gender": { "type": "string", "enum": ["male", "female"] },
+        "birthday": { "type": "string", "format": "date" }
+    },
+    "additionalProperties": false
+}
+----
+
+<1> The schema doesn't specify that the type of the instance must be an `object`.
+
+Instances :
+
+[source]
+----
+[ "aowss", "male" ] <1>
+----
+
+<1> Any type is valid, including an array. +
+**Since this is not an object, it doesn't have to comply to the schema properties !**
+
+[source]
+----
+{
+    "name": "aowss",
+    "gender": "male"
+}
+----
+
+[source]
+----
+{ <1>
+    "name": "aowss",
+    "gender": "male",
+    "nationality": "french", <2>
+    "birthday": "1973-01-24"
+}
+----
+
+<1> The instance's type is an object.
+<2> [red]##The `nationality` property is not allowed.##
+
+If the instance's type is an object, it must be valid in respect to the schema properties.
+
+[WARNING]
+Beware that a lot of examples around <<reference,using the `ref`
+keyword>>, do not enforce that !
+
+[[simple-cross-validation]]
+==== Simple Cross Validation
+
+The `dependencies` keyword is used to manage dependencies between
+properties.
+
+[[property_dependencies]]
+===== Property Dependency
+
+I need this property if the other property is specified
+
+If the passport number is specified, than we need the nationality.
+
+Schema :
+
+[source]
+----
+{
+    "type": "object",
+    "properties": {
+        "name": { "type": "string" },
+        "gender": { "type": "string", "enum": ["male", "female"] },
+        "birthday": { "type": "string", "format": "date" },
+        "nationality": { "type": "string" },
+        "passport": { "type": "string" }
+    },
+    "additionalProperties": false,
+    "required": ["name", "gender", "birthday"],
+    "dependencies": {
+        "passport": ["nationality"]
+    }
+}
+----
+
+Note that this means that the `passport` property requires the
+`nationality` property and not the reverse.
+
+Instances :
+
+[source]
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "birthday": "1973-01-24"
+}
+----
+
+[source]
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "birthday": "1973-01-24",
+    "nationality": "french"
+}
+----
+
+[source]
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "birthday": "1973-01-24",
+    "passport": "02AA12345",
+    "nationality": "french"
+}
+----
+
+[source]
+.invalid
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "birthday": "1973-01-24",
+    "passport": "02AA12345" <1>
+     <2>
+}
+----
+
+<1> The `passport` property is specified.
+<2> [red]##The `nationality` property is **not** specified.##
+
+[[in-fact-we-need-both-or-none-of-them]]
+In fact, we need both or none of them !
+
+Schema :
+
+[source]
+----
+{
+    "type": "object",
+    "properties": {
+        "name": { "type": "string" },
+        "gender": { "type": "string", "enum": ["male", "female"] },
+        "birthday": { "type": "string", "format": "date" },
+        "nationality": { "type": "string" },
+        "passport": { "type": "string" }
+    },
+    "additionalProperties": false,
+    "required": ["name", "gender", "birthday"],
+    "dependencies": {
+        "passport": ["nationality"],
+        "nationality": ["passport"]
+    }
+}
+----
+
+Instances :
+
+[source]
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "birthday": "1973-01-24"
+     <1>
+     <2>
+}
+----
+
+<1> The `nationality` property is not specified.
+<2> The `passport` property is not specified.
+
+[source]
+.invalid
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "birthday": "1973-01-24",
+    "nationality": "french" <1>
+     <2>
+}
+----
+
+<1> The `nationality` property **is** specified.
+<2> [red]##The `passport` property is **not** specified.##
+
+[[schema_dependencies]]
+===== Different Schemas
+
+If the nationality is specified, we need all passport details to be
+provided.
+
+Schema :
+
+[source]
+----
+{
+    "type": "object",
+    "properties": {
+        "name": { "type": "string" },
+        "gender": { "type": "string", "enum": ["male", "female"] },
+        "birthday": { "type": "string", "format": "date" },
+        "nationality": { "type": "string" }
+    },
+    "required": ["name", "gender", "birthday"],
+    "dependencies": {
+        "nationality": {
+            "properties": {
+                "passportNumber": { "type": "string" },
+                "passportIssueDate": { "type": "string", "format": "date" },
+                "passportExpiryDate": { "type": "string", "format": "date" }
+            },
+            "required": ["passportNumber", "passportIssueDate", "passportExpiryDate"]
+        }
+    }
+}
+----
+
+Note that this means that the `nationality` property requires the
+passport properties. +
+
+[TIP]
+A more natural way of understanding it is : if the `nationality`
+property is specified, then the passport details must be specified.
+
+Instances :
+
+[source]
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "birthday": "1973-01-24"
+}
+----
+
+[source]
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "birthday": "1973-01-24",
+    "nationality": "french",
+    "passportNumber": "02AA12345",
+    "passportIssueDate": "2011-02-12",
+    "passportExpiryDate": "2021-02-11"
+}
+----
+
+[source]
+.invalid
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "birthday": "1973-01-24",
+    "nationality": "french" <1>
+     <2>
+}
+----
+
+<1> The `nationality` property **is** specified.
+<2> [red]##The passport details are **not** specified.##
+
+[[beware-this-requires-additional-properties]]
+[CAUTION]
+Beware, this requires additional properties !
+
+Note that since the passport properties are now defined in the
+`depedencies` section, `additionalProperties` can't be set to `false` at
+the `object` level :
+
+Schema :
+
+[source]
+.inconsistent
+----
+{
+    "type": "object",
+    "properties": {
+        ...
+    },
+    "additionalProperties": false, <1>
+    "required": ["name", "gender", "birthday"],
+    "dependencies": {
+        "nationality": {
+            "properties": {
+                ...
+            },
+            "required": ["passportNumber", "passportIssueDate", "passportExpiryDate"]
+        }
+    }
+}
+----
+
+<1> [red]##The `additionalProperties` property can't be set to `false` since additional properties are definied in the `dependencies`.##
+
+This is different from xref:property_dependencies[the case where the
+dependency was on properties] ! +
+In that case, no additional properties where needed : they were all
+defined in the `object` schema.
+
+[[annoying-side-effects]]
+[CAUTION]
+Annoying side effects !!!
+
+Since `additionalProperties` can't be set to `false`, the following documents are valid :
+
+Schema ( xref:schema_dependencies[same as above] ):
+
+[source]
+----
+{
+    "type": "object",
+    "properties": {
+        "name": { "type": "string" },
+        "gender": { "type": "string", "enum": ["male", "female"] },
+        "birthday": { "type": "string", "format": "date" },
+        "nationality": { "type": "string" }
+    },
+    "required": ["name", "gender", "birthday"],
+    "dependencies": {
+        "nationality": {
+            "properties": {
+                "passportNumber": { "type": "string" },
+                "passportIssueDate": { "type": "string", "format": "date" },
+                "passportExpiryDate": { "type": "string", "format": "date" }
+            },
+            "required": ["passportNumber", "passportIssueDate", "passportExpiryDate"]
+        }
+    }
+}
+----
+
+Instances :
+
+The passport properties without the nationality :
+
+[source]
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "birthday": "1973-01-24",
+     <1>
+    "passportNumber": "02AA12345",
+    "passportIssueDate": "2011-02-12",
+    "passportExpiryDate": "2021-02-11"
+}
+----
+
+<1> The `nationality` property is not required since it's the passport details that require the `nationality` and not the opposite.
+
+Some passport properties only :
+
+[source]
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "birthday": "1973-01-24",
+    "passportNumber": "02AA12345"
+     <1>
+}
+----
+
+<1> [red]##The `passportIssueDate` and `passportExpiryDate` properties are not required !##
+
+Passport properties with a different format :
+
+[source]
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "birthday": "1973-01-24",
+    "passportNumber": 212345 <1>
+}
+----
+
+<1> [red]##The `passportNumber` property can have any format !##
+
+Any additional properties :
+
+[source]
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "birthday": "1973-01-24",
+    "number": "02AA12345" <1>
+}
+----
+
+<1> As is always the case when `additionalProperties` is not set to `false`, any property is allowed.
+
+[[beware-by-default-properties-are-not-required]]
+[CAUTION]
+Beware, by default, properties are not required !
+
+If you don't specify that the passport properties are mandatory, then
+the dependency is meaningless :
+
+Schema :
+
+[source]
+----
+{
+    "type": "object",
+    "properties": {
+        "name": { "type": "string" },
+        "gender": { "type": "string", "enum": ["male", "female"] },
+        "birthday": { "type": "string", "format": "date" },
+        "nationality": { "type": "string" }
+    },
+    "required": ["name", "gender", "birthday"],
+    "dependencies": {
+        "nationality": {
+            "properties": {
+                "passportNumber": { "type": "string" },
+                "passportIssueDate": { "type": "string", "format": "date" },
+                "passportExpiryDate": { "type": "string", "format": "date" }
+            }
+        }
+    }
+}
+----
+
+Instances :
+
+[source]
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "birthday": "1973-01-24",
+    "nationality": "french"
+     <1>
+}
+----
+
+<1> [red]##Since all the required properties are optional, it's fine to have none of them.##
+
+This is different from xref:property_dependencies[the case where the
+dependency was on properties] ! +
+In that case, `"dependencies": { "passport": ["nationality"] }`
+effectively meant that the `nationality` property was required if the
+`passport` property was present.
+
+[[advanced-cases]]
+=== Advanced Cases
+
+[[one-of-those-is-required]]
+==== One of those is required
+
+It is possible to specify that an object can have a certain set of
+properties or another set of properties. +
+If some of the properties are shared
+
+TBC
+
+[[this-type-of-array-or-this-type-of-object]]
+==== This type of array or this type of object
+
+As we have seen xref:choice[above], it is possible to specify that a
+value can be one of several types. +
+As we have seen xref:arrays[above], it is possible to specify the
+schema of an array. +
+As we have seen xref:objects[above], it is possible to specify the
+schema of an object.
+
+[[array_object]]
+Schema :
+
+[source]
+----
+{
+    "type": ["array", "object"],
+    "items": {
+        "type": "number"
+    },
+    "properties": {
+        "name": { "type": "string" },
+        "gender": { "type": "string", "enum": ["male", "female"] },
+        "birthday": { "type": "string", "format": "date" }
+    },
+    "additionalProperties": false
+}
+----
+
+Instances :
+
+[source]
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "birthday": "1973-01-24"
+}
+----
+
+[source]
+----
+[1, 2, 3, 4, 5]
+----
+
+[source]
+.invalid
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "birthday": "1973-01-24",
+    "nationality": "french"
+}
+----
+
+[source]
+.invalid
+----
+["aowss", "male", "1973-01-24"]
+----
+
+This is using the fact that `type` can accept a list of acceptable
+types.
+
+What it really means is that the type must be one of the listed types. +
+It is therefore more natural, at least in my opinion, to write the above
+schema as follows :
+
+Schema :
+
+[source]
+----
+{
+    "oneOf" : [
+        {
+            "type": "array",
+            "items": {
+                "type": "number"
+            }
+        },
+        {
+            "type": "object",
+            "properties": {
+                "name": { "type": "string" },
+                "gender": { "type": "string", "enum": ["male", "female"] },
+                "birthday": { "type": "string", "format": "date" }
+            },
+            "additionalProperties": false
+        }
+    ]
+}
+----
+
+This is also more flexible : you can define any number of arrays and
+objects or even other types as being acceptable.
+
+In the xref:array_object[previous schema], you could only define one
+array and one object since the matching of the allowed types to the
+specified schemas was done automatically :
+
+* the `array` type is matched to the `items` definition, +
+* the `object` type is matched to the `properties` definition.
+
+[[reuse]]
+=== What about reuse ?
+
+[[reference]]
+==== Referencing an existing schema
+
+The `$ref` keyword is used to reference an existing schema. +
+The value is a https://tools.ietf.org/html/rfc6901[JSON Pointer]
+expression.
+
+Schema :
+
+[source]
+----
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "passenger": {
+            "type": "object",
+            "properties": {
+                "name" : {
+                    "type": "string",
+                    "description": "The passenger's first and last name"
+                },
+                ...
+            }
+        }
+    },
+    "type": "object",
+    "properties": {
+        "passengers": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/passenger"
+            },
+            "uniqueItems": true
+        }
+    },
+    "additionalProperties": false
+}
+----
+
+It is customary ( but not required ) to put the referenced schemas in
+the parent schema under a key called `definitions`.
+
+The specification says :
+
+____
+This keyword plays no role in validation per se.  Its role is to provide a standardized location for schema authors to inline JSON Schemas into a more general schema.
+
+This keyword's value MUST be an object.
+Each member value of this object MUST be a valid JSON Schema.
+____
+
+The net effect of using the `$ref` keyword is that it is logically
+replaced by what it points to.
+
+Resulting Schema :
+
+[source]
+----
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+        "passengers": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name" : {
+                        "type": "string",
+                        "description": "The passenger's first and last name"
+                    },
+                    ...
+                }
+            },
+            "uniqueItems": true
+        }
+    },
+    "additionalProperties": false
+}
+----
+
+[[current-and-external-schemas]]
+===== Current and external schemas
+
+`#` refers to the current document.
+
+The following expression points to the `address` schema under the
+`definitions` property in the current schema document :
+
+[source]
+----
+{ "$ref": "#/definitions/passenger" }
+----
+
+The following expression points to the `price` schema under the
+`commons` property in the `common.schema.json` schema document :
+
+[source]
+----
+{ "$ref": "common.schema.json#/commons/price" }
+----
+
+Schemas :
+
+[source]
+.seat.schema.json
+----
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "seat": {
+            "type": "object",
+            "properties": {
+                ...,
+                "price" : { "$ref": "common.schema.json#/commons/price" }
+            }
+        }
+    },
+    "type": "object",
+    "properties": {
+        "seat" : { "$ref": "#/definitions/seat" }
+    },
+    "required" : [ "seat" ],
+    "additionalProperties": false
+}
+----
+
+[source]
+.common.schema.json
+----
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "commons": {
+        "currency" : {
+            "type": "string",
+            "pattern": "^[A-Z]{3}$"
+        },
+        ...,
+        "price": {
+            "type": "object",
+            "properties": {
+                "amount" : {
+                    "type": "number"
+                },
+                "currency" : { "$ref": "#/commons/currency" }
+            }
+        },
+        ...
+    }
+}
+----
+
+[[extending-an-existing-schema]]
+==== Extending an existing schema
+
+A schema can be extended by .
+
+TBC
+
+[[documenting]]
+=== Documenting
+
+The `title` and `description` keywords are used to describe parts of a
+schema.
+
+[[duplicate-keys]]
+=== Duplicate Keys
+
+[CAUTION]
+Even though JSON allows duplicate keys, they should not be used !
+
+[cols=".^1h,.^2,.>3e"]
+|====
+
+| JSON      | The meaning is not clear  | In XML you use duplicate keys to build lists. +
+In JSON you have the `array` type for that.
+
+| JSON Parsing | Parsers will throw an error or just ignore all but the last occurrence  |
+
+| JSON Pointer      | You can't address duplicate keys properly  |
+
+| JSON Schema      | There is no way to specify that a key is unique since JSON Schema assumes that keys are unique  | 
+[red]##Since the validator relies on a parser that is most likely going to
+ignore the duplicate key, the validator will validate the instance as if
+there was only one key : the last one. +
+Therefore if an instance contains a duplicate key where the first key's
+value is invalid and the second key's value is valid, the validator will
+consider the instance as valid !##
+
+|====
+
+[[summary]]
+=== Summary
+
+[cols=",",options="header"]
+|=======================================================================
+|type |keywords
+|`number` or `integer` |`multipleOf`, `maximum`, `exclusiveMaximum`, `minimum`, `exclusiveMinimum`
+
+|`string` |`maxLength`, `minLength`, `pattern`
+
+|`array` |`items`, `additionalItems`, `maxItems`, `minItems`, `uniqueItems`
+
+|`object` |`maxProperties`, `minProperties`, `required`, `properties`, `additionalProperties`, `patternProperties`, `dependencies`
+|=======================================================================
+
+[[suggestions]]
+=== Suggestions
+
+1. The default values for `additionalProperties` and `additionalItems` should be `false`.
+2. The cross validation facilities need to be enhanced.
+3. An `enumProperties` should be introduced as an equivalent to `patternProperties`.
+4. The `uniqueItems` keyword should be extended to use a JSON Pointer to what needs to be unique as is the case in XML Schema.
+5. A mechanism to define xref:specifying-formats[formats] should be available.
+6. The xref:default-values[default value] for a property should conform to the schema of that property.
+7. Schema inconsistencies should flag the schema as being invalid
+
+[bibliography]
+Resources
+---------
+
+[bibliography]
+.Web Resources
+
+- http://spacetelescope.github.io/understanding-json-schema/index.html[Understanding
+JSON Schema] by https://github.com/mdboom[Michael Droettboom]. +
+
+This is a very good resource. +
+The explanations are clear. +
+The presentation is very good.
+
+- http://www.xfront.com/json-and-json-schema-for-xml-developers[JSON and JSON-Schema for XML Developers] by http://www.xfront.com[Roger L. Costello]
+
+This is a very good tutorial ( as are most of his tutorials ). +
+It provides a comparison with XML Schema ( Roger has a very extensive
+knowledge of XML Schema ).
