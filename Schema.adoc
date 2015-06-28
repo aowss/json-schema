@@ -3,7 +3,7 @@ JSON Schema Tutorial
 :Author:                Aowss Ibrahim
 :Email:                 <aowss@yahoo.com>
 :Date:                  June 2015
-:Revision:              version 1.0.1
+:Revision:              version 1.1.2
 :source-highlighter:    highlightjs
 :source-language:       json
 :toc2:
@@ -14,6 +14,8 @@ JSON Schema Tutorial
 == JSON Schema
 
 MIME Type : `application/schema+json`
+
+No specific file extension is defined footnote:[`.json` can be used since a JSON Schema is a JSON document; `.schema.json` is often used to make the distinction between the schema and the instance document].
 
 As explained, in the http://json-schema.org/[JSON Schema web site] or
 https://github.com/json-schema/json-schema[JSON Schema github
@@ -904,7 +906,8 @@ Unfortunately, as opposed to objects where xref:mandatory[required
 elements can be specified], there is no way to specify which elements of
 the tuple are required.
 
-But, as is the case with objects, xref:lax[additional elements are
+[[array-lax]]
+But, as is the case with objects, xref:object-lax[additional elements are
 allowed by default] :
 
 [source]
@@ -1048,7 +1051,7 @@ As you can see, nothing is <<mandatory,mandatory>> :
 {}
 ----
 
-[[lax]]
+[[object-lax]]
 As you can see, you can <<strict,add>> properties :
 
 [source]
@@ -1076,8 +1079,10 @@ As you can see, you can <<strict,add>> properties :
 [[mandatory]]
 ==== What is required ?
 
-The `required` keyword is used to specify which properties are
-mandatory.
+The `required` keyword is used to specify which properties are mandatory. +
+
+[NOTE]
+This is different from XML Schema where elments are mandatory by default.
 
 Schema :
 
@@ -1167,8 +1172,10 @@ Instances :
 [[order]]
 ==== Enforce Order
 
-It is currently not possible to enforce order. +
-There is no equivalent to XML Schema's `sequence`.
+It is currently not possible to enforce order.
+
+[NOTE]
+There is no equivalent to XML Schema's `sequence` keyword.
 
 [[strict]]
 ==== Strict Definition
@@ -1688,7 +1695,7 @@ Schema :
 
 This is different from xref:property_dependencies[the case where the
 dependency was on properties] ! +
-In that case, no additional properties where needed : they were all
+In that case, no additional properties were needed : they were all
 defined in the `object` schema.
 
 [[annoying-side-effects]]
@@ -2119,8 +2126,71 @@ TBC
 [[documenting]]
 === Documenting
 
-The `title` and `description` keywords are used to describe parts of a
-schema.
+The `title` and `description` keywords are used to describe parts of a schema.
+
+[source]
+----
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"definitions": {
+		"passenger": {
+			"title": "Passenger", <1>
+			"description": "A Flight Passenger", <2>
+			"type": "object",
+			"properties": {
+				"type" : {
+					"type": "string",
+					"enum": [ "Adult", "Child", "Infant", "Young Adult"],
+					"description": "The passenger's type" <2>
+				},
+				"frequentFlyer" : {
+					"type": "object",
+					"properties": {
+						"programme" : {
+							"type": "string",
+							"enum": [ "Executive Club", "AA Passenger", "Finnair Bonus"],
+							"description": "The passenger's frequent flyer programme if he is part of one" <2>
+						}
+					}
+				}
+			}
+		}
+	}
+}
+----
+
+<1> A schema's title
+<2> A property's description
+
+[[open-model]]
+=== Open Content Model
+
+The JSON Scehma content model is open : by default, properties that have not been specified in the schema are allowed. +
+This behaviour can be changed for xref:array_strict[arrays] and xref:strict[objects].
+
+Although the open content model can seem a little counter-intuitive, the ideas behind it are evolvability & decoupling.
+
+.Scenario
+====
+. Party A publishes a schema for its public web API. +
+. Party B and Party C use this schema to interact with Party A.
+. Party A makes some changes to its API and publishes a new version of the schema that is **backward compatible**.
+. Party B is interested in the new features and upgrades the schema it uses to the new version.
+. Party C is not interested in the new features and continues to use the old version of the schema. +
+
+Because of the open content model, **the old version of the schema still validates the new instance documents**, i.e. the ones that adheres to the new schema.
+====
+
+[CAUTION]
+A lot of attention and testing is needed to ensure that the schema is really constraining the instance documents in the expected way. +
+There's a fine line between evolvability and no constraints, especially considering the above-mentioned xref:annoying-side-effects[gotchas].
+
+[NOTE]
+====
+This is one of the fundamental differences between JSON Schema and XML Schema. +
+In XML Schema, the content model is closed : by default only elements / attributes that have been specified are allowed. +
+Extension points can be defined using the `any` keyword to allow for unspecified content.
+====
 
 [[duplicate-keys]]
 === Duplicate Keys
@@ -2128,13 +2198,13 @@ schema.
 [CAUTION]
 Even though JSON allows duplicate keys, they should not be used !
 
-[cols=".^1h,.^2,.>3e"]
+[cols=".^1h,.^2,.^3e"]
 |====
 
 | JSON      | The meaning is not clear  | In XML you use duplicate keys to build lists. +
 In JSON you have the `array` type for that.
 
-| JSON Parsing | Parsers will throw an error or just ignore all but the last occurrence  |
+| JSON Parsing | Parsers will throw an error or just ignore all but the last occurrence  | See http://rfc7159.net/rfc7159#rfc.section.4[RFC 7159]
 
 | JSON Pointer      | You can't address duplicate keys properly  |
 
@@ -2163,16 +2233,140 @@ consider the instance as valid !##
 |`object` |`maxProperties`, `minProperties`, `required`, `properties`, `additionalProperties`, `patternProperties`, `dependencies`
 |=======================================================================
 
+[[examples]]
+=== Worked Examples
+
+. More flexible than a tuple but more retrictive than an array of `string`
+
+Schemas :
+
+[source]
+.common.schema.json
+----
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "seatType" : {
+            "type": "string",
+            "enum": [ "Bulkhead", "Cot", "Exit" ]
+        },
+        "seatDirection" : {
+            "type": "string",
+            "enum": [ "Forward Facing", "Rear Facing" ]
+        },
+        "seatSection" : {
+            "type": "string",
+            "enum": [ "Aisle", "Window", "Other" ]
+        },
+        "aircraftSection" : {
+            "type": "string",
+            "enum": [ "Left", "Right", "Centre" ]
+        }
+    }
+}
+----
+
+[source]
+.seat.schema.json
+----
+{
+    "type": "array",
+    "items": { <1>
+        "anyOf": [ <1>
+            { "$ref": "common.schema.json#/definitions/seatType" },
+            { "$ref": "common.schema.json#/definitions/seatSection" },
+            { "$ref": "common.schema.json#/definitions/aircraftSection" },
+            { "$ref": "common.schema.json#/definitions/seatDirection" }
+        ]
+    },
+    "additionalItems": false
+}
+----
+<1> Each item in the array can be of one of the specified types.
+
+Instances :
+
+[source]
+----
+["Cot", "Aisle", "Left", "Forward Facing"]
+----
+
+[source]
+----
+["Aisle", "Left", "Forward Facing"] <1>
+----
+<1> Items are not mandatory : the `seatType` is missing.
+
+[source]
+----
+["Aisle", "Cot", "Bulkhead", "Left", "Forward Facing"] <1> <2>
+----
+<1> Items can appear more than once : 2 `seatType`, `Cot` and `Bulkhead`, are present.
+<2> Order is irrelevant : the `seatSection` comes before the `seatType`.
+
+[source]
+----
+["Cot", "Cot", "Bulkhead", "Left", "Forward Facing"] <1>
+----
+<1> [red]##There is no way to prevent the repetition of `"Cot"`.##
+
+This is different from defining a tuple which is more constraining : 
+
+Schema :
+
+[source]
+.seat.schema.json
+----
+{
+    "type": "array",
+    "items": [ <1>
+        { "$ref": "common.schema.json#/definitions/seatType" },
+        { "$ref": "common.schema.json#/definitions/seatSection" },
+        { "$ref": "common.schema.json#/definitions/aircraftSection" },
+        { "$ref": "common.schema.json#/definitions/seatDirection" }
+    ],
+    "additionalItems": false
+}
+----
+<1> A 4-item tuple.
+
+Instances :
+
+[source]
+----
+["Cot", "Aisle", "Left", "Forward Facing"]
+----
+
+[source]
+.invalid
+----
+["Aisle", "Left", "Forward Facing"]
+----
+
+[source]
+.invalid
+----
+["Aisle", "Cot", "Left", "Forward Facing"]
+----
+
+[source]
+.invalid
+----
+["Cot", "Bulkhead", "Aisle", "Left", "Forward Facing"]
+----
+
 [[suggestions]]
 === Suggestions
 
-1. The default values for `additionalProperties` and `additionalItems` should be `false`.
-2. The cross validation facilities need to be enhanced.
-3. An `enumProperties` should be introduced as an equivalent to `patternProperties`.
-4. The `uniqueItems` keyword should be extended to use a JSON Pointer to what needs to be unique as is the case in XML Schema.
-5. A mechanism to define xref:specifying-formats[formats] should be available.
-6. The xref:default-values[default value] for a property should conform to the schema of that property.
-7. Schema inconsistencies should flag the schema as being invalid
+. The xref:schema_dependencies[cross validation facilities involving different schemas] need to be changed to avoid these xref:annoying-side-effects[issues].
++
+It should be possible to set `additionalProperties` to `false`.
+
+. An `enumProperties` should be introduced as an equivalent to `patternProperties`.
+. The `uniqueItems` keyword should be extended to use a JSON Pointer to what needs to be unique as is the case in XML Schema.
+. A mechanism to define xref:specifying-formats[formats] should be available.
+. The xref:default-values[default value] for a property should conform to the schema of that property.
+. Schema inconsistencies should flag the schema as being invalid
 
 [bibliography]
 Resources
