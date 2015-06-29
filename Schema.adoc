@@ -2131,31 +2131,31 @@ The `title` and `description` keywords are used to describe parts of a schema.
 [source]
 ----
 {
-	"$schema": "http://json-schema.org/draft-04/schema#",
-	"definitions": {
-		"passenger": {
-			"title": "Passenger", <1>
-			"description": "A Flight Passenger", <2>
-			"type": "object",
-			"properties": {
-				"type" : {
-					"type": "string",
-					"enum": [ "Adult", "Child", "Infant", "Young Adult"],
-					"description": "The passenger's type" <2>
-				},
-				"frequentFlyer" : {
-					"type": "object",
-					"properties": {
-						"programme" : {
-							"type": "string",
-							"enum": [ "Executive Club", "AA Passenger", "Finnair Bonus"],
-							"description": "The passenger's frequent flyer programme if he is part of one" <2>
-						}
-					}
-				}
-			}
-		}
-	}
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "passenger": {
+            "title": "Passenger", <1>
+            "description": "A Flight Passenger", <2>
+            "type": "object",
+            "properties": {
+                "type" : {
+                    "type": "string",
+                    "enum": [ "Adult", "Child", "Infant", "Young Adult"],
+                    "description": "The passenger's type" <2>
+                },
+                "frequentFlyer" : {
+                    "type": "object",
+                    "properties": {
+                        "programme" : {
+                            "type": "string",
+                            "enum": [ "Executive Club", "AA Passenger", "Finnair Bonus"],
+                            "description": "The passenger's frequent flyer programme" <2>
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 ----
 
