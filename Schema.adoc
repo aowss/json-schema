@@ -3,19 +3,19 @@ JSON Schema Tutorial
 :Author:                Aowss Ibrahim
 :Email:                 <aowss@yahoo.com>
 :Date:                  June 2015
-:Revision:              version 1.1.2
+:Revision:              version 1.1.3
 :source-highlighter:    highlightjs
 :source-language:       json
 :toc2:
 :toclevels:             5
 :icons:                 font
 
-[[json-schema]]
-== JSON Schema
+[[intro]]
+== Introduction
 
 MIME Type : `application/schema+json`
 
-No specific file extension is defined footnote:[`.json` can be used since a JSON Schema is a JSON document; `.schema.json` is often used to make the distinction between the schema and the instance document].
+No specific file extension is defined yet footnote:[`.json` can be used since a JSON Schema is a JSON document; `.schema.json` is often used to make the distinction between the schema and the instance document] footnote:[When the MIME Type will be http://www.iana.org/assignments/media-types/media-types.xhtml[registered], a file extension will probably be defined].
 
 As explained, in the http://json-schema.org/[JSON Schema web site] or
 https://github.com/json-schema/json-schema[JSON Schema github
@@ -37,41 +37,88 @@ http://json-schema.org/latest/json-schema-hypermedia.html.
 At the time of this writing ( {Date} ), the status of all these
 specifications is `Internet-Draft`.
 
-[[the-simplest-schema-ever]]
-=== The Simplest Schema Ever !
+[[conventions]]
+=== Conventtions
 
+Here are the conventions used in this document :
+
+[role="schema"]
+[source]
+----
+this is a JSON Schema document
+----
+
+[role="schema inconsistent"]
+[source]
+----
+this is an inconsistent JSON Schema document
+----
+
+[role="instance valid"]
+[source]
+----
+this is a valid JSON document
+----
+
+[role="instance invalid"]
+[source]
+----
+this is an invalid JSON document
+----
+
+[[tools]]
+=== Useful Tools
+
+. http://jsonschemalint.com/draft4/[Online JSON Schema Validator]
+
+[[the-simplest-schema-ever]]
+== The Simplest Schema Ever !
+
+[role="schema"]
 [source]
 ----
 {}
 ----
 
-Any well-formed JSON text will pass the validation against the above
-schema :
+Any well-formed JSON text will pass the validation against the above schema :
 
+[role="instance valid"]
 [source]
 ----
 false
 ----
+
+[role="instance valid"]
 [source]
 ----
 42
 ----
+
+[role="instance valid"]
 [source]
 ----
 false
 ----
+
+[role="instance valid"]
 [source]
 ----
 "string"
 ----
+
+[role="instance valid"]
 [source]
 ----
 null
 ----
+
+[role="instance valid"]
 [source]
 ----
 { "key" : "value" }
 ----
+
+[role="instance valid"]
 [source]
 ----
 [ "value1", 12, { "key" : "value" } ]
@@ -86,7 +133,7 @@ cases are valid even though
 ( See https://www.ietf.org/rfc/rfc4627.txt[RFC 4627] ).
 
 [[is-this-even-a-schema]]
-==== Is this even a schema ?
+=== Is this even a schema ?
 
 A JSON Schema is just a JSON document that conforms to the
 http://json-schema.org/draft-04/schema[JSON Schema's Schema].
@@ -94,6 +141,7 @@ http://json-schema.org/draft-04/schema[JSON Schema's Schema].
 A `$schema` keyword *can* be used to explicitly specify that a JSON
 document is a schema.
 
+[role="schema"]
 [source]
 ----
 { "$schema": "http://json-schema.org/schema#" }
@@ -115,12 +163,13 @@ http://tools.ietf.org/html/draft-zyp-json-schema-04[draft 4 of the
 specification].
 
 [[types]]
-=== Specifying Types
+== Specifying Types
 
 The `type` keyword is used to specify the type of a value or a structure :
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 { "type" : "string" }
@@ -128,11 +177,13 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 "string"
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -148,13 +199,14 @@ The valid values for the `type` keyword are :
 * `null` [ `null` ]
 
 [[choice]]
-==== You have a choice
+=== You have a choice
 
 The `type` keyword can have a value that is an array of the allowed
 types.
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 { "type": ["number", "string"] }
@@ -162,11 +214,13 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 42
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -174,7 +228,7 @@ false
 ----
 
 [[be-more-specific]]
-==== Be more specific
+=== Be more specific
 
 The `enum` keyword can be used in conjunction with the `type` keyword to
 restrict the set of valid values to a subset of the valid values for the
@@ -182,6 +236,7 @@ restrict the set of valid values to a subset of the valid values for the
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -192,11 +247,13 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 "red"
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -204,13 +261,14 @@ Instances :
 ----
 
 [[consistency]]
-===== Consistency
+==== Consistency
 
 If the `enum` keyword is used in conjunction with the `type` keyword,
 the values specified should be valid values for the `type`.
 
 Schema :
 
+[role="schema inconsistent"]
 [source]
 .inconsistent
 ----
@@ -222,6 +280,7 @@ Schema :
 
 Instances :
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -229,13 +288,14 @@ Instances :
 ----
 
 [[no-type]]
-===== No Type
+==== No Type
 
 The `enum` keyword can be used on its own. In this case the set of valid
 values can be of any type.
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -245,26 +305,31 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 "zero"
 ----
 
+[role="instance valid"]
 [source]
 ----
 null
 ----
 
+[role="instance valid"]
 [source]
 ----
 1
 ----
 
+[role="instance valid"]
 [source]
 ----
 1.0
 ----
 
+[role="instance valid"]
 [source]
 ----
 2
@@ -275,12 +340,13 @@ The last 2 cases are valid because JSON, as opposed to JSON Schema, does
 not make any difference between a `number` and an `integer`.
 
 [[specific-arrays]]
-===== Specific Arrays
+==== Specific Arrays
 
 The `enum` keyword can be used to enumerate valid arrays.
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -291,11 +357,13 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 ["A", "B"]
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -303,7 +371,7 @@ Instances :
 ----
 
 [[excluding-types]]
-==== Excluding Types
+=== Excluding Types
 
 The `not` keyword can be used to specify that a document is valid if it
 doesn't conform to a certain schema. +
@@ -311,6 +379,7 @@ doesn't conform to a certain schema. +
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -323,6 +392,7 @@ Schema :
 
 or
 
+[role="schema"]
 [source]
 ----
 {
@@ -335,11 +405,13 @@ or
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 "black"
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -347,7 +419,7 @@ Instances :
 ----
 
 [[specifying-formats]]
-==== Specifying Formats
+=== Specifying Formats
 
 The `format` keyword can be used to define specific formats. +
 The following are the built-in formats :
@@ -356,6 +428,7 @@ The following are the built-in formats :
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -366,11 +439,13 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 "2015-11-11T23:45:00Z"
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -381,6 +456,7 @@ Instances :
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -391,11 +467,13 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 "2015-11-11"
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -422,12 +500,12 @@ time of the writting ) :
 ====
 
 [[what-about-user-defined-formats]]
-===== What about user-defined formats ?
+==== What about user-defined formats ?
 
 It is not possible to define your own format à la http://relaxng.org/[RELAX NG].
 
 [[specifying-constraints]]
-==== Specifying Constraints
+=== Specifying Constraints
 
 The following keywords can be used to further constrain the set of valid
 values within the specified `type`.
@@ -438,6 +516,7 @@ values within the specified `type`.
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -449,11 +528,13 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 "AB"
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -466,6 +547,7 @@ regex format] ]
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -476,11 +558,13 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 "(888)555-1212"
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -494,6 +578,7 @@ Instances :
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -507,15 +592,19 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 1.5
 ----
+
+[role="instance valid"]
 [source]
 ----
 3
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -523,7 +612,7 @@ Instances :
 ----
 
 [[combine]]
-==== Combining Schemas
+=== Combining Schemas
 
 Schemas can be combined to create more complex schemas using the
 `allOf`, `anyOf` and `oneOf` keywords. +
@@ -533,6 +622,7 @@ Schemas can be combined to create more complex schemas using the
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -545,24 +635,32 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 "413"
 ----
+
+[role="instance valid"]
 [source]
 ----
 "test"
 ----
+
+[role="instance valid"]
 [source]
 ----
 413
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
 100000
 ----
+
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -573,6 +671,7 @@ Instances :
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -585,11 +684,13 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 "413"
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -598,6 +699,7 @@ Instances :
 
 Schema :
 
+[role="schema inconsistent"]
 [source]
 .inconsistent
 ----
@@ -616,6 +718,7 @@ adhere to all the schemas at the same time.
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -628,11 +731,13 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 10
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -640,10 +745,10 @@ Instances :
 ----
 
 [[arrays]]
-=== Defining Arrays
+== Defining Arrays
 
 [[element-types]]
-==== Element Types
+=== Element Types
 
 The `items` keyword is used to describe array elements. +
 *The value must be a schema.*
@@ -652,6 +757,7 @@ This is done in the same way as <<types,above>>.
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -664,15 +770,19 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 [1, 2, 3, 4, 5]
 ----
+
+[role="instance valid"]
 [source]
 ----
 []
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -681,6 +791,7 @@ Instances :
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -694,6 +805,7 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 ["2015-11-11", "2015-11-12", "2015-11-13", "2015-11-14", "2015-11-15"]
@@ -701,6 +813,7 @@ Instances :
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -713,14 +826,19 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 [1, 2, 3, 4, 5]
 ----
+
+[role="instance valid"]
 [source]
 ----
 ["1", "2", "3", "4", "5"]
 ----
+
+[role="instance valid"]
 [source]
 ----
 ["1", 2, "3", 4, "5"]
@@ -728,6 +846,7 @@ Instances :
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -741,11 +860,13 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 ["red", "green"]
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -754,6 +875,7 @@ Instances :
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -768,11 +890,13 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 ["AA", "AB"]
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -780,12 +904,13 @@ Instances :
 ----
 
 [[list-size]]
-==== List Size
+=== List Size
 
 The size of the array can be specified using `minItems` and `maxItems`.
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -800,11 +925,13 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 ["AA", "AB"]
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -812,13 +939,14 @@ Instances :
 ----
 
 [[sets]]
-==== Sets
+=== Sets
 
 It is possible to mandate that each element in the list be unique using
 the `uniqueItems` keyword.
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -829,11 +957,13 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 ["AA", "AB"]
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -847,7 +977,7 @@ The objects are considered unique if at least one of their properties is
 different; the order of the properties is irrelevant.
 
 [[tuples]]
-==== Tuples
+=== Tuples
 
 A tuple is an array where each item has a different meaning and
 therefore type, similar to a database row. +
@@ -856,6 +986,7 @@ schemas* instead of a single schema.
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -874,11 +1005,13 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 ["maths", 82.5]
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -888,6 +1021,7 @@ Instances :
 But, as opposed to objects where xref:object_order[property order is
 irrelevant], here, order matters !
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -897,11 +1031,14 @@ irrelevant], here, order matters !
 But, as is the case with objects, xref:optional[nothing is mandatory by
 default] :
 
+[[tuple_optional]]
+[role="instance valid"]
 [source]
 ----
 ["maths"]
 ----
 
+[CAUTION]
 Unfortunately, as opposed to objects where xref:mandatory[required
 elements can be specified], there is no way to specify which elements of
 the tuple are required.
@@ -910,19 +1047,21 @@ the tuple are required.
 But, as is the case with objects, xref:object-lax[additional elements are
 allowed by default] :
 
+[role="instance valid"]
 [source]
 ----
 ["maths", 82.5, "additional text"]
 ----
 
 [[array_strict]]
-===== Strict Definition
+==== Strict Definition
 
-The `additionalItems` keyword is used **in tuples**, to enforce that
+The `additionalItems` keyword is used, **in tuples**, to enforce that
 only elements specified in the schemas are allowed to appear.
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -942,6 +1081,7 @@ Schema :
 
 Instances :
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -949,17 +1089,18 @@ Instances :
 ----
 
 [[advanced-control]]
-===== Looser Definition
+==== Looser Definition
 
 [[additional_schema]]
-====== Conform to a Schema
+===== Conform to a Schema
 
-It is possible to allow only additional items that conform to a given schema. +
+It is possible, **in tuples**, to allow only additional items that conform to a given schema. +
 
-In this case, *the value of the `additionalItems` keyword must be a schema.*
+In this case, the value of the `additionalItems` keyword must be **a schema**.
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -982,32 +1123,38 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 ["maths", 82.5, "2015-11-11T23:45:00Z"]
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
 ["maths", 82.5, "additional text"]
 ----
 
-Note that this only works for tuples.
+[TIP]
+The `additionalItems` keyword can only be used with tuples. +
+It wouldn't make sense to use it with xref:arrays[arrays] since the schema specified by the `items` keyword is the only element type that is allowed for the array. +
+xref:arrays[Arrays] behave **as if** there was an implicit `additionalItems` property set to `false`.
 
 [[objects]]
-=== Specifying Structures
+== Specifying Structures
 
 The *`object`* type is the only strcutured type which structure is
 user-defined.
 
 [[whats-the-structure]]
-==== What's the structure ?
+=== What's the structure ?
 
 The `properties` keyword is used to define the structure of an object.
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -1022,6 +1169,7 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 {
@@ -1034,6 +1182,7 @@ Instances :
 [[object_order]]
 As you can see, <<order,order>> is not enforced :
 
+[role="instance valid"]
 [source]
 ----
 {
@@ -1046,6 +1195,7 @@ As you can see, <<order,order>> is not enforced :
 [[optional]]
 As you can see, nothing is <<mandatory,mandatory>> :
 
+[role="instance valid"]
 [source]
 ----
 {}
@@ -1054,6 +1204,7 @@ As you can see, nothing is <<mandatory,mandatory>> :
 [[object-lax]]
 As you can see, you can <<strict,add>> properties :
 
+[role="instance valid"]
 [source]
 ----
 {
@@ -1064,6 +1215,7 @@ As you can see, you can <<strict,add>> properties :
 }
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -1077,7 +1229,7 @@ As you can see, you can <<strict,add>> properties :
 <1> [red]##the `birthday` property has been declared to be of type `string` in the schema and the instance specifies a `boolean` property.##
 
 [[mandatory]]
-==== What is required ?
+=== What is required ?
 
 The `required` keyword is used to specify which properties are mandatory. +
 
@@ -1086,6 +1238,7 @@ This is different from XML Schema where elments are mandatory by default.
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -1102,6 +1255,7 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 {
@@ -1110,6 +1264,7 @@ Instances :
 }
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -1119,7 +1274,7 @@ Instances :
 <1> [red]##The schema declares that `name` and `gender` are mandatory and the instance doesn't specify these properties.##
 
 [[default-values]]
-==== Default Values
+=== Default Values
 
 The `default` keyword is used to specify default values. +
 Default values are values that are set in case the document does not
@@ -1127,6 +1282,7 @@ contain the property.
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -1148,6 +1304,7 @@ As you can see `Male` is not a valid value for the following :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 {
@@ -1158,6 +1315,7 @@ Instances :
 
 <1> Even though the `gender` property is mandatory, it doesn't have to be specified since it has a `default` value.
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -1170,7 +1328,7 @@ Instances :
 <1> [red]##If the property is present, it must conform to the schema, i.e. its value must be `"male"` or `"female"`.##
 
 [[order]]
-==== Enforce Order
+=== Enforce Order
 
 It is currently not possible to enforce order.
 
@@ -1178,13 +1336,14 @@ It is currently not possible to enforce order.
 There is no equivalent to XML Schema's `sequence` keyword.
 
 [[strict]]
-==== Strict Definition
+=== Strict Definition
 
 The `additionalProperties` keyword is used to enforce that only
 properties specified in the schema are allowed to appear.
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -1200,6 +1359,7 @@ Schema :
 
 Instances :
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -1214,10 +1374,10 @@ Instances :
 <1> [red]##The schema doesn't allow any property that has not been declared to appear in the instance.##
 
 [[advanced-control-1]]
-==== Looser Definition
+=== Looser Definition
 
 [[additional_schema-1]]
-===== Conform to a Schema
+==== Conform to a Schema
 
 <<additional_schema,As is the case with tuples>>, it is possible to allow only additional properties that conform to a given schema.
 
@@ -1225,6 +1385,7 @@ In this case, *the value of the `additionalProperties` keyword must be a schema.
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -1239,6 +1400,7 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 {
@@ -1248,6 +1410,7 @@ Instances :
 }
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -1260,12 +1423,13 @@ Instances :
 
 <1> [red]##The schema allows non declared properties to be specified in the instance but **their type** must be `string` and their format must be `date`.##
 
-===== Restrict the number
+==== Restrict the number
 
 The `minProperties` &`maxProperties` keywords are used to enforce the number of properties.
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -1277,6 +1441,7 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 {
@@ -1286,6 +1451,7 @@ Instances :
 }
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -1304,6 +1470,7 @@ of required properties :
 
 Schema :
 
+[role="schema inconsistent"]
 [source]
 .inconsistent
 ----
@@ -1327,7 +1494,7 @@ If the `additionalProperties` keyword is specified with a value of
 `false`, these keywords only make sense to restrict the number of
 optional properties that can be specified.
 
-===== Only these names
+==== Only these names
 
 The `patternProperties` keyword is used to enforce a given pattern for the **name** of a property. +
 It's the property's name that must conform to the pattern. +
@@ -1339,6 +1506,7 @@ Allow additional boolean properties that begin with an `_` :
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -1355,6 +1523,7 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 {
@@ -1365,6 +1534,7 @@ Instances :
 }
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -1383,13 +1553,14 @@ In that case, `additionalProperties` will refer to any properties that
 are not explicitly listed in `properties` and don’t match any of the `patternProperties`.
 
 [[make-sure-its-an-object]]
-===== Make sure it's an object
+==== Make sure it's an object
 
 [CAUTION]
 Note that if you don't specify that the type is `object`, then any other type will be valid.
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -1407,6 +1578,7 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 [ "aowss", "male" ] <1>
@@ -1415,6 +1587,7 @@ Instances :
 <1> Any type is valid, including an array. +
 **Since this is not an object, it doesn't have to comply to the schema properties !**
 
+[role="instance valid"]
 [source]
 ----
 {
@@ -1423,6 +1596,7 @@ Instances :
 }
 ----
 
+[role="instance valid"]
 [source]
 ----
 { <1>
@@ -1443,13 +1617,13 @@ Beware that a lot of examples around <<reference,using the `ref`
 keyword>>, do not enforce that !
 
 [[simple-cross-validation]]
-==== Simple Cross Validation
+=== Simple Cross Validation
 
 The `dependencies` keyword is used to manage dependencies between
 properties.
 
 [[property_dependencies]]
-===== Property Dependency
+==== Property Dependency
 
 I need this property if the other property is specified
 
@@ -1457,6 +1631,7 @@ If the passport number is specified, than we need the nationality.
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -1481,6 +1656,7 @@ Note that this means that the `passport` property requires the
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 {
@@ -1490,6 +1666,7 @@ Instances :
 }
 ----
 
+[role="instance valid"]
 [source]
 ----
 {
@@ -1500,6 +1677,7 @@ Instances :
 }
 ----
 
+[role="instance valid"]
 [source]
 ----
 {
@@ -1511,6 +1689,7 @@ Instances :
 }
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -1531,6 +1710,7 @@ In fact, we need both or none of them !
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -1553,6 +1733,7 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 {
@@ -1567,6 +1748,7 @@ Instances :
 <1> The `nationality` property is not specified.
 <2> The `passport` property is not specified.
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -1583,13 +1765,14 @@ Instances :
 <2> [red]##The `passport` property is **not** specified.##
 
 [[schema_dependencies]]
-===== Different Schemas
+==== Different Schemas
 
 If the nationality is specified, we need all passport details to be
 provided.
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -1623,6 +1806,7 @@ property is specified, then the passport details must be specified.
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 {
@@ -1632,6 +1816,7 @@ Instances :
 }
 ----
 
+[role="instance valid"]
 [source]
 ----
 {
@@ -1645,6 +1830,7 @@ Instances :
 }
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -1670,6 +1856,7 @@ the `object` level :
 
 Schema :
 
+[role="schema inconsistent"]
 [source]
 .inconsistent
 ----
@@ -1706,6 +1893,7 @@ Since `additionalProperties` can't be set to `false`, the following documents ar
 
 Schema ( xref:schema_dependencies[same as above] ):
 
+[role="schema"]
 [source]
 ----
 {
@@ -1734,6 +1922,7 @@ Instances :
 
 The passport properties without the nationality :
 
+[role="instance valid"]
 [source]
 ----
 {
@@ -1751,6 +1940,7 @@ The passport properties without the nationality :
 
 Some passport properties only :
 
+[role="instance valid"]
 [source]
 ----
 {
@@ -1766,6 +1956,7 @@ Some passport properties only :
 
 Passport properties with a different format :
 
+[role="instance valid"]
 [source]
 ----
 {
@@ -1780,6 +1971,7 @@ Passport properties with a different format :
 
 Any additional properties :
 
+[role="instance valid"]
 [source]
 ----
 {
@@ -1801,6 +1993,7 @@ the dependency is meaningless :
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -1826,6 +2019,7 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 {
@@ -1846,10 +2040,10 @@ effectively meant that the `nationality` property was required if the
 `passport` property was present.
 
 [[advanced-cases]]
-=== Advanced Cases
+== Advanced Cases
 
 [[one-of-those-is-required]]
-==== One of those is required
+=== One of those is required
 
 It is possible to specify that an object can have a certain set of
 properties or another set of properties. +
@@ -1858,7 +2052,7 @@ If some of the properties are shared
 TBC
 
 [[this-type-of-array-or-this-type-of-object]]
-==== This type of array or this type of object
+=== This type of array or this type of object
 
 As we have seen xref:choice[above], it is possible to specify that a
 value can be one of several types. +
@@ -1870,6 +2064,7 @@ schema of an object.
 [[array_object]]
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -1888,6 +2083,7 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 {
@@ -1897,11 +2093,13 @@ Instances :
 }
 ----
 
+[role="instance valid"]
 [source]
 ----
 [1, 2, 3, 4, 5]
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -1913,6 +2111,7 @@ Instances :
 }
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -1928,6 +2127,7 @@ schema as follows :
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -1962,10 +2162,10 @@ specified schemas was done automatically :
 * the `object` type is matched to the `properties` definition.
 
 [[reuse]]
-=== What about reuse ?
+== What about reuse ?
 
 [[reference]]
-==== Referencing an existing schema
+=== Referencing an existing schema
 
 The `$ref` keyword is used to reference an existing schema. +
 The value is a https://tools.ietf.org/html/rfc6901[JSON Pointer]
@@ -1973,6 +2173,7 @@ expression.
 
 Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -2020,6 +2221,7 @@ replaced by what it points to.
 
 Resulting Schema :
 
+[role="schema"]
 [source]
 ----
 {
@@ -2046,7 +2248,7 @@ Resulting Schema :
 ----
 
 [[current-and-external-schemas]]
-===== Current and external schemas
+==== Current and external schemas
 
 `#` refers to the current document.
 
@@ -2068,6 +2270,7 @@ The following expression points to the `price` schema under the
 
 Schemas :
 
+[role="schema"]
 [source]
 .seat.schema.json
 ----
@@ -2091,6 +2294,7 @@ Schemas :
 }
 ----
 
+[role="schema"]
 [source]
 .common.schema.json
 ----
@@ -2117,17 +2321,18 @@ Schemas :
 ----
 
 [[extending-an-existing-schema]]
-==== Extending an existing schema
+=== Extending an existing schema
 
 A schema can be extended by .
 
 TBC
 
 [[documenting]]
-=== Documenting
+== Documenting
 
 The `title` and `description` keywords are used to describe parts of a schema.
 
+[role="schema"]
 [source]
 ----
 {
@@ -2163,7 +2368,7 @@ The `title` and `description` keywords are used to describe parts of a schema.
 <2> A property's description
 
 [[open-model]]
-=== Open Content Model
+== Open Content Model
 
 The JSON Scehma content model is open : by default, properties that have not been specified in the schema are allowed. +
 This behaviour can be changed for xref:array_strict[arrays] and xref:strict[objects].
@@ -2193,7 +2398,7 @@ Extension points can be defined using the `any` keyword to allow for unspecified
 ====
 
 [[duplicate-keys]]
-=== Duplicate Keys
+== Duplicate Keys
 
 [CAUTION]
 Even though JSON allows duplicate keys, they should not be used !
@@ -2219,7 +2424,7 @@ consider the instance as valid !##
 |====
 
 [[summary]]
-=== Summary
+== Summary
 
 [cols=",",options="header"]
 |=======================================================================
@@ -2234,12 +2439,13 @@ consider the instance as valid !##
 |=======================================================================
 
 [[examples]]
-=== Worked Examples
+== Worked Examples
 
 . More flexible than a tuple but more retrictive than an array of `string`
 
 Schemas :
 
+[role="schema"]
 [source]
 .common.schema.json
 ----
@@ -2266,6 +2472,7 @@ Schemas :
 }
 ----
 
+[role="schema"]
 [source]
 .seat.schema.json
 ----
@@ -2286,17 +2493,20 @@ Schemas :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 ["Cot", "Aisle", "Left", "Forward Facing"]
 ----
 
+[role="instance valid"]
 [source]
 ----
 ["Aisle", "Left", "Forward Facing"] <1>
 ----
 <1> Items are not mandatory : the `seatType` is missing.
 
+[role="instance valid"]
 [source]
 ----
 ["Aisle", "Cot", "Bulkhead", "Left", "Forward Facing"] <1> <2>
@@ -2304,6 +2514,7 @@ Instances :
 <1> Items can appear more than once : 2 `seatType`, `Cot` and `Bulkhead`, are present.
 <2> Order is irrelevant : the `seatSection` comes before the `seatType`.
 
+[role="instance valid"]
 [source]
 ----
 ["Cot", "Cot", "Bulkhead", "Left", "Forward Facing"] <1>
@@ -2314,6 +2525,7 @@ This is different from defining a tuple which is more constraining :
 
 Schema :
 
+[role="schema"]
 [source]
 .seat.schema.json
 ----
@@ -2332,23 +2544,27 @@ Schema :
 
 Instances :
 
+[role="instance valid"]
 [source]
 ----
 ["Cot", "Aisle", "Left", "Forward Facing"]
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
 ["Aisle", "Left", "Forward Facing"]
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
 ["Aisle", "Cot", "Left", "Forward Facing"]
 ----
 
+[role="instance invalid"]
 [source]
 .invalid
 ----
@@ -2356,17 +2572,17 @@ Instances :
 ----
 
 [[suggestions]]
-=== Suggestions
+== Suggestions
 
 . The xref:schema_dependencies[cross validation facilities involving different schemas] need to be changed to avoid these xref:annoying-side-effects[issues].
 +
 It should be possible to set `additionalProperties` to `false`.
-
+. The xref:default-values[default value] for a property should conform to the schema of that property.
+. Schema inconsistencies should flag the schema as being invalid.
+. It should be possible to indicate xref:tuple_optional[which items are mandatory in a tuple].
+. A mechanism to define or extend existing xref:specifying-formats[formats] should be available. The set of available xref:specifying-formats[formats] should be extended.
 . An `enumProperties` should be introduced as an equivalent to `patternProperties`.
 . The `uniqueItems` keyword should be extended to use a JSON Pointer to what needs to be unique as is the case in XML Schema.
-. A mechanism to define xref:specifying-formats[formats] should be available.
-. The xref:default-values[default value] for a property should conform to the schema of that property.
-. Schema inconsistencies should flag the schema as being invalid
 
 [bibliography]
 Resources
