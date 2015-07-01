@@ -541,6 +541,7 @@ Instances :
 "A"
 ----
 
+[[pattern]]
 * `pattern` [
 http://www.ecma-international.org/ecma-262/5.1/#sec-15.10[JavaScript
 regex format] ]
@@ -1096,7 +1097,7 @@ Instances :
 
 It is possible, **in tuples**, to allow only additional items that conform to a given schema. +
 
-In this case, the value of the `additionalItems` keyword must be **a schema**.
+In this case, **the value of the `additionalItems` keyword must be a schema**.
 
 Schema :
 
@@ -1497,10 +1498,12 @@ optional properties that can be specified.
 ==== Only these names
 
 The `patternProperties` keyword is used to enforce a given pattern for the **name** of a property. +
-It's the property's name that must conform to the pattern. +
-The property's value must conform to the provided schema. +
-This therefore goes one step further than xref:additional_schema[just
-specifying the schema to which additional properties must conform]
+
+It's the property's name that must conform to the specified xref:pattern[pattern]. +
+
+The property's value must conform to the provided **schema**. +
+
+This therefore goes one step further than xref:additional_schema[just specifying the schema to which additional properties must conform].
 
 Allow additional boolean properties that begin with an `_` :
 
@@ -1517,7 +1520,8 @@ Schema :
     },
     "patternProperties": {
         "^_": { "type": "boolean" }
-    }
+    },
+    "additionalProperties": false
 }
 ----
 
@@ -1545,7 +1549,7 @@ Instances :
 }
 ----
 
-<1> [red]##The schema allows non declared properties to be specified in the instance but **their name** must be begin with `_`.##
+<1> [red]##The schema allows non declared properties to be specified in the instance but **their name** must begin with `_`.##
 
 [TIP]
 `patternProperties` can be used in conjunction with `additionalProperties`. +
@@ -1596,8 +1600,9 @@ Instances :
 }
 ----
 
-[role="instance valid"]
+[role="instance invalid"]
 [source]
+.invalid
 ----
 { <1>
     "name": "aowss",
@@ -2252,7 +2257,7 @@ Resulting Schema :
 
 `#` refers to the current document.
 
-The following expression points to the `address` schema under the
+The following expression points to the `passenger` schema under the
 `definitions` property in the current schema document :
 
 [source]
