@@ -1556,6 +1556,54 @@ Instances :
 In that case, `additionalProperties` will refer to any properties that
 are not explicitly listed in `properties` and don’t match any of the `patternProperties`.
 
+It's possible to have more than one pattern specified.
+
+Schema :
+
+[role="schema"]
+[source]
+----
+{
+    "type": "object",
+    "properties": {
+        "name": { "type": "string" },
+        "gender": { "type": "string", "enum": ["male", "female"] }
+    },
+    "patternProperties": {
+        "^_": { "type": "boolean" },
+        "^-": { "type": "string" }
+    },
+    "additionalProperties": false
+}
+----
+
+Instances :
+
+[role="instance valid"]
+[source]
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "_member": true,
+    "-user": "aowss"
+}
+----
+
+[role="instance invalid"]
+[source]
+.invalid
+----
+{
+    "name": "aowss",
+    "gender": "male",
+    "_member": true,
+    "-user": true <1>
+}
+----
+
+<1> [red]##The schema allows non declared properties with names that begin with `-` to be specified but their type must be `string`.##
+
 [[make-sure-its-an-object]]
 ==== Make sure it's an object
 

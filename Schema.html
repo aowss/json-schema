@@ -2683,6 +2683,60 @@ are not explicitly listed in <code>properties</code> and don’t match any of th
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>It&#8217;s possible to have more than one pattern specified.</p>
+</div>
+<div class="paragraph">
+<p>Schema :</p>
+</div>
+<div class="listingblock schema">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+    "type": "object",
+    "properties": {
+        "name": { "type": "string" },
+        "gender": { "type": "string", "enum": ["male", "female"] }
+    },
+    "patternProperties": {
+        "^_": { "type": "boolean" },
+        "^-": { "type": "string" }
+    },
+    "additionalProperties": false
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Instances :</p>
+</div>
+<div class="listingblock instance valid">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+    "name": "aowss",
+    "gender": "male",
+    "_member": true,
+    "-user": "aowss"
+}</code></pre>
+</div>
+</div>
+<div class="listingblock instance invalid">
+<div class="title">invalid</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+    "name": "aowss",
+    "gender": "male",
+    "_member": true,
+    "-user": true <i class="conum" data-value="1"></i><b>(1)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><span class="red">The schema allows non declared properties with names that begin with <code>-</code> to be specified but their type must be <code>string</code>.</span></td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect3">
 <h4 id="make-sure-its-an-object">Make sure it&#8217;s an object</h4>
@@ -4092,7 +4146,7 @@ knowledge of XML Schema ).</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-07-01 10:55:58 BST
+Last updated 2015-07-01 11:56:22 BST
 </div>
 </div>
 </body>
