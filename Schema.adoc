@@ -2,8 +2,8 @@ JSON Schema Tutorial
 ====================
 :Author:                Aowss Ibrahim
 :Email:                 <aowss@yahoo.com>
-:Date:                  June 2015
-:Revision:              version 1.1.3
+:Date:                  July 2015
+:Revision:              version 1.1.4
 :source-highlighter:    highlightjs
 :source-language:       json
 :toc2:
@@ -15,7 +15,7 @@ JSON Schema Tutorial
 
 MIME Type : `application/schema+json`
 
-No specific file extension is defined yet footnote:[`.json` can be used since a JSON Schema is a JSON document; `.schema.json` is often used to make the distinction between the schema and the instance document] footnote:[When the MIME Type will be http://www.iana.org/assignments/media-types/media-types.xhtml[registered], a file extension will probably be defined].
+No specific file extension is defined yet footnote:[`.json` can be used since a JSON Schema is a JSON document; `.schema.json` is often used to make the distinction between the schema and the instance document] footnote:[when the MIME Type will be http://www.iana.org/assignments/media-types/media-types.xhtml[registered], a file extension will probably be defined].
 
 As explained, in the http://json-schema.org/[JSON Schema web site] or
 https://github.com/json-schema/json-schema[JSON Schema github
@@ -69,7 +69,26 @@ this is an invalid JSON document
 [[tools]]
 === Useful Tools
 
+A lot of useful tools are listed on the http://json-schema.org/implementations.html[JSON Schema web site].
+
+[[online-validators]]
+==== Online Validators
+
 . http://jsonschemalint.com/draft4/[Online JSON Schema Validator]
+. http://www.jsonschemavalidator.net/[Another online JSON Schema Validator]
+
+==== Libraries
+
+The only problem with xref:online-validators[these online validators] is that they can't handle schemas that are split into multiple files. +
+For that you need to use a JSON Schema validation library written in you favourite language. 
+
+. https://github.com/fge/json-schema-validator[Francis Galiegue's JSON Schema Validator written in Java]
+
+An instance is validated against a given schema using the following command : 
+
+`java -jar json-schema-validator-2.2.6-lib.jar seatmap.schema.json seatmap.json`  
+
+The `jar` is downloaded from https://bintray.com/fge/maven/json-schema-validator/view[here] as mentioned in the `"Full" jar; command line` section footnote:[you need to download this jar : `json-schema-validator-2.2.6-lib.jar`, not this one : `json-schema-validator-2.2.6.jar`].  
 
 [[the-simplest-schema-ever]]
 == The Simplest Schema Ever !
@@ -938,6 +957,10 @@ Instances :
 ----
 ["AA"]
 ----
+
+[TIP]
+Most of the time, it is useful to have `minItems` set to `1`. +
+This avoids the confusion caused by a property which value is an empty array : `[]` which is usually best represented by a missing property.
 
 [[sets]]
 === Sets
@@ -2494,7 +2517,206 @@ consider the instance as valid !##
 [[examples]]
 == Worked Examples
 
-. More flexible than a tuple but more retrictive than an array of `string`
+=== Same set of properties but different rules
+
+A person has a first name, a last name and **eventually an email address**. +
+A payer is a person whose **email address is required** for confirmation purpose.
+
+Schema :
+
+[role="schema"]
+[source]
+----
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+    "person": {
+        "type": "object",
+        "properties": {
+            "firstName" : { "type": "string" },
+            "lastName" : { "type": "string" },
+            "email" : {
+                "type": "string",
+                "format": "email"
+            }
+        },
+        "required" : [ "firstName", "lastName" ],
+        "additionalProperties": false
+    },
+    "payer" : {
+        "allOf": [ <1>
+            { "$ref": "#/definitions/person" },
+            { "required" : [ "email"] } <1>
+        ]
+    }
+    },
+    "type": "object",
+    "properties": {
+        "person" : { "$ref": "#/definitions/person" },
+        "payer" : { "$ref": "#/definitions/payer" }
+    },
+    "additionalProperties": false
+}
+----
+<1> The `payer` must at the same time, as denoted by the `allOf` keyword, be a `person` and have an `email`, as denoted by the `required` keyword.
+
+Instances :
+
+[role="instance valid"]
+[source]
+----
+{
+    "person" : {
+        "firstName" : "Aowss",
+        "lastName" : "Ibrahim"
+    }
+}
+----
+
+[role="instance valid"]
+[source]
+----
+{
+    "person" : {
+        "firstName" : "Aowss",
+        "lastName" : "Ibrahim",
+        "email" : "aowss@yahoo.com" <1>
+    }
+}
+----
+<1> A `person` can have an `email`.
+
+[role="instance valid"]
+[source]
+----
+{
+    "payer" : {
+        "firstName" : "Aowss",
+        "lastName" : "Ibrahim",
+        "email" : "aowss@yahoo.com"
+    }
+}
+----
+
+[role="instance invalid"]
+[source]
+----
+{
+    "payer" : {
+        "firstName" : "Aowss",
+        "lastName" : "Ibrahim"
+         <1>
+    }
+}
+----
+<1> [red]##The `email` property is required for a `payer`.##
+
+[NOTE]
+This kind of constructs don't exist in XML Schema 1.0.
+
+[TIP]
+It is not possible to make a required property optional.
+
+This only works if the required property is not nested :
+
+[role="schema inconsistent"]
+[source]
+----
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+    "person": {
+        "type": "object",
+        "properties": {
+            "firstName" : { "type": "string" },
+            "lastName" : { "type": "string" },
+            "contactDetails" : {
+                "type": "object",
+                "properties": {
+                    "phone" : { "type" : "integer" },
+                    "email" : {
+                        "type": "string",
+                        "format": "email" <1>
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        "required" : [ "firstName", "lastName" ],
+        "additionalProperties": false
+    },
+    "payer" : {
+        "allOf": [
+            { "$ref": "#/definitions/person" },
+            { "required" : [ "email"] } <2>
+        ]
+    }
+    },
+    "type": "object",
+    "properties": {
+        "person" : { "$ref": "#/definitions/person" },
+        "payer" : { "$ref": "#/definitions/payer" }
+    },
+    "additionalProperties": false
+}
+----
+<1> The `email` property is now nested within a `contactDetails` property.
+<2> [red]##It is not possible to reference a nested property.##
+
+A workaround is to mark the `contactDetails` property as being required. +
+You also need to specify that it must contain at least one property to avoid an empty `contactDetails` object. 
+
+[role="schema"]
+[source]
+----
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+    "person": {
+        "type": "object",
+        "properties": {
+            "firstName" : { "type": "string" },
+            "lastName" : { "type": "string" },
+            "contactDetails" : {
+                "type": "object",
+                "properties": {
+                    "phone" : { "type" : "integer" },
+                    "email" : {
+                        "type": "string",
+                        "format": "email"
+                    }
+                },
+                "minProperties": 1, <1>
+                "additionalProperties": false
+            }
+        },
+        "required" : [ "firstName", "lastName" ],
+        "additionalProperties": false
+    },
+    "payer" : {
+        "allOf": [
+            { "$ref": "#/definitions/person" },
+            { "required" : [ "contactDetails"] } <2>
+        ]
+    }
+    },
+    "type": "object",
+    "properties": {
+        "person" : { "$ref": "#/definitions/person" },
+        "payer" : { "$ref": "#/definitions/payer" }
+    },
+    "additionalProperties": false
+}
+----
+<1> `contactDetails` must contain at least one property.
+<2> `contactDetails` is required.
+
+=== A flexible tuple
+
+The array contains items of type `string`. +
+Each item's set of valid values have been defined by a different property using the `enum` keyword.
+
+The proposed solution is more flexible than a tuple but more retrictive than an array of `string`.
 
 Schemas :
 
@@ -2607,22 +2829,25 @@ Instances :
 [source]
 .invalid
 ----
-["Aisle", "Left", "Forward Facing"]
+["Aisle", "Left", "Forward Facing"] <1>
 ----
+<1> [red]##All items are mandatory : a `seatSection` must be present.##
 
 [role="instance invalid"]
 [source]
 .invalid
 ----
-["Aisle", "Cot", "Left", "Forward Facing"]
+["Aisle", "Cot", "Left", "Forward Facing"] <1>
 ----
+<1> [red]##Order is relevant : the `seatSection` must come after the `seatType`.##
 
 [role="instance invalid"]
 [source]
 .invalid
 ----
-["Cot", "Bulkhead", "Aisle", "Left", "Forward Facing"]
+["Cot", "Bulkhead", "Aisle", "Left", "Forward Facing"] <1>
 ----
+<1> [red]##Items can only appear once : you can't have 2 `seatType`.##
 
 [[suggestions]]
 == Suggestions
@@ -2631,11 +2856,12 @@ Instances :
 +
 It should be possible to set `additionalProperties` to `false`.
 . The xref:default-values[default value] for a property should conform to the schema of that property.
-. Schema inconsistencies should flag the schema as being invalid.
+. Schema inconsistencies should flag the schema as being invalid footnote:[if a property references an inexistant definition, its content can be anything !].
 . It should be possible to indicate xref:tuple_optional[which items are mandatory in a tuple].
 . A mechanism to define or extend existing xref:specifying-formats[formats] should be available. The set of available xref:specifying-formats[formats] should be extended.
 . An `enumProperties` should be introduced as an equivalent to `patternProperties`.
-. The `uniqueItems` keyword should be extended to use a JSON Pointer to what needs to be unique as is the case in XML Schema.
+. The `uniqueItems` keyword should be extended to use a JSON Pointer to reference what needs to be unique.
+. The `required` keyword should be extended to use a JSON Pointer to reference what is required.
 
 [bibliography]
 Resources

@@ -789,7 +789,12 @@ div.valid code {
 <li><a href="#intro">Introduction</a>
 <ul class="sectlevel2">
 <li><a href="#conventions">Conventtions</a></li>
-<li><a href="#tools">Useful Tools</a></li>
+<li><a href="#tools">Useful Tools</a>
+<ul class="sectlevel3">
+<li><a href="#online-validators">Online Validators</a></li>
+<li><a href="#_libraries">Libraries</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#the-simplest-schema-ever">The Simplest Schema Ever !</a>
@@ -877,7 +882,12 @@ div.valid code {
 <li><a href="#open-model">Open Content Model</a></li>
 <li><a href="#duplicate-keys">Duplicate Keys</a></li>
 <li><a href="#summary">Summary</a></li>
-<li><a href="#examples">Worked Examples</a></li>
+<li><a href="#examples">Worked Examples</a>
+<ul class="sectlevel2">
+<li><a href="#_same_set_of_properties_but_different_rules">Same set of properties but different rules</a></li>
+<li><a href="#_a_flexible_tuple">A flexible tuple</a></li>
+</ul>
+</li>
 <li><a href="#suggestions">Suggestions</a></li>
 <li><a href="#_resources">Resources</a></li>
 </ul>
@@ -927,7 +937,7 @@ Hyper-Schema</a> defines the hyper-media keywords of JSON Schema</p>
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-At the time of this writing ( June 2015 ), the status of all these
+At the time of this writing ( July 2015 ), the status of all these
 specifications is <code>Internet-Draft</code>.
 </td>
 </tr>
@@ -961,12 +971,44 @@ specifications is <code>Internet-Draft</code>.
 </div>
 <div class="sect2">
 <h3 id="tools">Useful Tools</h3>
+<div class="paragraph">
+<p>A lot of useful tools are listed on the <a href="http://json-schema.org/implementations.html">JSON Schema web site</a>.</p>
+</div>
+<div class="sect3">
+<h4 id="online-validators">Online Validators</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
 <p><a href="http://jsonschemalint.com/draft4/">Online JSON Schema Validator</a></p>
 </li>
+<li>
+<p><a href="http://www.jsonschemavalidator.net/">Another online JSON Schema Validator</a></p>
+</li>
 </ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_libraries">Libraries</h4>
+<div class="paragraph">
+<p>The only problem with <a href="#online-validators">these online validators</a> is that they can&#8217;t handle schemas that are split into multiple files.<br>
+For that you need to use a JSON Schema validation library written in you favourite language.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="https://github.com/fge/json-schema-validator">Francis Galiegue&#8217;s JSON Schema Validator written in Java</a></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>An instance is validated against a given schema using the following command :</p>
+</div>
+<div class="paragraph">
+<p><code>java -jar json-schema-validator-2.2.6-lib.jar seatmap.schema.json seatmap.json</code></p>
+</div>
+<div class="paragraph">
+<p>The <code>jar</code> is downloaded from <a href="https://bintray.com/fge/maven/json-schema-validator/view">here</a> as mentioned in the <code>"Full" jar; command line</code> section <span class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnote_3" title="View footnote.">3</a>]</span>.</p>
+</div>
 </div>
 </div>
 </div>
@@ -1940,6 +1982,19 @@ adhere to all the schemas at the same time.</p>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-json" data-lang="json">["AA"]</code></pre>
 </div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Most of the time, it is useful to have <code>minItems</code> set to <code>1</code>.<br>
+This avoids the confusion caused by a property which value is an empty array : <code>[]</code> which is usually best represented by a missing property.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -3901,12 +3956,266 @@ consider the instance as valid !</span></em></p></td>
 <div class="sect1">
 <h2 id="examples">Worked Examples</h2>
 <div class="sectionbody">
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>More flexible than a tuple but more retrictive than an array of <code>string</code></p>
-</li>
-</ol>
+<div class="sect2">
+<h3 id="_same_set_of_properties_but_different_rules">Same set of properties but different rules</h3>
+<div class="paragraph">
+<p>A person has a first name, a last name and <strong>eventually an email address</strong>.<br>
+A payer is a person whose <strong>email address is required</strong> for confirmation purpose.</p>
+</div>
+<div class="paragraph">
+<p>Schema :</p>
+</div>
+<div class="listingblock schema">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+    "person": {
+        "type": "object",
+        "properties": {
+            "firstName" : { "type": "string" },
+            "lastName" : { "type": "string" },
+            "email" : {
+                "type": "string",
+                "format": "email"
+            }
+        },
+        "required" : [ "firstName", "lastName" ],
+        "additionalProperties": false
+    },
+    "payer" : {
+        "allOf": [ <i class="conum" data-value="1"></i><b>(1)</b>
+            { "$ref": "#/definitions/person" },
+            { "required" : [ "email"] } <i class="conum" data-value="1"></i><b>(1)</b>
+        ]
+    }
+    },
+    "type": "object",
+    "properties": {
+        "person" : { "$ref": "#/definitions/person" },
+        "payer" : { "$ref": "#/definitions/payer" }
+    },
+    "additionalProperties": false
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>payer</code> must at the same time, as denoted by the <code>allOf</code> keyword, be a <code>person</code> and have an <code>email</code>, as denoted by the <code>required</code> keyword.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Instances :</p>
+</div>
+<div class="listingblock instance valid">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+    "person" : {
+        "firstName" : "Aowss",
+        "lastName" : "Ibrahim"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock instance valid">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+    "person" : {
+        "firstName" : "Aowss",
+        "lastName" : "Ibrahim",
+        "email" : "aowss@yahoo.com" <i class="conum" data-value="1"></i><b>(1)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>A <code>person</code> can have an <code>email</code>.</td>
+</tr>
+</table>
+</div>
+<div class="listingblock instance valid">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+    "payer" : {
+        "firstName" : "Aowss",
+        "lastName" : "Ibrahim",
+        "email" : "aowss@yahoo.com"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock instance invalid">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+    "payer" : {
+        "firstName" : "Aowss",
+        "lastName" : "Ibrahim"
+         <i class="conum" data-value="1"></i><b>(1)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><span class="red">The <code>email</code> property is required for a <code>payer</code>.</span></td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This kind of constructs don&#8217;t exist in XML Schema 1.0.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+It is not possible to make a required property optional.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This only works if the required property is not nested :</p>
+</div>
+<div class="listingblock schema inconsistent">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+    "person": {
+        "type": "object",
+        "properties": {
+            "firstName" : { "type": "string" },
+            "lastName" : { "type": "string" },
+            "contactDetails" : {
+                "type": "object",
+                "properties": {
+                    "phone" : { "type" : "integer" },
+                    "email" : {
+                        "type": "string",
+                        "format": "email" <i class="conum" data-value="1"></i><b>(1)</b>
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        "required" : [ "firstName", "lastName" ],
+        "additionalProperties": false
+    },
+    "payer" : {
+        "allOf": [
+            { "$ref": "#/definitions/person" },
+            { "required" : [ "email"] } <i class="conum" data-value="2"></i><b>(2)</b>
+        ]
+    }
+    },
+    "type": "object",
+    "properties": {
+        "person" : { "$ref": "#/definitions/person" },
+        "payer" : { "$ref": "#/definitions/payer" }
+    },
+    "additionalProperties": false
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>email</code> property is now nested within a <code>contactDetails</code> property.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><span class="red">It is not possible to reference a nested property.</span></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A workaround is to mark the <code>contactDetails</code> property as being required.<br>
+You also need to specify that it must contain at least one property to avoid an empty <code>contactDetails</code> object.</p>
+</div>
+<div class="listingblock schema">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+    "person": {
+        "type": "object",
+        "properties": {
+            "firstName" : { "type": "string" },
+            "lastName" : { "type": "string" },
+            "contactDetails" : {
+                "type": "object",
+                "properties": {
+                    "phone" : { "type" : "integer" },
+                    "email" : {
+                        "type": "string",
+                        "format": "email"
+                    }
+                },
+                "minProperties": 1, <i class="conum" data-value="1"></i><b>(1)</b>
+                "additionalProperties": false
+            }
+        },
+        "required" : [ "firstName", "lastName" ],
+        "additionalProperties": false
+    },
+    "payer" : {
+        "allOf": [
+            { "$ref": "#/definitions/person" },
+            { "required" : [ "contactDetails"] } <i class="conum" data-value="2"></i><b>(2)</b>
+        ]
+    }
+    },
+    "type": "object",
+    "properties": {
+        "person" : { "$ref": "#/definitions/person" },
+        "payer" : { "$ref": "#/definitions/payer" }
+    },
+    "additionalProperties": false
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>contactDetails</code> must contain at least one property.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>contactDetails</code> is required.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_a_flexible_tuple">A flexible tuple</h3>
+<div class="paragraph">
+<p>The array contains items of type <code>string</code>.<br>
+Each item&#8217;s set of valid values have been defined by a different property using the <code>enum</code> keyword.</p>
+</div>
+<div class="paragraph">
+<p>The proposed solution is more flexible than a tuple but more retrictive than an array of <code>string</code>.</p>
 </div>
 <div class="paragraph">
 <p>Schemas :</p>
@@ -4053,19 +4362,44 @@ consider the instance as valid !</span></em></p></td>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["Aisle", "Left", "Forward Facing"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["Aisle", "Left", "Forward Facing"] <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><span class="red">All items are mandatory : a <code>seatSection</code> must be present.</span></td>
+</tr>
+</table>
 </div>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["Aisle", "Cot", "Left", "Forward Facing"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["Aisle", "Cot", "Left", "Forward Facing"] <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><span class="red">Order is relevant : the <code>seatSection</code> must come after the <code>seatType</code>.</span></td>
+</tr>
+</table>
 </div>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["Cot", "Bulkhead", "Aisle", "Left", "Forward Facing"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["Cot", "Bulkhead", "Aisle", "Left", "Forward Facing"] <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><span class="red">Items can only appear once : you can&#8217;t have 2 <code>seatType</code>.</span></td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -4085,7 +4419,7 @@ consider the instance as valid !</span></em></p></td>
 <p>The <a href="#default-values">default value</a> for a property should conform to the schema of that property.</p>
 </li>
 <li>
-<p>Schema inconsistencies should flag the schema as being invalid.</p>
+<p>Schema inconsistencies should flag the schema as being invalid <span class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnote_4" title="View footnote.">4</a>]</span>.</p>
 </li>
 <li>
 <p>It should be possible to indicate <a href="#tuple_optional">which items are mandatory in a tuple</a>.</p>
@@ -4097,7 +4431,10 @@ consider the instance as valid !</span></em></p></td>
 <p>An <code>enumProperties</code> should be introduced as an equivalent to <code>patternProperties</code>.</p>
 </li>
 <li>
-<p>The <code>uniqueItems</code> keyword should be extended to use a JSON Pointer to what needs to be unique as is the case in XML Schema.</p>
+<p>The <code>uniqueItems</code> keyword should be extended to use a JSON Pointer to reference what needs to be unique.</p>
+</li>
+<li>
+<p>The <code>required</code> keyword should be extended to use a JSON Pointer to reference what is required.</p>
 </li>
 </ol>
 </div>
@@ -4141,12 +4478,18 @@ knowledge of XML Schema ).</p>
 <a href="#_footnoteref_1">1</a>. <code>.json</code> can be used since a JSON Schema is a JSON document; <code>.schema.json</code> is often used to make the distinction between the schema and the instance document
 </div>
 <div class="footnote" id="_footnote_2">
-<a href="#_footnoteref_2">2</a>. When the MIME Type will be <a href="http://www.iana.org/assignments/media-types/media-types.xhtml">registered</a>, a file extension will probably be defined
+<a href="#_footnoteref_2">2</a>. when the MIME Type will be <a href="http://www.iana.org/assignments/media-types/media-types.xhtml">registered</a>, a file extension will probably be defined
+</div>
+<div class="footnote" id="_footnote_3">
+<a href="#_footnoteref_3">3</a>. you need to download this jar : <code>json-schema-validator-2.2.6-lib.jar</code>, not this one : <code>json-schema-validator-2.2.6.jar</code>
+</div>
+<div class="footnote" id="_footnote_4">
+<a href="#_footnoteref_4">4</a>. if a property references an inexistant definition, its content can be anything !
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-07-01 11:56:22 BST
+Last updated 2015-07-04 14:38:18 BST
 </div>
 </div>
 </body>
