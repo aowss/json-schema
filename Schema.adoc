@@ -3,7 +3,7 @@ JSON Schema Tutorial
 :Author:                Aowss Ibrahim
 :Email:                 <aowss@yahoo.com>
 :Date:                  July 2015
-:Revision:              version 1.1.4
+:Revision:              version 1.2.0
 :source-highlighter:    highlightjs
 :source-language:       json
 :toc2:
@@ -76,6 +76,7 @@ A lot of useful tools are listed on the http://json-schema.org/implementations.h
 
 . http://jsonschemalint.com/draft4/[Online JSON Schema Validator]
 . http://www.jsonschemavalidator.net/[Another online JSON Schema Validator]
+. http://json-schema-validator.herokuapp.com/[Francis Galiegue's online JSON Schema Validator]
 
 ==== Libraries
 
@@ -86,7 +87,7 @@ For that you need to use a JSON Schema validation library written in you favouri
 
 An instance is validated against a given schema using the following command : 
 
-`java -jar json-schema-validator-2.2.6-lib.jar seatmap.schema.json seatmap.json`  
+`java -jar json-schema-validator-2.2.6-lib.jar schema.json instance.json`  
 
 The `jar` is downloaded from https://bintray.com/fge/maven/json-schema-validator/view[here] as mentioned in the `"Full" jar; command line` section footnote:[you need to download this jar : `json-schema-validator-2.2.6-lib.jar`, not this one : `json-schema-validator-2.2.6.jar`].  
 
@@ -212,7 +213,7 @@ Instances :
 The valid values for the `type` keyword are :
 
 * `string` +
-* `integer` and `number` +
+* `integer` and `number` footnote:[leading zeros are not allowed] +
 * `boolean` [ `true`, `false` ] +
 * `object` and `array` +
 * `null` [ `null` ]
@@ -1300,9 +1301,10 @@ Instances :
 [[default-values]]
 === Default Values
 
+[red]##**This section needs to be validated**##.
+
 The `default` keyword is used to specify default values. +
-Default values are values that are set in case the document does not
-contain the property.
+Default values are values that are set in case the instance does not contain the property.
 
 Schema :
 
@@ -1313,16 +1315,16 @@ Schema :
     "type": "object",
     "properties": {
         "name": { "type": "string" },
-        "gender": { "type": "string", "enum": ["male", "female"], default": "Male" }, <1>
+        "gender": { "type": "string", "enum": ["male", "female"], "default": "Male" }, <1>
         "birthday": { "type": "string", "format": "date" },
-        "nationality": { "type": "string", default": "french" }
+        "nationality": { "type": "string", "default": "french" }
     },
     "additionalProperties": false,
     "required": ["name", "gender", "nationality"]
 }
 ----
 
-<1> The `default` value doesn't have to comply to the schema. +
+<1> The `default` value doesn't have to comply to the schema footnote:[the specification says : It is RECOMMENDED that a default value be valid against the associated schema]. +
 As you can see `Male` is not a valid value for the following :
 `"enum": ["male", "female"]`.
 
@@ -1350,6 +1352,11 @@ Instances :
 ----
 
 <1> [red]##If the property is present, it must conform to the schema, i.e. its value must be `"male"` or `"female"`.##
+
+[CAUTION]
+Even though having a default value that is not valid according to the schema is counter-intuitive, it could make sense in the case of an `enum` : +
+a property could have a set of values that could be set and if that property is missing another value is set by the validator. +
+[red]##The value should still conform to the specified `type`.##
 
 [[order]]
 === Enforce Order
@@ -2710,6 +2717,78 @@ You also need to specify that it must contain at least one property to avoid an 
 ----
 <1> `contactDetails` must contain at least one property.
 <2> `contactDetails` is required.
+
+Instances :
+
+[role="instance valid"]
+[source]
+----
+{
+    "person" : {
+        "firstName" : "Aowss",
+        "lastName" : "Ibrahim"
+         <1>
+    }
+}
+----
+<1> A `person` without contact details.
+
+[role="instance valid"]
+[source]
+----
+{
+    "person" : {
+        "firstName" : "Aowss",
+        "lastName" : "Ibrahim",
+        "contactDetails" : {
+            "email" : "aowss@yahoo.com" <1>
+        }
+    }
+}
+----
+<1> A `person`'s contact details can be an `email`.
+
+[role="instance valid"]
+[source]
+----
+{
+    "person" : {
+        "firstName" : "Aowss",
+        "lastName" : "Ibrahim",
+        "contactDetails" : {
+            "phone" : 97788987654 <1>
+        }
+    }
+}
+----
+<1> A `person`'s contact details can be a `phone`.
+
+[role="instance valid"]
+[source]
+----
+{
+    "payer" : {
+        "firstName" : "Aowss",
+        "lastName" : "Ibrahim",
+        "contactDetails" : {
+            "email" : "aowss@yahoo.com"
+        }
+    }
+}
+----
+
+[role="instance invalid"]
+[source]
+----
+{
+    "payer" : {
+        "firstName" : "Aowss",
+        "lastName" : "Ibrahim"
+         <1>
+    }
+}
+----
+<1> [red]##The `contactDetails` property is required for a `payer`.##
 
 === A flexible tuple
 

@@ -984,6 +984,9 @@ specifications is <code>Internet-Draft</code>.
 <li>
 <p><a href="http://www.jsonschemavalidator.net/">Another online JSON Schema Validator</a></p>
 </li>
+<li>
+<p><a href="http://json-schema-validator.herokuapp.com/">Francis Galiegue&#8217;s online JSON Schema Validator</a></p>
+</li>
 </ol>
 </div>
 </div>
@@ -1004,7 +1007,7 @@ For that you need to use a JSON Schema validation library written in you favouri
 <p>An instance is validated against a given schema using the following command :</p>
 </div>
 <div class="paragraph">
-<p><code>java -jar json-schema-validator-2.2.6-lib.jar seatmap.schema.json seatmap.json</code></p>
+<p><code>java -jar json-schema-validator-2.2.6-lib.jar schema.json instance.json</code></p>
 </div>
 <div class="paragraph">
 <p>The <code>jar</code> is downloaded from <a href="https://bintray.com/fge/maven/json-schema-validator/view">here</a> as mentioned in the <code>"Full" jar; command line</code> section <span class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnote_3" title="View footnote.">3</a>]</span>.</p>
@@ -2384,9 +2387,11 @@ This is different from XML Schema where elments are mandatory by default.
 <div class="sect2">
 <h3 id="default-values">Default Values</h3>
 <div class="paragraph">
+<p><span class="red"><strong>This section needs to be validated</strong></span>.</p>
+</div>
+<div class="paragraph">
 <p>The <code>default</code> keyword is used to specify default values.<br>
-Default values are values that are set in case the document does not
-contain the property.</p>
+Default values are values that are set in case the instance does not contain the property.</p>
 </div>
 <div class="paragraph">
 <p>Schema :</p>
@@ -2397,9 +2402,9 @@ contain the property.</p>
     "type": "object",
     "properties": {
         "name": { "type": "string" },
-        "gender": { "type": "string", "enum": ["male", "female"], default": "Male" }, <i class="conum" data-value="1"></i><b>(1)</b>
+        "gender": { "type": "string", "enum": ["male", "female"], "default": "Male" }, <i class="conum" data-value="1"></i><b>(1)</b>
         "birthday": { "type": "string", "format": "date" },
-        "nationality": { "type": "string", default": "french" }
+        "nationality": { "type": "string", "default": "french" }
     },
     "additionalProperties": false,
     "required": ["name", "gender", "nationality"]
@@ -2410,7 +2415,7 @@ contain the property.</p>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <code>default</code> value doesn&#8217;t have to comply to the schema.<br>
+<td>The <code>default</code> value doesn&#8217;t have to comply to the schema <span class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnote_4" title="View footnote.">4</a>]</span>.<br>
 As you can see <code>Male</code> is not a valid value for the following :
 <code>"enum": ["male", "female"]</code>.</td>
 </tr>
@@ -2449,6 +2454,20 @@ As you can see <code>Male</code> is not a valid value for the following :
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td><span class="red">If the property is present, it must conform to the schema, i.e. its value must be <code>"male"</code> or <code>"female"</code>.</span></td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+Even though having a default value that is not valid according to the schema is counter-intuitive, it could make sense in the case of an <code>enum</code> :<br>
+a property could have a set of values that could be set and if that property is missing another value is set by the validator.<br>
+<span class="red">The value should still conform to the specified <code>type</code>.</span>
+</td>
 </tr>
 </table>
 </div>
@@ -4207,6 +4226,102 @@ You also need to specify that it must contain at least one property to avoid an 
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>Instances :</p>
+</div>
+<div class="listingblock instance valid">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+    "person" : {
+        "firstName" : "Aowss",
+        "lastName" : "Ibrahim"
+         <i class="conum" data-value="1"></i><b>(1)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>A <code>person</code> without contact details.</td>
+</tr>
+</table>
+</div>
+<div class="listingblock instance valid">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+    "person" : {
+        "firstName" : "Aowss",
+        "lastName" : "Ibrahim",
+        "contactDetails" : {
+            "email" : "aowss@yahoo.com" <i class="conum" data-value="1"></i><b>(1)</b>
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>A <code>person</code>'s contact details can be an <code>email</code>.</td>
+</tr>
+</table>
+</div>
+<div class="listingblock instance valid">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+    "person" : {
+        "firstName" : "Aowss",
+        "lastName" : "Ibrahim",
+        "contactDetails" : {
+            "phone" : 97788987654 <i class="conum" data-value="1"></i><b>(1)</b>
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>A <code>person</code>'s contact details can be a <code>phone</code>.</td>
+</tr>
+</table>
+</div>
+<div class="listingblock instance valid">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+    "payer" : {
+        "firstName" : "Aowss",
+        "lastName" : "Ibrahim",
+        "contactDetails" : {
+            "email" : "aowss@yahoo.com"
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock instance invalid">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+    "payer" : {
+        "firstName" : "Aowss",
+        "lastName" : "Ibrahim"
+         <i class="conum" data-value="1"></i><b>(1)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><span class="red">The <code>contactDetails</code> property is required for a <code>payer</code>.</span></td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_a_flexible_tuple">A flexible tuple</h3>
@@ -4419,7 +4534,7 @@ Each item&#8217;s set of valid values have been defined by a different property 
 <p>The <a href="#default-values">default value</a> for a property should conform to the schema of that property.</p>
 </li>
 <li>
-<p>Schema inconsistencies should flag the schema as being invalid <span class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnote_4" title="View footnote.">4</a>]</span>.</p>
+<p>Schema inconsistencies should flag the schema as being invalid <span class="footnote">[<a id="_footnoteref_5" class="footnote" href="#_footnote_5" title="View footnote.">5</a>]</span>.</p>
 </li>
 <li>
 <p>It should be possible to indicate <a href="#tuple_optional">which items are mandatory in a tuple</a>.</p>
@@ -4484,12 +4599,15 @@ knowledge of XML Schema ).</p>
 <a href="#_footnoteref_3">3</a>. you need to download this jar : <code>json-schema-validator-2.2.6-lib.jar</code>, not this one : <code>json-schema-validator-2.2.6.jar</code>
 </div>
 <div class="footnote" id="_footnote_4">
-<a href="#_footnoteref_4">4</a>. if a property references an inexistant definition, its content can be anything !
+<a href="#_footnoteref_4">4</a>. the specification says : It is RECOMMENDED that a default value be valid against the associated schema
+</div>
+<div class="footnote" id="_footnote_5">
+<a href="#_footnoteref_5">5</a>. if a property references an inexistant definition, its content can be anything !
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-07-04 14:38:18 BST
+Last updated 2015-07-05 11:37:22 BST
 </div>
 </div>
 </body>
