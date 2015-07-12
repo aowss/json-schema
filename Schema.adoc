@@ -3,12 +3,17 @@ JSON Schema Tutorial
 :Author:                Aowss Ibrahim
 :Email:                 <aowss@yahoo.com>
 :Date:                  July 2015
-:Revision:              version 1.2.0
+:Revision:              version 1.3.0
 :source-highlighter:    highlightjs
 :source-language:       json
 :toc2:
 :toclevels:             5
 :icons:                 font
+
+[preface]
+== Acknowledgments
+
+Thanks to Jason Desrosiers and Clemens Uhlenhut for their clarifications around the `default` keyword footnote:[https://groups.google.com/forum/#!topic/json-schema/Yq73mPJvQf0[JSON Schema Google Group]].
 
 [[intro]]
 == Introduction
@@ -38,7 +43,7 @@ At the time of this writing ( {Date} ), the status of all these
 specifications is `Internet-Draft`.
 
 [[conventions]]
-=== Conventtions
+=== Conventions
 
 Here are the conventions used in this document :
 
@@ -519,8 +524,8 @@ time of the writting ) :
 * only mentions `string` formats. +
 ====
 
-[[what-about-user-defined-formats]]
-==== What about user-defined formats ?
+[[user-defined-formats]]
+==== User-defined formats
 
 It is not possible to define your own format à la http://relaxng.org/[RELAX NG].
 
@@ -1298,66 +1303,6 @@ Instances :
 
 <1> [red]##The schema declares that `name` and `gender` are mandatory and the instance doesn't specify these properties.##
 
-[[default-values]]
-=== Default Values
-
-[red]##**This section needs to be validated**##.
-
-The `default` keyword is used to specify default values. +
-Default values are values that are set in case the instance does not contain the property.
-
-Schema :
-
-[role="schema"]
-[source]
-----
-{
-    "type": "object",
-    "properties": {
-        "name": { "type": "string" },
-        "gender": { "type": "string", "enum": ["male", "female"], "default": "Male" }, <1>
-        "birthday": { "type": "string", "format": "date" },
-        "nationality": { "type": "string", "default": "french" }
-    },
-    "additionalProperties": false,
-    "required": ["name", "gender", "nationality"]
-}
-----
-
-<1> The `default` value doesn't have to comply to the schema footnote:[the specification says : It is RECOMMENDED that a default value be valid against the associated schema]. +
-As you can see `Male` is not a valid value for the following :
-`"enum": ["male", "female"]`.
-
-Instances :
-
-[role="instance valid"]
-[source]
-----
-{
-    "name": "aowss"
-     <1>
-}
-----
-
-<1> Even though the `gender` property is mandatory, it doesn't have to be specified since it has a `default` value.
-
-[role="instance invalid"]
-[source]
-.invalid
-----
-{
-    "name": "aowss",
-    "gender": "" <1>
-}
-----
-
-<1> [red]##If the property is present, it must conform to the schema, i.e. its value must be `"male"` or `"female"`.##
-
-[CAUTION]
-Even though having a default value that is not valid according to the schema is counter-intuitive, it could make sense in the case of an `enum` : +
-a property could have a set of values that could be set and if that property is missing another value is set by the validator. +
-[red]##The value should still conform to the specified `type`.##
-
 [[order]]
 === Enforce Order
 
@@ -2125,15 +2070,6 @@ effectively meant that the `nationality` property was required if the
 [[advanced-cases]]
 == Advanced Cases
 
-[[one-of-those-is-required]]
-=== One of those is required
-
-It is possible to specify that an object can have a certain set of
-properties or another set of properties. +
-If some of the properties are shared
-
-TBC
-
 [[this-type-of-array-or-this-type-of-object]]
 === This type of array or this type of object
 
@@ -2251,7 +2187,7 @@ specified schemas was done automatically :
 === Referencing an existing schema
 
 The `$ref` keyword is used to reference an existing schema. +
-The value is a https://tools.ietf.org/html/rfc6901[JSON Pointer]
+The value is a http://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03[JSON Reference]
 expression.
 
 Schema :
@@ -2403,17 +2339,11 @@ Schemas :
 }
 ----
 
-[[extending-an-existing-schema]]
-=== Extending an existing schema
-
-A schema can be extended by .
-
-TBC
-
 [[documenting]]
 == Documenting
 
-The `title` and `description` keywords are used to describe parts of a schema.
+The `title` and `description` keywords are used to describe parts of a schema. +
+These keywords are not used in the validation process.
 
 [role="schema"]
 [source]
@@ -2427,17 +2357,18 @@ The `title` and `description` keywords are used to describe parts of a schema.
             "type": "object",
             "properties": {
                 "type" : {
+                    "description": "The passenger's type", <3>
                     "type": "string",
-                    "enum": [ "Adult", "Child", "Infant", "Young Adult"],
-                    "description": "The passenger's type" <2>
+                    "enum": [ "Adult", "Child", "Infant", "Young Adult"]
                 },
                 "frequentFlyer" : {
                     "type": "object",
                     "properties": {
                         "programme" : {
+                            "title": "Frequent Flyer Programme", <4>
+                            "description": "The passenger's frequent flyer programme", <3>
                             "type": "string",
-                            "enum": [ "Executive Club", "AA Passenger", "Finnair Bonus"],
-                            "description": "The passenger's frequent flyer programme" <2>
+                            "enum": [ "Executive Club", "AA Passenger", "Finnair Bonus"]
                         }
                     }
                 }
@@ -2448,7 +2379,58 @@ The `title` and `description` keywords are used to describe parts of a schema.
 ----
 
 <1> A schema's title
-<2> A property's description
+<2> A schema's description
+<3> A property's description
+<4> A property's title
+
+[[default-values]]
+=== Default Values
+
+The `default` keyword is used to *document* eventual default values. +
+This keyword is not used in the validation process.
+
+Schema :
+
+[role="schema"]
+[source]
+----
+{
+    "type": "object",
+    "properties": {
+        "name": { "type": "string" },
+        "gender": { "type": "string", "enum": ["male", "female"], "default": "Male" }, <1>
+        "birthday": { "type": "string", "format": "date" },
+        "nationality": { "type": "string", "default": "french" }
+    },
+    "additionalProperties": false,
+    "required": ["name", "gender", "nationality"]
+}
+----
+
+<1> The `default` value doesn't have to comply to the schema footnote:[the specification says : It is RECOMMENDED that a default value be valid against the associated schema]. +
+As you can see `Male` is not a valid value for the following :
+`"enum": ["male", "female"]`.
+
+Instances :
+
+[role="instance invalid"]
+[source]
+----
+{
+    "name": "aowss"
+     <1>
+}
+----
+
+<1> [red]##Since the `default` keyword is not used in the validation process, the mandatory `gender` & `nationality` properties must be specified.##
+
+[CAUTION]
+In my opinion, this keyword is useless and misleading ! +
+It is useless since it is not used to document anything meaningful, especially if it can have a value that doesn't comply to the schema. +
+It is misleading since it gives the impression that specifying a default value will have an effect on the validation process.
+
+[TIP]
+This is very different from XML Schema's `default` keyword.
 
 [[open-model]]
 == Open Content Model
@@ -2523,6 +2505,14 @@ consider the instance as valid !##
 
 [[examples]]
 == Worked Examples
+
+=== One of those is required
+
+It is possible to specify that an object can have a certain set of
+properties or another set of properties. +
+If some of the properties are shared
+
+TBC
 
 === Same set of properties but different rules
 
@@ -2927,6 +2917,11 @@ Instances :
 ["Cot", "Bulkhead", "Aisle", "Left", "Forward Facing"] <1>
 ----
 <1> [red]##Items can only appear once : you can't have 2 `seatType`.##
+
+[[limitations]]
+== Limitations
+
+=== Extending an existing schema
 
 [[suggestions]]
 == Suggestions

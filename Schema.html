@@ -786,9 +786,10 @@ div.valid code {
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
+<li><a href="#_acknowledgments">Acknowledgments</a></li>
 <li><a href="#intro">Introduction</a>
 <ul class="sectlevel2">
-<li><a href="#conventions">Conventtions</a></li>
+<li><a href="#conventions">Conventions</a></li>
 <li><a href="#tools">Useful Tools</a>
 <ul class="sectlevel3">
 <li><a href="#online-validators">Online Validators</a></li>
@@ -815,7 +816,7 @@ div.valid code {
 <li><a href="#excluding-types">Excluding Types</a></li>
 <li><a href="#specifying-formats">Specifying Formats</a>
 <ul class="sectlevel3">
-<li><a href="#what-about-user-defined-formats">What about user-defined formats ?</a></li>
+<li><a href="#user-defined-formats">User-defined formats</a></li>
 </ul>
 </li>
 <li><a href="#specifying-constraints">Specifying Constraints</a></li>
@@ -843,7 +844,6 @@ div.valid code {
 <ul class="sectlevel2">
 <li><a href="#whats-the-structure">What&#8217;s the structure ?</a></li>
 <li><a href="#mandatory">What is required ?</a></li>
-<li><a href="#default-values">Default Values</a></li>
 <li><a href="#order">Enforce Order</a></li>
 <li><a href="#strict">Strict Definition</a></li>
 <li><a href="#advanced-control-1">Looser Definition</a>
@@ -864,7 +864,6 @@ div.valid code {
 </li>
 <li><a href="#advanced-cases">Advanced Cases</a>
 <ul class="sectlevel2">
-<li><a href="#one-of-those-is-required">One of those is required</a></li>
 <li><a href="#this-type-of-array-or-this-type-of-object">This type of array or this type of object</a></li>
 </ul>
 </li>
@@ -875,17 +874,26 @@ div.valid code {
 <li><a href="#current-and-external-schemas">Current and external schemas</a></li>
 </ul>
 </li>
-<li><a href="#extending-an-existing-schema">Extending an existing schema</a></li>
 </ul>
 </li>
-<li><a href="#documenting">Documenting</a></li>
+<li><a href="#documenting">Documenting</a>
+<ul class="sectlevel2">
+<li><a href="#default-values">Default Values</a></li>
+</ul>
+</li>
 <li><a href="#open-model">Open Content Model</a></li>
 <li><a href="#duplicate-keys">Duplicate Keys</a></li>
 <li><a href="#summary">Summary</a></li>
 <li><a href="#examples">Worked Examples</a>
 <ul class="sectlevel2">
+<li><a href="#_one_of_those_is_required">One of those is required</a></li>
 <li><a href="#_same_set_of_properties_but_different_rules">Same set of properties but different rules</a></li>
 <li><a href="#_a_flexible_tuple">A flexible tuple</a></li>
+</ul>
+</li>
+<li><a href="#limitations">Limitations</a>
+<ul class="sectlevel2">
+<li><a href="#_extending_an_existing_schema">Extending an existing schema</a></li>
 </ul>
 </li>
 <li><a href="#suggestions">Suggestions</a></li>
@@ -895,13 +903,21 @@ div.valid code {
 </div>
 <div id="content">
 <div class="sect1">
+<h2 id="_acknowledgments">Acknowledgments</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Thanks to Jason Desrosiers and Clemens Uhlenhut for their clarifications around the <code>default</code> keyword <span class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</span>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="intro">Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>MIME Type : <code>application/schema+json</code></p>
 </div>
 <div class="paragraph">
-<p>No specific file extension is defined yet <span class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</span> <span class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnote_2" title="View footnote.">2</a>]</span>.</p>
+<p>No specific file extension is defined yet <span class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnote_2" title="View footnote.">2</a>]</span> <span class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnote_3" title="View footnote.">3</a>]</span>.</p>
 </div>
 <div class="paragraph">
 <p>As explained, in the <a href="http://json-schema.org/">JSON Schema web site</a> or
@@ -944,7 +960,7 @@ specifications is <code>Internet-Draft</code>.
 </table>
 </div>
 <div class="sect2">
-<h3 id="conventions">Conventtions</h3>
+<h3 id="conventions">Conventions</h3>
 <div class="paragraph">
 <p>Here are the conventions used in this document :</p>
 </div>
@@ -1010,7 +1026,7 @@ For that you need to use a JSON Schema validation library written in you favouri
 <p><code>java -jar json-schema-validator-2.2.6-lib.jar schema.json instance.json</code></p>
 </div>
 <div class="paragraph">
-<p>The <code>jar</code> is downloaded from <a href="https://bintray.com/fge/maven/json-schema-validator/view">here</a> as mentioned in the <code>"Full" jar; command line</code> section <span class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnote_3" title="View footnote.">3</a>]</span>.</p>
+<p>The <code>jar</code> is downloaded from <a href="https://bintray.com/fge/maven/json-schema-validator/view">here</a> as mentioned in the <code>"Full" jar; command line</code> section <span class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnote_4" title="View footnote.">4</a>]</span>.</p>
 </div>
 </div>
 </div>
@@ -1162,7 +1178,7 @@ specification</a>.</p>
 <p><code>string</code><br></p>
 </li>
 <li>
-<p><code>integer</code> and <code>number</code><br></p>
+<p><code>integer</code> and <code>number</code> <span class="footnote">[<a id="_footnoteref_5" class="footnote" href="#_footnote_5" title="View footnote.">5</a>]</span><br></p>
 </li>
 <li>
 <p><code>boolean</code> [ <code>true</code>, <code>false</code> ]<br></p>
@@ -1522,7 +1538,7 @@ time of the writting ) :</p>
 </table>
 </div>
 <div class="sect3">
-<h4 id="what-about-user-defined-formats">What about user-defined formats ?</h4>
+<h4 id="user-defined-formats">User-defined formats</h4>
 <div class="paragraph">
 <p>It is not possible to define your own format à la <a href="http://relaxng.org/">RELAX NG</a>.</p>
 </div>
@@ -2380,94 +2396,6 @@ This is different from XML Schema where elments are mandatory by default.
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td><span class="red">The schema declares that <code>name</code> and <code>gender</code> are mandatory and the instance doesn&#8217;t specify these properties.</span></td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="default-values">Default Values</h3>
-<div class="paragraph">
-<p><span class="red"><strong>This section needs to be validated</strong></span>.</p>
-</div>
-<div class="paragraph">
-<p>The <code>default</code> keyword is used to specify default values.<br>
-Default values are values that are set in case the instance does not contain the property.</p>
-</div>
-<div class="paragraph">
-<p>Schema :</p>
-</div>
-<div class="listingblock schema">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
-    "type": "object",
-    "properties": {
-        "name": { "type": "string" },
-        "gender": { "type": "string", "enum": ["male", "female"], "default": "Male" }, <i class="conum" data-value="1"></i><b>(1)</b>
-        "birthday": { "type": "string", "format": "date" },
-        "nationality": { "type": "string", "default": "french" }
-    },
-    "additionalProperties": false,
-    "required": ["name", "gender", "nationality"]
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <code>default</code> value doesn&#8217;t have to comply to the schema <span class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnote_4" title="View footnote.">4</a>]</span>.<br>
-As you can see <code>Male</code> is not a valid value for the following :
-<code>"enum": ["male", "female"]</code>.</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Instances :</p>
-</div>
-<div class="listingblock instance valid">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
-    "name": "aowss"
-     <i class="conum" data-value="1"></i><b>(1)</b>
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Even though the <code>gender</code> property is mandatory, it doesn&#8217;t have to be specified since it has a <code>default</code> value.</td>
-</tr>
-</table>
-</div>
-<div class="listingblock instance invalid">
-<div class="title">invalid</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
-    "name": "aowss",
-    "gender": "" <i class="conum" data-value="1"></i><b>(1)</b>
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><span class="red">If the property is present, it must conform to the schema, i.e. its value must be <code>"male"</code> or <code>"female"</code>.</span></td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock caution">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-caution" title="Caution"></i>
-</td>
-<td class="content">
-Even though having a default value that is not valid according to the schema is counter-intuitive, it could make sense in the case of an <code>enum</code> :<br>
-a property could have a set of values that could be set and if that property is missing another value is set by the validator.<br>
-<span class="red">The value should still conform to the specified <code>type</code>.</span>
-</td>
 </tr>
 </table>
 </div>
@@ -3456,17 +3384,6 @@ effectively meant that the <code>nationality</code> property was required if the
 <h2 id="advanced-cases">Advanced Cases</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="one-of-those-is-required">One of those is required</h3>
-<div class="paragraph">
-<p>It is possible to specify that an object can have a certain set of
-properties or another set of properties.<br>
-If some of the properties are shared</p>
-</div>
-<div class="paragraph">
-<p>TBC</p>
-</div>
-</div>
-<div class="sect2">
 <h3 id="this-type-of-array-or-this-type-of-object">This type of array or this type of object</h3>
 <div class="paragraph">
 <p>As we have seen <a href="#choice">above</a>, it is possible to specify that a
@@ -3593,7 +3510,7 @@ specified schemas was done automatically :</p>
 <h3 id="reference">Referencing an existing schema</h3>
 <div class="paragraph">
 <p>The <code>$ref</code> keyword is used to reference an existing schema.<br>
-The value is a <a href="https://tools.ietf.org/html/rfc6901">JSON Pointer</a>
+The value is a <a href="http://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03">JSON Reference</a>
 expression.</p>
 </div>
 <div class="paragraph">
@@ -3755,22 +3672,14 @@ replaced by what it points to.</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="extending-an-existing-schema">Extending an existing schema</h3>
-<div class="paragraph">
-<p>A schema can be extended by .</p>
-</div>
-<div class="paragraph">
-<p>TBC</p>
-</div>
-</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="documenting">Documenting</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>title</code> and <code>description</code> keywords are used to describe parts of a schema.</p>
+<p>The <code>title</code> and <code>description</code> keywords are used to describe parts of a schema.<br>
+These keywords are not used in the validation process.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
@@ -3783,17 +3692,18 @@ replaced by what it points to.</p>
             "type": "object",
             "properties": {
                 "type" : {
+                    "description": "The passenger's type", <i class="conum" data-value="3"></i><b>(3)</b>
                     "type": "string",
-                    "enum": [ "Adult", "Child", "Infant", "Young Adult"],
-                    "description": "The passenger's type" <i class="conum" data-value="2"></i><b>(2)</b>
+                    "enum": [ "Adult", "Child", "Infant", "Young Adult"]
                 },
                 "frequentFlyer" : {
                     "type": "object",
                     "properties": {
                         "programme" : {
+                            "title": "Frequent Flyer Programme", <i class="conum" data-value="4"></i><b>(4)</b>
+                            "description": "The passenger's frequent flyer programme", <i class="conum" data-value="3"></i><b>(3)</b>
                             "type": "string",
-                            "enum": [ "Executive Club", "AA Passenger", "Finnair Bonus"],
-                            "description": "The passenger's frequent flyer programme" <i class="conum" data-value="2"></i><b>(2)</b>
+                            "enum": [ "Executive Club", "AA Passenger", "Finnair Bonus"]
                         }
                     }
                 }
@@ -3811,9 +3721,97 @@ replaced by what it points to.</p>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>A schema&#8217;s description</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
 <td>A property&#8217;s description</td>
 </tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>A property&#8217;s title</td>
+</tr>
 </table>
+</div>
+<div class="sect2">
+<h3 id="default-values">Default Values</h3>
+<div class="paragraph">
+<p>The <code>default</code> keyword is used to <strong>document</strong> eventual default values.<br>
+This keyword is not used in the validation process.</p>
+</div>
+<div class="paragraph">
+<p>Schema :</p>
+</div>
+<div class="listingblock schema">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+    "type": "object",
+    "properties": {
+        "name": { "type": "string" },
+        "gender": { "type": "string", "enum": ["male", "female"], "default": "Male" }, <i class="conum" data-value="1"></i><b>(1)</b>
+        "birthday": { "type": "string", "format": "date" },
+        "nationality": { "type": "string", "default": "french" }
+    },
+    "additionalProperties": false,
+    "required": ["name", "gender", "nationality"]
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>default</code> value doesn&#8217;t have to comply to the schema <span class="footnote">[<a id="_footnoteref_6" class="footnote" href="#_footnote_6" title="View footnote.">6</a>]</span>.<br>
+As you can see <code>Male</code> is not a valid value for the following :
+<code>"enum": ["male", "female"]</code>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Instances :</p>
+</div>
+<div class="listingblock instance invalid">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+    "name": "aowss"
+     <i class="conum" data-value="1"></i><b>(1)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><span class="red">Since the <code>default</code> keyword is not used in the validation process, the mandatory <code>gender</code> &amp; <code>nationality</code> properties must be specified.</span></td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+In my opinion, this keyword is useless and misleading !<br>
+It is useless since it is not used to document anything meaningful, especially if it can have a value that doesn&#8217;t comply to the schema.<br>
+It is misleading since it gives the impression that specifying a default value will have an effect on the validation process.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+This is very different from XML Schema&#8217;s <code>default</code> keyword.
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 </div>
@@ -3975,6 +3973,17 @@ consider the instance as valid !</span></em></p></td>
 <div class="sect1">
 <h2 id="examples">Worked Examples</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_one_of_those_is_required">One of those is required</h3>
+<div class="paragraph">
+<p>It is possible to specify that an object can have a certain set of
+properties or another set of properties.<br>
+If some of the properties are shared</p>
+</div>
+<div class="paragraph">
+<p>TBC</p>
+</div>
+</div>
 <div class="sect2">
 <h3 id="_same_set_of_properties_but_different_rules">Same set of properties but different rules</h3>
 <div class="paragraph">
@@ -4520,6 +4529,15 @@ Each item&#8217;s set of valid values have been defined by a different property 
 </div>
 </div>
 <div class="sect1">
+<h2 id="limitations">Limitations</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_extending_an_existing_schema">Extending an existing schema</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="suggestions">Suggestions</h2>
 <div class="sectionbody">
 <div class="olist arabic">
@@ -4534,7 +4552,7 @@ Each item&#8217;s set of valid values have been defined by a different property 
 <p>The <a href="#default-values">default value</a> for a property should conform to the schema of that property.</p>
 </li>
 <li>
-<p>Schema inconsistencies should flag the schema as being invalid <span class="footnote">[<a id="_footnoteref_5" class="footnote" href="#_footnote_5" title="View footnote.">5</a>]</span>.</p>
+<p>Schema inconsistencies should flag the schema as being invalid <span class="footnote">[<a id="_footnoteref_7" class="footnote" href="#_footnote_7" title="View footnote.">7</a>]</span>.</p>
 </li>
 <li>
 <p>It should be possible to indicate <a href="#tuple_optional">which items are mandatory in a tuple</a>.</p>
@@ -4590,24 +4608,30 @@ knowledge of XML Schema ).</p>
 <div id="footnotes">
 <hr>
 <div class="footnote" id="_footnote_1">
-<a href="#_footnoteref_1">1</a>. <code>.json</code> can be used since a JSON Schema is a JSON document; <code>.schema.json</code> is often used to make the distinction between the schema and the instance document
+<a href="#_footnoteref_1">1</a>. <a href="https://groups.google.com/forum/#!topic/json-schema/Yq73mPJvQf0">JSON Schema Google Group</a>
 </div>
 <div class="footnote" id="_footnote_2">
-<a href="#_footnoteref_2">2</a>. when the MIME Type will be <a href="http://www.iana.org/assignments/media-types/media-types.xhtml">registered</a>, a file extension will probably be defined
+<a href="#_footnoteref_2">2</a>. <code>.json</code> can be used since a JSON Schema is a JSON document; <code>.schema.json</code> is often used to make the distinction between the schema and the instance document
 </div>
 <div class="footnote" id="_footnote_3">
-<a href="#_footnoteref_3">3</a>. you need to download this jar : <code>json-schema-validator-2.2.6-lib.jar</code>, not this one : <code>json-schema-validator-2.2.6.jar</code>
+<a href="#_footnoteref_3">3</a>. when the MIME Type will be <a href="http://www.iana.org/assignments/media-types/media-types.xhtml">registered</a>, a file extension will probably be defined
 </div>
 <div class="footnote" id="_footnote_4">
-<a href="#_footnoteref_4">4</a>. the specification says : It is RECOMMENDED that a default value be valid against the associated schema
+<a href="#_footnoteref_4">4</a>. you need to download this jar : <code>json-schema-validator-2.2.6-lib.jar</code>, not this one : <code>json-schema-validator-2.2.6.jar</code>
 </div>
 <div class="footnote" id="_footnote_5">
-<a href="#_footnoteref_5">5</a>. if a property references an inexistant definition, its content can be anything !
+<a href="#_footnoteref_5">5</a>. leading zeros are not allowed
+</div>
+<div class="footnote" id="_footnote_6">
+<a href="#_footnoteref_6">6</a>. the specification says : It is RECOMMENDED that a default value be valid against the associated schema
+</div>
+<div class="footnote" id="_footnote_7">
+<a href="#_footnoteref_7">7</a>. if a property references an inexistant definition, its content can be anything !
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-07-05 11:37:22 BST
+Last updated 2015-07-12 15:18:33 BST
 </div>
 </div>
 </body>
