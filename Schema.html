@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.2">
+<meta name="generator" content="Asciidoctor 1.5.6.1">
 <meta name="author" content="Aowss Ibrahim">
 <title>JSON Schema Tutorial</title>
 <style>
@@ -771,10 +771,7 @@ div.valid code {
     border-color: blue;
 }
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad()</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
@@ -787,13 +784,14 @@ div.valid code {
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_acknowledgments">Acknowledgments</a></li>
+<li><a href="#_to_do">To Do</a></li>
 <li><a href="#intro">Introduction</a>
 <ul class="sectlevel2">
 <li><a href="#conventions">Conventions</a></li>
 <li><a href="#tools">Useful Tools</a>
 <ul class="sectlevel3">
 <li><a href="#online-validators">Online Validators</a></li>
-<li><a href="#_libraries">Libraries</a></li>
+<li><a href="#libraries">Libraries</a></li>
 </ul>
 </li>
 </ul>
@@ -906,7 +904,19 @@ div.valid code {
 <h2 id="_acknowledgments">Acknowledgments</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Thanks to Jason Desrosiers and Clemens Uhlenhut for their clarifications around the <code>default</code> keyword <span class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</span>.</p>
+<p>Thanks to Jason Desrosiers and Clemens Uhlenhut for their clarifications around the <code>default</code> keyword <sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_to_do">To Do</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Explain how to use <a href="https://github.com/everit-org/json-schema">this validator</a> in <a href="#libraries">this section</a></p>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -917,25 +927,25 @@ div.valid code {
 <p>MIME Type : <code>application/schema+json</code></p>
 </div>
 <div class="paragraph">
-<p>No specific file extension is defined yet <span class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnote_2" title="View footnote.">2</a>]</span> <span class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnote_3" title="View footnote.">3</a>]</span>.</p>
+<p>No specific file extension is defined yet <sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnote_2" title="View footnote.">2</a>]</sup> <sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnote_3" title="View footnote.">3</a>]</sup>.</p>
 </div>
 <div class="paragraph">
 <p>As explained, in the <a href="http://json-schema.org/">JSON Schema web site</a> or
-<a href="https://github.com/json-schema/json-schema">JSON Schema github
+<a href="https://github.com/json-schema-org/json-schema-spec">JSON Schema github
 repository</a>, there are 3 specifications around JSON Schema :</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="http://tools.ietf.org/html/draft-zyp-json-schema-04">JSON Schema Core</a>
+<p><a href="https://tools.ietf.org/html/draft-wright-json-schema-01">JSON Schema Core</a>
 defines the basic foundation of JSON Schema</p>
 </li>
 <li>
-<p><a href="http://tools.ietf.org/html/draft-fge-json-schema-validation-00">JSON
+<p><a href="https://tools.ietf.org/html/draft-wright-json-schema-01">JSON
 Schema Validation</a> defines the validation keywords of JSON Schema</p>
 </li>
 <li>
-<p><a href="http://tools.ietf.org/html/draft-luff-json-hyper-schema-00">JSON
+<p><a href="https://tools.ietf.org/html/draft-wright-json-schema-hyperschema-01">JSON
 Hyper-Schema</a> defines the hyper-media keywords of JSON Schema</p>
 </li>
 </ul>
@@ -953,8 +963,9 @@ Hyper-Schema</a> defines the hyper-media keywords of JSON Schema</p>
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-At the time of this writing ( July 2015 ), the status of all these
-specifications is <code>Internet-Draft</code>.
+At the time of this writing ( October 2017 ), the status of all these
+specifications is <code>Internet-Draft</code>.<br>
+As explained <a href="http://json-schema.org/draft-06/json-schema-migration-faq.html">here</a>, the current draft is <code>Draft 6</code>.
 </td>
 </tr>
 </table>
@@ -966,22 +977,22 @@ specifications is <code>Internet-Draft</code>.
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">this is a JSON Schema document</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">this is a JSON Schema document</code></pre>
 </div>
 </div>
 <div class="listingblock schema inconsistent">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">this is an inconsistent JSON Schema document</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">this is an inconsistent JSON Schema document</code></pre>
 </div>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">this is a valid JSON document</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">this is a valid JSON document</code></pre>
 </div>
 </div>
 <div class="listingblock instance invalid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">this is an invalid JSON document</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">this is an invalid JSON document</code></pre>
 </div>
 </div>
 </div>
@@ -995,30 +1006,39 @@ specifications is <code>Internet-Draft</code>.
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="http://jsonschemalint.com/draft4/">Online JSON Schema Validator</a></p>
-</li>
-<li>
-<p><a href="http://www.jsonschemavalidator.net/">Another online JSON Schema Validator</a></p>
-</li>
-<li>
-<p><a href="http://json-schema-validator.herokuapp.com/">Francis Galiegue&#8217;s online JSON Schema Validator</a></p>
+<p><a href="http://jsonschemalint.com">Online JSON Schema Validator</a></p>
 </li>
 </ol>
 </div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<a href="http://www.jsonschemavalidator.net/">This validator</a> and <a href="http://json-schema-validator.herokuapp.com/">Francis Galiegue&#8217;s one</a> only validate up to <code>Draft 4</code> schemas
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect3">
-<h4 id="_libraries">Libraries</h4>
+<h4 id="libraries">Libraries</h4>
 <div class="paragraph">
 <p>The only problem with <a href="#online-validators">these online validators</a> is that they can&#8217;t handle schemas that are split into multiple files.<br>
 For that you need to use a JSON Schema validation library written in you favourite language.</p>
 </div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>Java</code> </dt>
+<dd>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="https://github.com/fge/json-schema-validator">Francis Galiegue&#8217;s JSON Schema Validator written in Java</a></p>
-</li>
-</ol>
-</div>
+<p><a href="https://github.com/fge/json-schema-validator">Francis Galiegue&#8217;s JSON Schema Validator</a></p>
+<div class="exampleblock">
+<div class="content">
 <div class="paragraph">
 <p>An instance is validated against a given schema using the following command :</p>
 </div>
@@ -1026,7 +1046,69 @@ For that you need to use a JSON Schema validation library written in you favouri
 <p><code>java -jar json-schema-validator-2.2.6-lib.jar schema.json instance.json</code></p>
 </div>
 <div class="paragraph">
-<p>The <code>jar</code> is downloaded from <a href="https://bintray.com/fge/maven/json-schema-validator/view">here</a> as mentioned in the <code>"Full" jar; command line</code> section <span class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnote_4" title="View footnote.">4</a>]</span>.</p>
+<p>The <code>jar</code> is downloaded from <a href="https://bintray.com/fge/maven/json-schema-validator/view">here</a> as mentioned in the <code>"Full" jar; command line</code> section <sup class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnote_4" title="View footnote.">4</a>]</sup>.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Unfortunatelly this only validates up to <code>Draft 4</code> schemas
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</li>
+<li>
+<p><a href="https://github.com/everit-org/json-schema" class="bare">https://github.com/everit-org/json-schema</a></p>
+</li>
+</ol>
+</div>
+</dd>
+<dt class="hdlist1"><code>JavaScript</code> </dt>
+<dd>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="https://github.com/jessedc/ajv-cli" class="bare">https://github.com/jessedc/ajv-cli</a></p>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>Install using <code>npm install -g ajv-cli</code> as mentioned <a href="https://www.npmjs.com/package/ajv-cli">here</a>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If you have a standalone schema, validate using <code>ajv -s schemas/standalone.schema.json -d "examples/instance.json"</code>.</p>
+</li>
+<li>
+<p>If you have <a href="#reference">a set of shcemas</a>, validate using <code>ajv -s schemas/primary.schema.json -r schemas/linked.schema.json -d "examples/instance.json"</code>.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Don&#8217;t forget to replace the paths mentioned in the above commands with your own paths !
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</dd>
+</dl>
 </div>
 </div>
 </div>
@@ -1037,7 +1119,7 @@ For that you need to use a JSON Schema validation library written in you favouri
 <div class="sectionbody">
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{}</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1045,37 +1127,37 @@ For that you need to use a JSON Schema validation library written in you favouri
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">false</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">false</code></pre>
 </div>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">42</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">42</code></pre>
 </div>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">false</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">false</code></pre>
 </div>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">"string"</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"string"</code></pre>
 </div>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">null</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">null</code></pre>
 </div>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{ "key" : "value" }</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{ "key" : "value" }</code></pre>
 </div>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">[ "value1", 12, { "key" : "value" } ]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">[ "value1", 12, { "key" : "value" } ]</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -1099,7 +1181,7 @@ cases are valid even though
 <h3 id="is-this-even-a-schema">Is this even a schema ?</h3>
 <div class="paragraph">
 <p>A JSON Schema is just a JSON document that conforms to the
-<a href="http://json-schema.org/draft-04/schema">JSON Schema&#8217;s Schema</a>.</p>
+<a href="http://json-schema.org/schema">JSON Schema&#8217;s Schema</a>.</p>
 </div>
 <div class="paragraph">
 <p>A <code>$schema</code> keyword <strong>can</strong> be used to explicitly specify that a JSON
@@ -1107,8 +1189,16 @@ document is a schema.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{ "$schema": "http://json-schema.org/schema#" }</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{ "$schema": "http://json-schema.org/schema#" } <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The value specifies the version of the specification &amp; the location of the schema</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Note that you can specify the version of the specification or even the
@@ -1123,7 +1213,7 @@ specification the schema adheres to :</p>
 </div>
 <div class="paragraph">
 <p>JSON Schema hyperschema written against the
-<a href="http://tools.ietf.org/html/draft-luff-json-hyper-schema-00">current
+<a href="http://json-schema.org/latest/json-schema-hypermedia">current
 version of the specification</a>.</p>
 </div>
 <div class="ulist">
@@ -1152,7 +1242,7 @@ specification</a>.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{ "type" : "string" }</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{ "type" : "string" }</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1160,13 +1250,13 @@ specification</a>.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">"string"</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"string"</code></pre>
 </div>
 </div>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">42</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">42</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1178,7 +1268,7 @@ specification</a>.</p>
 <p><code>string</code><br></p>
 </li>
 <li>
-<p><code>integer</code> and <code>number</code> <span class="footnote">[<a id="_footnoteref_5" class="footnote" href="#_footnote_5" title="View footnote.">5</a>]</span><br></p>
+<p><code>integer</code> and <code>number</code> <sup class="footnote">[<a id="_footnoteref_5" class="footnote" href="#_footnote_5" title="View footnote.">5</a>]</sup><br></p>
 </li>
 <li>
 <p><code>boolean</code> [ <code>true</code>, <code>false</code> ]<br></p>
@@ -1202,7 +1292,7 @@ types.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{ "type": ["number", "string"] }</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{ "type": ["number", "string"] }</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1210,13 +1300,13 @@ types.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">42</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">42</code></pre>
 </div>
 </div>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">false</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">false</code></pre>
 </div>
 </div>
 </div>
@@ -1232,7 +1322,7 @@ restrict the set of valid values to a subset of the valid values for the
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "string",
     "enum": ["red", "amber", "green"]
 }</code></pre>
@@ -1243,13 +1333,13 @@ restrict the set of valid values to a subset of the valid values for the
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">"red"</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"red"</code></pre>
 </div>
 </div>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">"black"</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"black"</code></pre>
 </div>
 </div>
 <div class="sect3">
@@ -1264,7 +1354,7 @@ the values specified should be valid values for the <code>type</code>.</p>
 <div class="listingblock schema inconsistent">
 <div class="title">inconsistent</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "number",
     "enum": ["zero", 1, 2]
 }</code></pre>
@@ -1276,7 +1366,7 @@ the values specified should be valid values for the <code>type</code>.</p>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">"zero"</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"zero"</code></pre>
 </div>
 </div>
 </div>
@@ -1291,7 +1381,7 @@ values can be of any type.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "enum": ["zero", 1, 2.0, null]
 }</code></pre>
 </div>
@@ -1301,27 +1391,27 @@ values can be of any type.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">"zero"</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"zero"</code></pre>
 </div>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">null</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">null</code></pre>
 </div>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">1</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">1</code></pre>
 </div>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">1.0</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">1.0</code></pre>
 </div>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">2</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">2</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -1348,7 +1438,7 @@ not make any difference between a <code>number</code> and an <code>integer</code
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "array",
     "enum": [ ["A", "B"], [1,2] ]
 }</code></pre>
@@ -1359,13 +1449,13 @@ not make any difference between a <code>number</code> and an <code>integer</code
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["A", "B"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["A", "B"]</code></pre>
 </div>
 </div>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["A"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["A"]</code></pre>
 </div>
 </div>
 </div>
@@ -1382,7 +1472,7 @@ doesn&#8217;t conform to a certain schema.<br>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "not" : {
         "type": "string",
         "enum": ["red", "amber", "green"]
@@ -1395,7 +1485,7 @@ doesn&#8217;t conform to a certain schema.<br>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "string",
     "not" : {
         "enum": ["red", "amber", "green"]
@@ -1408,13 +1498,13 @@ doesn&#8217;t conform to a certain schema.<br>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">"black"</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"black"</code></pre>
 </div>
 </div>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">"red"</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"red"</code></pre>
 </div>
 </div>
 </div>
@@ -1436,7 +1526,7 @@ The following are the built-in formats :</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "string",
     "format": "date-time"
 }</code></pre>
@@ -1447,13 +1537,13 @@ The following are the built-in formats :</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">"2015-11-11T23:45:00Z"</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"2015-11-11T23:45:00Z"</code></pre>
 </div>
 </div>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">"2015-11-11T23:45:00"</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"2015-11-11T23:45:00"</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -1468,7 +1558,7 @@ The following are the built-in formats :</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "string",
     "format": "date"
 }</code></pre>
@@ -1479,13 +1569,13 @@ The following are the built-in formats :</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">"2015-11-11"</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"2015-11-11"</code></pre>
 </div>
 </div>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">"2015-11-11T23:45:00Z"</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"2015-11-11T23:45:00Z"</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -1565,7 +1655,7 @@ values within the specified <code>type</code>.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "string",
     "minLength": 2,
     "maxLength": 3
@@ -1577,13 +1667,13 @@ values within the specified <code>type</code>.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">"AB"</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"AB"</code></pre>
 </div>
 </div>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">"A"</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"A"</code></pre>
 </div>
 </div>
 <div id="pattern" class="ulist">
@@ -1600,7 +1690,7 @@ regex format</a> ]</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "string",
     "pattern": "^(\\([0-9]{3}\\))?[0-9]{3}-[0-9]{4}$"
 }</code></pre>
@@ -1611,13 +1701,13 @@ regex format</a> ]</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">"(888)555-1212"</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"(888)555-1212"</code></pre>
 </div>
 </div>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">"(888)5551212"</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"(888)5551212"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1638,7 +1728,7 @@ regex format</a> ]</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "number",
     "multipleOf" : 1.5,
     "minimum": 1.5,
@@ -1652,18 +1742,18 @@ regex format</a> ]</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">1.5</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">1.5</code></pre>
 </div>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">3</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">3</code></pre>
 </div>
 </div>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">6.0</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">6.0</code></pre>
 </div>
 </div>
 </div>
@@ -1686,7 +1776,7 @@ regex format</a> ]</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "anyOf": [
         { "type": "string", "maxLength": 5 },
         { "type": "integer", "maximum": 99999 }
@@ -1699,29 +1789,29 @@ regex format</a> ]</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">"413"</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"413"</code></pre>
 </div>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">"test"</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"test"</code></pre>
 </div>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">413</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">413</code></pre>
 </div>
 </div>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">100000</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">100000</code></pre>
 </div>
 </div>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">"100000"</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"100000"</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -1736,7 +1826,7 @@ regex format</a> ]</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "allOf": [
         { "type": "string", "maxLength": 5 },
         { "type": "string", "minLength": 2 }
@@ -1749,13 +1839,13 @@ regex format</a> ]</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">"413"</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"413"</code></pre>
 </div>
 </div>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">"1"</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"1"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1764,7 +1854,7 @@ regex format</a> ]</p>
 <div class="listingblock schema inconsistent">
 <div class="title">inconsistent</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "allOf": [
         { "type": "string", "maxLength": 5 },
         { "type": "integer", "maximum": 99999 }
@@ -1788,7 +1878,7 @@ adhere to all the schemas at the same time.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "oneOf": [
         { "type": "number", "multipleOf": 5 },
         { "type": "number", "multipleOf": 3 }
@@ -1801,13 +1891,13 @@ adhere to all the schemas at the same time.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">10</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">10</code></pre>
 </div>
 </div>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">15</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">15</code></pre>
 </div>
 </div>
 </div>
@@ -1830,7 +1920,7 @@ adhere to all the schemas at the same time.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "array",
     "items": {
         "type": "number"
@@ -1843,18 +1933,18 @@ adhere to all the schemas at the same time.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">[1, 2, 3, 4, 5]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">[1, 2, 3, 4, 5]</code></pre>
 </div>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">[]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">[]</code></pre>
 </div>
 </div>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["1", "2", "3", "4", "5"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["1", "2", "3", "4", "5"]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1862,7 +1952,7 @@ adhere to all the schemas at the same time.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "array",
     "items": {
         "type": "string",
@@ -1876,7 +1966,7 @@ adhere to all the schemas at the same time.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["2015-11-11", "2015-11-12", "2015-11-13", "2015-11-14", "2015-11-15"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["2015-11-11", "2015-11-12", "2015-11-13", "2015-11-14", "2015-11-15"]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1884,7 +1974,7 @@ adhere to all the schemas at the same time.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "array",
     "items": {
         "type": ["number", "string"]
@@ -1897,17 +1987,17 @@ adhere to all the schemas at the same time.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">[1, 2, 3, 4, 5]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">[1, 2, 3, 4, 5]</code></pre>
 </div>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["1", "2", "3", "4", "5"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["1", "2", "3", "4", "5"]</code></pre>
 </div>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["1", 2, "3", 4, "5"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["1", 2, "3", 4, "5"]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1915,7 +2005,7 @@ adhere to all the schemas at the same time.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "array",
     "items": {
         "type": "string",
@@ -1929,13 +2019,13 @@ adhere to all the schemas at the same time.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["red", "green"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["red", "green"]</code></pre>
 </div>
 </div>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["red", "blue"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["red", "blue"]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1943,7 +2033,7 @@ adhere to all the schemas at the same time.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "array",
     "items": {
         "type": "string",
@@ -1958,13 +2048,13 @@ adhere to all the schemas at the same time.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["AA", "AB"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["AA", "AB"]</code></pre>
 </div>
 </div>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["A", "AA"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["A", "AA"]</code></pre>
 </div>
 </div>
 </div>
@@ -1978,7 +2068,7 @@ adhere to all the schemas at the same time.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "array",
     "minItems": 2,
     "maxItems": 3,
@@ -1993,13 +2083,13 @@ adhere to all the schemas at the same time.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["AA", "AB"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["AA", "AB"]</code></pre>
 </div>
 </div>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["AA"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["AA"]</code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -2027,7 +2117,7 @@ the <code>uniqueItems</code> keyword.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "array",
     "uniqueItems": true
 }</code></pre>
@@ -2038,13 +2128,13 @@ the <code>uniqueItems</code> keyword.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["AA", "AB"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["AA", "AB"]</code></pre>
 </div>
 </div>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["AA", "AA"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["AA", "AA"]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2077,7 +2167,7 @@ schemas</strong> instead of a single schema.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "array",
     "items": [
         {
@@ -2096,13 +2186,13 @@ schemas</strong> instead of a single schema.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["maths", 82.5]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["maths", 82.5]</code></pre>
 </div>
 </div>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["english"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["english"]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2112,7 +2202,7 @@ irrelevant</a>, here, order matters !</p>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">[82.5, "maths"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">[82.5, "maths"]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2121,7 +2211,7 @@ default</a> :</p>
 </div>
 <div id="tuple_optional" class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["maths"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["maths"]</code></pre>
 </div>
 </div>
 <div class="admonitionblock caution">
@@ -2144,7 +2234,7 @@ allowed by default</a> :</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["maths", 82.5, "additional text"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["maths", 82.5, "additional text"]</code></pre>
 </div>
 </div>
 <div class="sect3">
@@ -2158,7 +2248,7 @@ only elements specified in the schemas are allowed to appear.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "array",
     "items": [
         {
@@ -2179,7 +2269,7 @@ only elements specified in the schemas are allowed to appear.</p>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["maths", 82.5, "additional text"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["maths", 82.5, "additional text"]</code></pre>
 </div>
 </div>
 </div>
@@ -2198,7 +2288,7 @@ only elements specified in the schemas are allowed to appear.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "array",
     "items": [
         {
@@ -2221,13 +2311,13 @@ only elements specified in the schemas are allowed to appear.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["maths", 82.5, "2015-11-11T23:45:00Z"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["maths", 82.5, "2015-11-11T23:45:00Z"]</code></pre>
 </div>
 </div>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["maths", 82.5, "additional text"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["maths", 82.5, "additional text"]</code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -2266,7 +2356,7 @@ user-defined.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "object",
     "properties": {
         "name": { "type": "string" },
@@ -2281,7 +2371,7 @@ user-defined.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "birthday": "1973-01-24"
@@ -2293,7 +2383,7 @@ user-defined.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "gender": "male",
     "name": "aowss",
     "birthday": "1973-01-24"
@@ -2305,7 +2395,7 @@ user-defined.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{}</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{}</code></pre>
 </div>
 </div>
 <div id="object-lax" class="paragraph">
@@ -2313,7 +2403,7 @@ user-defined.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "nationality": "french",
@@ -2324,7 +2414,7 @@ user-defined.</p>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "birthday": false <i class="conum" data-value="1"></i><b>(1)</b>
@@ -2362,7 +2452,7 @@ This is different from XML Schema where elments are mandatory by default.
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "object",
     "properties": {
         "name": { "type": "string" },
@@ -2379,7 +2469,7 @@ This is different from XML Schema where elments are mandatory by default.
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male"
 }</code></pre>
@@ -2388,7 +2478,7 @@ This is different from XML Schema where elments are mandatory by default.
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{} <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{} <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -2429,7 +2519,7 @@ properties specified in the schema are allowed to appear.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "object",
     "properties": {
         "name": { "type": "string" },
@@ -2446,7 +2536,7 @@ properties specified in the schema are allowed to appear.</p>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "nationality": "french", <i class="conum" data-value="1"></i><b>(1)</b>
@@ -2478,7 +2568,7 @@ properties specified in the schema are allowed to appear.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "object",
     "properties": {
         "name": { "type": "string" },
@@ -2493,7 +2583,7 @@ properties specified in the schema are allowed to appear.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "dob": "1973-01-24"
@@ -2503,7 +2593,7 @@ properties specified in the schema are allowed to appear.</p>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "dob": 1973 <i class="conum" data-value="1"></i><b>(1)</b>
@@ -2529,7 +2619,7 @@ properties specified in the schema are allowed to appear.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "object",
     "minProperties": 2,
     "maxProperties": 3
@@ -2541,7 +2631,7 @@ properties specified in the schema are allowed to appear.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "birthday": "1973-01-24"
@@ -2551,7 +2641,7 @@ properties specified in the schema are allowed to appear.</p>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "nationality": "french",
@@ -2577,7 +2667,7 @@ of required properties :</p>
 <div class="listingblock schema inconsistent">
 <div class="title">inconsistent</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "object",
     "properties": {
         "name": { "type": "string" },
@@ -2627,7 +2717,7 @@ optional properties that can be specified.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "object",
     "properties": {
         "name": { "type": "string" },
@@ -2645,7 +2735,7 @@ optional properties that can be specified.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "_member": true,
@@ -2656,7 +2746,7 @@ optional properties that can be specified.</p>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "member": true <i class="conum" data-value="1"></i><b>(1)</b>
@@ -2693,7 +2783,7 @@ are not explicitly listed in <code>properties</code> and don’t match any of th
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "object",
     "properties": {
         "name": { "type": "string" },
@@ -2712,7 +2802,7 @@ are not explicitly listed in <code>properties</code> and don’t match any of th
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "_member": true,
@@ -2723,7 +2813,7 @@ are not explicitly listed in <code>properties</code> and don’t match any of th
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "_member": true,
@@ -2759,7 +2849,7 @@ Note that if you don&#8217;t specify that the type is <code>object</code>, then 
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
      <i class="conum" data-value="1"></i><b>(1)</b>
     "properties": {
         "name": { "type": "string" },
@@ -2783,7 +2873,7 @@ Note that if you don&#8217;t specify that the type is <code>object</code>, then 
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">[ "aowss", "male" ] <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">[ "aowss", "male" ] <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -2797,7 +2887,7 @@ Note that if you don&#8217;t specify that the type is <code>object</code>, then 
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male"
 }</code></pre>
@@ -2806,7 +2896,7 @@ Note that if you don&#8217;t specify that the type is <code>object</code>, then 
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{ <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{ <i class="conum" data-value="1"></i><b>(1)</b>
     "name": "aowss",
     "gender": "male",
     "nationality": "french", <i class="conum" data-value="2"></i><b>(2)</b>
@@ -2863,7 +2953,7 @@ properties.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "object",
     "properties": {
         "name": { "type": "string" },
@@ -2889,7 +2979,7 @@ properties.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "birthday": "1973-01-24"
@@ -2898,7 +2988,7 @@ properties.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "birthday": "1973-01-24",
@@ -2908,7 +2998,7 @@ properties.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "birthday": "1973-01-24",
@@ -2920,7 +3010,7 @@ properties.</p>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "birthday": "1973-01-24",
@@ -2949,7 +3039,7 @@ properties.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "object",
     "properties": {
         "name": { "type": "string" },
@@ -2972,7 +3062,7 @@ properties.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "birthday": "1973-01-24"
@@ -2996,7 +3086,7 @@ properties.</p>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "birthday": "1973-01-24",
@@ -3029,7 +3119,7 @@ provided.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "object",
     "properties": {
         "name": { "type": "string" },
@@ -3073,7 +3163,7 @@ property is specified, then the passport details must be specified.
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "birthday": "1973-01-24"
@@ -3082,7 +3172,7 @@ property is specified, then the passport details must be specified.
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "birthday": "1973-01-24",
@@ -3096,7 +3186,7 @@ property is specified, then the passport details must be specified.
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "birthday": "1973-01-24",
@@ -3140,7 +3230,7 @@ the <code>object</code> level :</p>
 <div class="listingblock schema inconsistent">
 <div class="title">inconsistent</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "object",
     "properties": {
         ...
@@ -3192,7 +3282,7 @@ Annoying side effects !!!
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "object",
     "properties": {
         "name": { "type": "string" },
@@ -3222,7 +3312,7 @@ Annoying side effects !!!
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "birthday": "1973-01-24",
@@ -3246,7 +3336,7 @@ Annoying side effects !!!
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "birthday": "1973-01-24",
@@ -3268,7 +3358,7 @@ Annoying side effects !!!
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "birthday": "1973-01-24",
@@ -3289,7 +3379,7 @@ Annoying side effects !!!
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "birthday": "1973-01-24",
@@ -3326,7 +3416,7 @@ the dependency is meaningless :</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "object",
     "properties": {
         "name": { "type": "string" },
@@ -3352,7 +3442,7 @@ the dependency is meaningless :</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "birthday": "1973-01-24",
@@ -3398,7 +3488,7 @@ schema of an object.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": ["array", "object"],
     "items": {
         "type": "number"
@@ -3417,7 +3507,7 @@ schema of an object.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "birthday": "1973-01-24"
@@ -3426,13 +3516,13 @@ schema of an object.</p>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">[1, 2, 3, 4, 5]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">[1, 2, 3, 4, 5]</code></pre>
 </div>
 </div>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss",
     "gender": "male",
     "birthday": "1973-01-24",
@@ -3443,7 +3533,7 @@ schema of an object.</p>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["aowss", "male", "1973-01-24"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["aowss", "male", "1973-01-24"]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3460,7 +3550,7 @@ schema as follows :</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "oneOf" : [
         {
             "type": "array",
@@ -3510,18 +3600,17 @@ specified schemas was done automatically :</p>
 <h3 id="reference">Referencing an existing schema</h3>
 <div class="paragraph">
 <p>The <code>$ref</code> keyword is used to reference an existing schema.<br>
-The value is a <a href="http://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03">JSON Reference</a>
-expression.</p>
+The value is a <a href="https://tools.ietf.org/html/rfc6901">JSON Pointer</a> expression.</p>
 </div>
 <div class="paragraph">
 <p>Schema :</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
-    "$schema": "http://json-schema.org/draft-04/schema#",
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+    "$schema": "http://json-schema.org/schema#",
     "definitions": {
-        "passenger": {
+        "passenger": { <i class="conum" data-value="2"></i><b>(2)</b>
             "type": "object",
             "properties": {
                 "name" : {
@@ -3537,7 +3626,7 @@ expression.</p>
         "passengers": {
             "type": "array",
             "items": {
-                "$ref": "#/definitions/passenger"
+                "$ref": "#/definitions/passenger" <i class="conum" data-value="1"></i><b>(1)</b>
             },
             "uniqueItems": true
         }
@@ -3546,9 +3635,27 @@ expression.</p>
 }</code></pre>
 </div>
 </div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Reference to another location in this schema</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Location referenced by the <code>$ref</code> keyword</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>It is customary ( but not required ) to put the referenced schemas in
-the parent schema under a key called <code>definitions</code>.</p>
+<p>It is customary ( but not required ) to put the referenced schemas in the parent schema under a key called <code>definitions</code>.</p>
 </div>
 <div class="paragraph">
 <p>The specification says :</p>
@@ -3556,7 +3663,7 @@ the parent schema under a key called <code>definitions</code>.</p>
 <div class="quoteblock">
 <blockquote>
 <div class="paragraph">
-<p>This keyword plays no role in validation per se.  Its role is to provide a standardized location for schema authors to inline JSON Schemas into a more general schema.</p>
+<p>This keyword plays no role in validation per se. Its role is to provide a standardized location for schema authors to inline JSON Schemas into a more general schema.</p>
 </div>
 <div class="paragraph">
 <p>This keyword&#8217;s value MUST be an object.
@@ -3564,22 +3671,25 @@ Each member value of this object MUST be a valid JSON Schema.</p>
 </div>
 </blockquote>
 </div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
-<p>The net effect of using the <code>$ref</code> keyword is that it is logically
-replaced by what it points to.</p>
+<p>The net effect of using the <code>$ref</code> keyword is that it is logically replaced by what it points to.</p>
 </div>
 <div class="paragraph">
 <p>Resulting Schema :</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
-    "$schema": "http://json-schema.org/draft-04/schema#",
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+    "$schema": "http://json-schema.org/schema#",
     "type": "object",
     "properties": {
         "passengers": {
             "type": "array",
-            "items": {
+            "items": { <i class="conum" data-value="1"></i><b>(1)</b>
                 "type": "object",
                 "properties": {
                     "name" : {
@@ -3596,27 +3706,33 @@ replaced by what it points to.</p>
 }</code></pre>
 </div>
 </div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>$ref</code> keyword has been replaced by what it points to</td>
+</tr>
+</table>
+</div>
 <div class="sect3">
 <h4 id="current-and-external-schemas">Current and external schemas</h4>
 <div class="paragraph">
 <p><code>#</code> refers to the current document.</p>
 </div>
 <div class="paragraph">
-<p>The following expression points to the <code>passenger</code> schema under the
-<code>definitions</code> property in the current schema document :</p>
+<p>The following expression points to the <code>passenger</code> schema under the <code>definitions</code> property in the current schema document :</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{ "$ref": "#/definitions/passenger" }</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{ "$ref": "#/definitions/passenger" }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The following expression points to the <code>price</code> schema under the
-<code>commons</code> property in the <code>common.schema.json</code> schema document :</p>
+<p>The following expression points to the <code>price</code> schema under the <code>commons</code> property in the <code>common.schema.json</code> schema document :</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{ "$ref": "common.schema.json#/commons/price" }</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{ "$ref": "common.schema.json#/commons/price" }</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3625,8 +3741,8 @@ replaced by what it points to.</p>
 <div class="listingblock schema">
 <div class="title">seat.schema.json</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
-    "$schema": "http://json-schema.org/draft-04/schema#",
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+    "$schema": "http://json-schema.org/schema#",
     "definitions": {
         "seat": {
             "type": "object",
@@ -3648,8 +3764,8 @@ replaced by what it points to.</p>
 <div class="listingblock schema">
 <div class="title">common.schema.json</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
-    "$schema": "http://json-schema.org/draft-04/schema#",
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+    "$schema": "http://json-schema.org/schema#",
     "commons": {
         "currency" : {
             "type": "string",
@@ -3683,8 +3799,8 @@ These keywords are not used in the validation process.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
-    "$schema": "http://json-schema.org/draft-04/schema#",
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+    "$schema": "http://json-schema.org/schema#",
     "definitions": {
         "passenger": {
             "title": "Passenger", <i class="conum" data-value="1"></i><b>(1)</b>
@@ -3744,7 +3860,7 @@ This keyword is not used in the validation process.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "object",
     "properties": {
         "name": { "type": "string" },
@@ -3761,7 +3877,7 @@ This keyword is not used in the validation process.</p>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <code>default</code> value doesn&#8217;t have to comply to the schema <span class="footnote">[<a id="_footnoteref_6" class="footnote" href="#_footnote_6" title="View footnote.">6</a>]</span>.<br>
+<td>The <code>default</code> value doesn&#8217;t have to comply to the schema <sup class="footnote">[<a id="_footnoteref_6" class="footnote" href="#_footnote_6" title="View footnote.">6</a>]</sup>.<br>
 As you can see <code>Male</code> is not a valid value for the following :
 <code>"enum": ["male", "female"]</code>.</td>
 </tr>
@@ -3772,7 +3888,7 @@ As you can see <code>Male</code> is not a valid value for the following :
 </div>
 <div class="listingblock instance invalid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "name": "aowss"
      <i class="conum" data-value="1"></i><b>(1)</b>
 }</code></pre>
@@ -3900,9 +4016,9 @@ Even though JSON allows duplicate keys, they should not be used !
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 16%;">
-<col style="width: 33%;">
-<col style="width: 50%;">
+<col style="width: 16.6666%;">
+<col style="width: 33.3333%;">
+<col style="width: 50.0001%;">
 </colgroup>
 <tbody>
 <tr>
@@ -3940,8 +4056,8 @@ consider the instance as valid !</span></em></p></td>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: %;">
-<col style="width: %;">
+<col style="width: 50%;">
+<col style="width: 50%;">
 </colgroup>
 <thead>
 <tr>
@@ -3995,8 +4111,8 @@ A payer is a person whose <strong>email address is required</strong> for confirm
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
-    "$schema": "http://json-schema.org/draft-04/schema#",
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+    "$schema": "http://json-schema.org/schema#",
     "definitions": {
     "person": {
         "type": "object",
@@ -4040,7 +4156,7 @@ A payer is a person whose <strong>email address is required</strong> for confirm
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "person" : {
         "firstName" : "Aowss",
         "lastName" : "Ibrahim"
@@ -4050,7 +4166,7 @@ A payer is a person whose <strong>email address is required</strong> for confirm
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "person" : {
         "firstName" : "Aowss",
         "lastName" : "Ibrahim",
@@ -4069,7 +4185,7 @@ A payer is a person whose <strong>email address is required</strong> for confirm
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "payer" : {
         "firstName" : "Aowss",
         "lastName" : "Ibrahim",
@@ -4080,7 +4196,7 @@ A payer is a person whose <strong>email address is required</strong> for confirm
 </div>
 <div class="listingblock instance invalid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "payer" : {
         "firstName" : "Aowss",
         "lastName" : "Ibrahim"
@@ -4126,8 +4242,8 @@ It is not possible to make a required property optional.
 </div>
 <div class="listingblock schema inconsistent">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
-    "$schema": "http://json-schema.org/draft-04/schema#",
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+    "$schema": "http://json-schema.org/schema#",
     "definitions": {
     "person": {
         "type": "object",
@@ -4183,8 +4299,8 @@ You also need to specify that it must contain at least one property to avoid an 
 </div>
 <div class="listingblock schema">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
-    "$schema": "http://json-schema.org/draft-04/schema#",
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+    "$schema": "http://json-schema.org/schema#",
     "definitions": {
     "person": {
         "type": "object",
@@ -4240,7 +4356,7 @@ You also need to specify that it must contain at least one property to avoid an 
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "person" : {
         "firstName" : "Aowss",
         "lastName" : "Ibrahim"
@@ -4259,7 +4375,7 @@ You also need to specify that it must contain at least one property to avoid an 
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "person" : {
         "firstName" : "Aowss",
         "lastName" : "Ibrahim",
@@ -4280,7 +4396,7 @@ You also need to specify that it must contain at least one property to avoid an 
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "person" : {
         "firstName" : "Aowss",
         "lastName" : "Ibrahim",
@@ -4301,7 +4417,7 @@ You also need to specify that it must contain at least one property to avoid an 
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "payer" : {
         "firstName" : "Aowss",
         "lastName" : "Ibrahim",
@@ -4314,7 +4430,7 @@ You also need to specify that it must contain at least one property to avoid an 
 </div>
 <div class="listingblock instance invalid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "payer" : {
         "firstName" : "Aowss",
         "lastName" : "Ibrahim"
@@ -4347,8 +4463,8 @@ Each item&#8217;s set of valid values have been defined by a different property 
 <div class="listingblock schema">
 <div class="title">common.schema.json</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
-    "$schema": "http://json-schema.org/draft-04/schema#",
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+    "$schema": "http://json-schema.org/schema#",
     "definitions": {
         "seatType" : {
             "type": "string",
@@ -4373,7 +4489,7 @@ Each item&#8217;s set of valid values have been defined by a different property 
 <div class="listingblock schema">
 <div class="title">seat.schema.json</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "array",
     "items": { <i class="conum" data-value="1"></i><b>(1)</b>
         "anyOf": [ <i class="conum" data-value="1"></i><b>(1)</b>
@@ -4400,12 +4516,12 @@ Each item&#8217;s set of valid values have been defined by a different property 
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["Cot", "Aisle", "Left", "Forward Facing"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["Cot", "Aisle", "Left", "Forward Facing"]</code></pre>
 </div>
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["Aisle", "Left", "Forward Facing"] <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["Aisle", "Left", "Forward Facing"] <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -4418,7 +4534,7 @@ Each item&#8217;s set of valid values have been defined by a different property 
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["Aisle", "Cot", "Bulkhead", "Left", "Forward Facing"] <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["Aisle", "Cot", "Bulkhead", "Left", "Forward Facing"] <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -4435,7 +4551,7 @@ Each item&#8217;s set of valid values have been defined by a different property 
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["Cot", "Cot", "Bulkhead", "Left", "Forward Facing"] <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["Cot", "Cot", "Bulkhead", "Left", "Forward Facing"] <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -4455,7 +4571,7 @@ Each item&#8217;s set of valid values have been defined by a different property 
 <div class="listingblock schema">
 <div class="title">seat.schema.json</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "type": "array",
     "items": [ <i class="conum" data-value="1"></i><b>(1)</b>
         { "$ref": "common.schema.json#/definitions/seatType" },
@@ -4480,13 +4596,13 @@ Each item&#8217;s set of valid values have been defined by a different property 
 </div>
 <div class="listingblock instance valid">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["Cot", "Aisle", "Left", "Forward Facing"]</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["Cot", "Aisle", "Left", "Forward Facing"]</code></pre>
 </div>
 </div>
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["Aisle", "Left", "Forward Facing"] <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["Aisle", "Left", "Forward Facing"] <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -4500,7 +4616,7 @@ Each item&#8217;s set of valid values have been defined by a different property 
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["Aisle", "Cot", "Left", "Forward Facing"] <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["Aisle", "Cot", "Left", "Forward Facing"] <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -4514,7 +4630,7 @@ Each item&#8217;s set of valid values have been defined by a different property 
 <div class="listingblock instance invalid">
 <div class="title">invalid</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">["Cot", "Bulkhead", "Aisle", "Left", "Forward Facing"] <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">["Cot", "Bulkhead", "Aisle", "Left", "Forward Facing"] <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -4552,7 +4668,7 @@ Each item&#8217;s set of valid values have been defined by a different property 
 <p>The <a href="#default-values">default value</a> for a property should conform to the schema of that property.</p>
 </li>
 <li>
-<p>Schema inconsistencies should flag the schema as being invalid <span class="footnote">[<a id="_footnoteref_7" class="footnote" href="#_footnote_7" title="View footnote.">7</a>]</span>.</p>
+<p>Schema inconsistencies should flag the schema as being invalid <sup class="footnote">[<a id="_footnoteref_7" class="footnote" href="#_footnote_7" title="View footnote.">7</a>]</sup>.</p>
 </li>
 <li>
 <p>It should be possible to indicate <a href="#tuple_optional">which items are mandatory in a tuple</a>.</p>
@@ -4590,8 +4706,8 @@ JSON Schema</a> by <a href="https://github.com/mdboom">Michael Droettboom</a>.<b
 The explanations are clear.<br>
 The presentation is very good.</p>
 </div>
-<div class="ulist">
-<ul>
+<div class="ulist bibliography">
+<ul class="bibliography">
 <li>
 <p><a href="http://www.xfront.com/json-and-json-schema-for-xml-developers">JSON and JSON-Schema for XML Developers</a> by <a href="http://www.xfront.com">Roger L. Costello</a></p>
 </li>
@@ -4631,8 +4747,11 @@ knowledge of XML Schema ).</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-07-12 15:18:33 BST
+Last updated 2017-10-04 09:44:38 EDT
 </div>
 </div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
 </body>
 </html>

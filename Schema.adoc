@@ -2,8 +2,8 @@ JSON Schema Tutorial
 ====================
 :Author:                Aowss Ibrahim
 :Email:                 <aowss@yahoo.com>
-:Date:                  July 2015
-:Revision:              version 1.3.0
+:Date:                  October 2017
+:Revision:              version 2.0.0
 :source-highlighter:    highlightjs
 :source-language:       json
 :toc2:
@@ -15,6 +15,10 @@ JSON Schema Tutorial
 
 Thanks to Jason Desrosiers and Clemens Uhlenhut for their clarifications around the `default` keyword footnote:[https://groups.google.com/forum/#!topic/json-schema/Yq73mPJvQf0[JSON Schema Google Group]].
 
+== To Do
+
+. Explain how to use https://github.com/everit-org/json-schema[this validator] in xref:libraries[this section]
+
 [[intro]]
 == Introduction
 
@@ -23,14 +27,14 @@ MIME Type : `application/schema+json`
 No specific file extension is defined yet footnote:[`.json` can be used since a JSON Schema is a JSON document; `.schema.json` is often used to make the distinction between the schema and the instance document] footnote:[when the MIME Type will be http://www.iana.org/assignments/media-types/media-types.xhtml[registered], a file extension will probably be defined].
 
 As explained, in the http://json-schema.org/[JSON Schema web site] or
-https://github.com/json-schema/json-schema[JSON Schema github
+https://github.com/json-schema-org/json-schema-spec[JSON Schema github
 repository], there are 3 specifications around JSON Schema :
 
-* http://tools.ietf.org/html/draft-zyp-json-schema-04[JSON Schema Core]
+* https://tools.ietf.org/html/draft-wright-json-schema-01[JSON Schema Core]
 defines the basic foundation of JSON Schema
-* http://tools.ietf.org/html/draft-fge-json-schema-validation-00[JSON
+* https://tools.ietf.org/html/draft-wright-json-schema-01[JSON
 Schema Validation] defines the validation keywords of JSON Schema
-* http://tools.ietf.org/html/draft-luff-json-hyper-schema-00[JSON
+* https://tools.ietf.org/html/draft-wright-json-schema-hyperschema-01[JSON
 Hyper-Schema] defines the hyper-media keywords of JSON Schema
 
 Confusingly, these three documents can also be found at
@@ -40,7 +44,8 @@ http://json-schema.org/latest/json-schema-hypermedia.html.
 
 [WARNING]
 At the time of this writing ( {Date} ), the status of all these
-specifications is `Internet-Draft`.
+specifications is `Internet-Draft`. +
+As explained http://json-schema.org/draft-06/json-schema-migration-faq.html[here], the current draft is `Draft 6`.
 
 [[conventions]]
 === Conventions
@@ -79,22 +84,45 @@ A lot of useful tools are listed on the http://json-schema.org/implementations.h
 [[online-validators]]
 ==== Online Validators
 
-. http://jsonschemalint.com/draft4/[Online JSON Schema Validator]
-. http://www.jsonschemavalidator.net/[Another online JSON Schema Validator]
-. http://json-schema-validator.herokuapp.com/[Francis Galiegue's online JSON Schema Validator]
+. http://jsonschemalint.com[Online JSON Schema Validator]
 
+[WARNING]
+http://www.jsonschemavalidator.net/[This validator] and http://json-schema-validator.herokuapp.com/[Francis Galiegue's one] only validate up to `Draft 4` schemas
+
+[[libraries]]
 ==== Libraries
 
 The only problem with xref:online-validators[these online validators] is that they can't handle schemas that are split into multiple files. +
 For that you need to use a JSON Schema validation library written in you favourite language. 
 
-. https://github.com/fge/json-schema-validator[Francis Galiegue's JSON Schema Validator written in Java]
-
+`Java` :: 
+. https://github.com/fge/json-schema-validator[Francis Galiegue's JSON Schema Validator]
++
+====
 An instance is validated against a given schema using the following command : 
 
 `java -jar json-schema-validator-2.2.6-lib.jar schema.json instance.json`  
 
 The `jar` is downloaded from https://bintray.com/fge/maven/json-schema-validator/view[here] as mentioned in the `"Full" jar; command line` section footnote:[you need to download this jar : `json-schema-validator-2.2.6-lib.jar`, not this one : `json-schema-validator-2.2.6.jar`].  
+
+[WARNING]
+Unfortunatelly this only validates up to `Draft 4` schemas
+====
+
+. https://github.com/everit-org/json-schema
+
+`JavaScript` ::
+. https://github.com/jessedc/ajv-cli
++
+====
+Install using `npm install -g ajv-cli` as mentioned https://www.npmjs.com/package/ajv-cli[here].
+
+* If you have a standalone schema, validate using `ajv -s schemas/standalone.schema.json -d "examples/instance.json"`.
+* If you have xref:reference[a set of shcemas], validate using `ajv -s schemas/primary.schema.json -r schemas/linked.schema.json -d "examples/instance.json"`.
+
+[NOTE]
+Don't forget to replace the paths mentioned in the above commands with your own paths !
+====
 
 [[the-simplest-schema-ever]]
 == The Simplest Schema Ever !
@@ -161,7 +189,7 @@ cases are valid even though
 === Is this even a schema ?
 
 A JSON Schema is just a JSON document that conforms to the
-http://json-schema.org/draft-04/schema[JSON Schema's Schema].
+http://json-schema.org/schema[JSON Schema's Schema].
 
 A `$schema` keyword *can* be used to explicitly specify that a JSON
 document is a schema.
@@ -169,8 +197,9 @@ document is a schema.
 [role="schema"]
 [source]
 ----
-{ "$schema": "http://json-schema.org/schema#" }
+{ "$schema": "http://json-schema.org/schema#" } <1>
 ----
+<1> The value specifies the version of the specification & the location of the schema
 
 Note that you can specify the version of the specification or even the
 specification the schema adheres to :
@@ -178,7 +207,7 @@ specification the schema adheres to :
 * `http://json-schema.org/hyper-schema#`
 
 JSON Schema hyperschema written against the
-http://tools.ietf.org/html/draft-luff-json-hyper-schema-00[current
+http://json-schema.org/latest/json-schema-hypermedia[current
 version of the specification].
 
 * `http://json-schema.org/draft-04/schema#`
@@ -2187,8 +2216,7 @@ specified schemas was done automatically :
 === Referencing an existing schema
 
 The `$ref` keyword is used to reference an existing schema. +
-The value is a http://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03[JSON Reference]
-expression.
+The value is a https://tools.ietf.org/html/rfc6901[JSON Pointer] expression.
 
 Schema :
 
@@ -2196,9 +2224,9 @@ Schema :
 [source]
 ----
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "http://json-schema.org/schema#",
     "definitions": {
-        "passenger": {
+        "passenger": { <2>
             "type": "object",
             "properties": {
                 "name" : {
@@ -2214,7 +2242,7 @@ Schema :
         "passengers": {
             "type": "array",
             "items": {
-                "$ref": "#/definitions/passenger"
+                "$ref": "#/definitions/passenger" <1>
             },
             "uniqueItems": true
         }
@@ -2222,21 +2250,24 @@ Schema :
     "additionalProperties": false
 }
 ----
+<1> Reference to another location in this schema
+<2> Location referenced by the `$ref` keyword
 
-It is customary ( but not required ) to put the referenced schemas in
-the parent schema under a key called `definitions`.
+[TIP]
+====
+It is customary ( but not required ) to put the referenced schemas in the parent schema under a key called `definitions`.
 
 The specification says :
 
 ____
-This keyword plays no role in validation per se.  Its role is to provide a standardized location for schema authors to inline JSON Schemas into a more general schema.
+This keyword plays no role in validation per se. Its role is to provide a standardized location for schema authors to inline JSON Schemas into a more general schema.
 
 This keyword's value MUST be an object.
 Each member value of this object MUST be a valid JSON Schema.
 ____
+====
 
-The net effect of using the `$ref` keyword is that it is logically
-replaced by what it points to.
+The net effect of using the `$ref` keyword is that it is logically replaced by what it points to.
 
 Resulting Schema :
 
@@ -2244,12 +2275,12 @@ Resulting Schema :
 [source]
 ----
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "http://json-schema.org/schema#",
     "type": "object",
     "properties": {
         "passengers": {
             "type": "array",
-            "items": {
+            "items": { <1>
                 "type": "object",
                 "properties": {
                     "name" : {
@@ -2265,22 +2296,21 @@ Resulting Schema :
     "additionalProperties": false
 }
 ----
+<1> The `$ref` keyword has been replaced by what it points to
 
 [[current-and-external-schemas]]
 ==== Current and external schemas
 
 `#` refers to the current document.
 
-The following expression points to the `passenger` schema under the
-`definitions` property in the current schema document :
+The following expression points to the `passenger` schema under the `definitions` property in the current schema document :
 
 [source]
 ----
 { "$ref": "#/definitions/passenger" }
 ----
 
-The following expression points to the `price` schema under the
-`commons` property in the `common.schema.json` schema document :
+The following expression points to the `price` schema under the `commons` property in the `common.schema.json` schema document :
 
 [source]
 ----
@@ -2294,7 +2324,7 @@ Schemas :
 .seat.schema.json
 ----
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "http://json-schema.org/schema#",
     "definitions": {
         "seat": {
             "type": "object",
@@ -2318,7 +2348,7 @@ Schemas :
 .common.schema.json
 ----
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "http://json-schema.org/schema#",
     "commons": {
         "currency" : {
             "type": "string",
@@ -2349,7 +2379,7 @@ These keywords are not used in the validation process.
 [source]
 ----
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "http://json-schema.org/schema#",
     "definitions": {
         "passenger": {
             "title": "Passenger", <1>
@@ -2525,7 +2555,7 @@ Schema :
 [source]
 ----
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "http://json-schema.org/schema#",
     "definitions": {
     "person": {
         "type": "object",
@@ -2620,7 +2650,7 @@ This only works if the required property is not nested :
 [source]
 ----
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "http://json-schema.org/schema#",
     "definitions": {
     "person": {
         "type": "object",
@@ -2667,7 +2697,7 @@ You also need to specify that it must contain at least one property to avoid an 
 [source]
 ----
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "http://json-schema.org/schema#",
     "definitions": {
     "person": {
         "type": "object",
@@ -2794,7 +2824,7 @@ Schemas :
 .common.schema.json
 ----
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "http://json-schema.org/schema#",
     "definitions": {
         "seatType" : {
             "type": "string",
