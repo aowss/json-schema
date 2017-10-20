@@ -1,0 +1,25 @@
+@import url("themes/asciidoctor-compact.css");
+
+div.schema code {
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    background-color: #FFFFF0;
+}
+
+div.instance code {
+    background-color: #F5FFFF;
+}
+
+div.inconsistent code,
+div.invalid code {
+    border-style: solid;
+    border-width: 1px;
+    border-color: red;
+}
+
+div.valid code {
+    border-style: solid;
+    border-width: 1px;
+    border-color: blue;
+}

@@ -18,6 +18,7 @@ Thanks to Jason Desrosiers and Clemens Uhlenhut for their clarifications around 
 == To Do
 
 . Explain how to use https://github.com/everit-org/json-schema[this validator] in xref:libraries[this section]
+. Add a section about definition vs. declaration in xref:[this section]
 
 [[intro]]
 == Introduction
@@ -197,7 +198,7 @@ document is a schema.
 [role="schema"]
 [source]
 ----
-{ "$schema": "http://json-schema.org/schema#" } <1>
+{ "$schema": "http://json-schema.org/draft-06/schema#" } <1>
 ----
 <1> The value specifies the version of the specification & the location of the schema
 
@@ -1032,8 +1033,7 @@ Instances :
 Note that the unique items can be arrays or objects. +
 
 [TIP]
-The objects are considered unique if at least one of their properties is
-different; the order of the properties is irrelevant.
+The objects are considered non-unique if at least one of their properties is different; the order of the properties is irrelevant.
 
 [[tuples]]
 === Tuples
@@ -2224,7 +2224,7 @@ Schema :
 [source]
 ----
 {
-    "$schema": "http://json-schema.org/schema#",
+    "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
         "passenger": { <2>
             "type": "object",
@@ -2275,7 +2275,7 @@ Resulting Schema :
 [source]
 ----
 {
-    "$schema": "http://json-schema.org/schema#",
+    "$schema": "http://json-schema.org/draft-06/schema#",
     "type": "object",
     "properties": {
         "passengers": {
@@ -2303,7 +2303,7 @@ Resulting Schema :
 
 `#` refers to the current document.
 
-The following expression points to the `passenger` schema under the `definitions` property in the current schema document :
+The following expression points to the `passenger` schema under the `definitions` property in the *current* schema document :
 
 [source]
 ----
@@ -2324,7 +2324,7 @@ Schemas :
 .seat.schema.json
 ----
 {
-    "$schema": "http://json-schema.org/schema#",
+    "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
         "seat": {
             "type": "object",
@@ -2348,7 +2348,7 @@ Schemas :
 .common.schema.json
 ----
 {
-    "$schema": "http://json-schema.org/schema#",
+    "$schema": "http://json-schema.org/draft-06/schema#",
     "commons": {
         "currency" : {
             "type": "string",
@@ -2379,7 +2379,7 @@ These keywords are not used in the validation process.
 [source]
 ----
 {
-    "$schema": "http://json-schema.org/schema#",
+    "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
         "passenger": {
             "title": "Passenger", <1>
@@ -2555,7 +2555,7 @@ Schema :
 [source]
 ----
 {
-    "$schema": "http://json-schema.org/schema#",
+    "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
     "person": {
         "type": "object",
@@ -2650,7 +2650,7 @@ This only works if the required property is not nested :
 [source]
 ----
 {
-    "$schema": "http://json-schema.org/schema#",
+    "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
     "person": {
         "type": "object",
@@ -2697,7 +2697,7 @@ You also need to specify that it must contain at least one property to avoid an 
 [source]
 ----
 {
-    "$schema": "http://json-schema.org/schema#",
+    "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
     "person": {
         "type": "object",
@@ -2824,7 +2824,7 @@ Schemas :
 .common.schema.json
 ----
 {
-    "$schema": "http://json-schema.org/schema#",
+    "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
         "seatType" : {
             "type": "string",
