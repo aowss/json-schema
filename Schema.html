@@ -180,7 +180,10 @@ div.valid code {
 <p>Explain how to use <a href="https://github.com/everit-org/json-schema">this validator</a> in <a href="#libraries">this section</a></p>
 </li>
 <li>
-<p>Add a section about definition vs. declaration in xref:[this section]</p>
+<p>Add a section about definition vs. declaration</p>
+</li>
+<li>
+<p>Check what <a href="#specifying-formats">formats</a> are supported by draft 6</p>
 </li>
 </ol>
 </div>
@@ -196,31 +199,36 @@ div.valid code {
 <p>No specific file extension is defined yet <sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnote_2" title="View footnote.">2</a>]</sup> <sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnote_3" title="View footnote.">3</a>]</sup>.</p>
 </div>
 <div class="paragraph">
-<p>As explained, in the <a href="http://json-schema.org/">JSON Schema web site</a> or
-<a href="https://github.com/json-schema-org/json-schema-spec">JSON Schema github
-repository</a>, there are 3 specifications around JSON Schema :</p>
+<p>As explained, in the <a href="http://json-schema.org/">JSON Schema web site</a> or <a href="https://github.com/json-schema-org/json-schema-spec">JSON Schema github repository</a>, there are 3 specifications around JSON Schema :</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://tools.ietf.org/html/draft-wright-json-schema-01">JSON Schema Core</a>
-defines the basic foundation of JSON Schema</p>
+<p><a href="https://tools.ietf.org/html/draft-wright-json-schema-01">JSON Schema Core</a> defines the basic foundation of JSON Schema</p>
 </li>
 <li>
-<p><a href="https://tools.ietf.org/html/draft-wright-json-schema-01">JSON
-Schema Validation</a> defines the validation keywords of JSON Schema</p>
+<p><a href="https://tools.ietf.org/html/draft-wright-json-schema-01">JSON Schema Validation</a> defines the validation keywords of JSON Schema</p>
 </li>
 <li>
-<p><a href="https://tools.ietf.org/html/draft-wright-json-schema-hyperschema-01">JSON
-Hyper-Schema</a> defines the hyper-media keywords of JSON Schema</p>
+<p><a href="https://tools.ietf.org/html/draft-wright-json-schema-hyperschema-01">JSON Hyper-Schema</a> defines the hyper-media keywords of JSON Schema</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Confusingly, these three documents can also be found at
-<a href="http://json-schema.org/latest/json-schema-core.html" class="bare">http://json-schema.org/latest/json-schema-core.html</a>,
-<a href="http://json-schema.org/latest/json-schema-validation.html" class="bare">http://json-schema.org/latest/json-schema-validation.html</a> and
-<a href="http://json-schema.org/latest/json-schema-hypermedia.html" class="bare">http://json-schema.org/latest/json-schema-hypermedia.html</a>.</p>
+<p>Confusingly, these 3 documents can also be found at :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://json-schema.org/latest/json-schema-core.html" class="bare">http://json-schema.org/latest/json-schema-core.html</a>,</p>
+</li>
+<li>
+<p><a href="http://json-schema.org/latest/json-schema-validation.html" class="bare">http://json-schema.org/latest/json-schema-validation.html</a> and</p>
+</li>
+<li>
+<p><a href="http://json-schema.org/latest/json-schema-hypermedia.html" class="bare">http://json-schema.org/latest/json-schema-hypermedia.html</a>.</p>
+</li>
+</ul>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -229,8 +237,7 @@ Hyper-Schema</a> defines the hyper-media keywords of JSON Schema</p>
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-At the time of this writing ( October 2017 ), the status of all these
-specifications is <code>Internet-Draft</code>.<br>
+At the time of this writing ( November 2017 ), the status of all these specifications is <code>Internet-Draft</code>.<br>
 As explained <a href="http://json-schema.org/draft-06/json-schema-migration-faq.html">here</a>, the current draft is <code>Draft 6</code>.
 </td>
 </tr>
@@ -272,7 +279,10 @@ As explained <a href="http://json-schema.org/draft-06/json-schema-migration-faq.
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="http://jsonschemalint.com">Online JSON Schema Validator</a></p>
+<p><a href="http://jsonschemalint.com">JSON Schema Lint</a></p>
+</li>
+<li>
+<p><a href="http://www.jsonschemavalidator.net/">JSON Schema Validator</a></p>
 </li>
 </ol>
 </div>
@@ -283,7 +293,7 @@ As explained <a href="http://json-schema.org/draft-06/json-schema-migration-faq.
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-<a href="http://www.jsonschemavalidator.net/">This validator</a> and <a href="http://json-schema-validator.herokuapp.com/">Francis Galiegue&#8217;s one</a> only validate up to <code>Draft 4</code> schemas
+<a href="http://json-schema-validator.herokuapp.com/">Francis Galiegue&#8217;s validator</a> only validate up to <code>Draft 4</code> schemas
 </td>
 </tr>
 </table>
@@ -330,7 +340,7 @@ Unfortunatelly this only validates up to <code>Draft 4</code> schemas
 </div>
 </li>
 <li>
-<p><a href="https://github.com/everit-org/json-schema" class="bare">https://github.com/everit-org/json-schema</a></p>
+<p><a href="https://github.com/everit-org/json-schema">JSON Schema Validator for Java</a></p>
 </li>
 </ol>
 </div>
@@ -340,7 +350,7 @@ Unfortunatelly this only validates up to <code>Draft 4</code> schemas
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="https://github.com/jessedc/ajv-cli" class="bare">https://github.com/jessedc/ajv-cli</a></p>
+<p><a href="https://github.com/jessedc/ajv-cli">Another Json Validator</a></p>
 <div class="exampleblock">
 <div class="content">
 <div class="paragraph">
@@ -433,12 +443,7 @@ Don&#8217;t forget to replace the paths mentioned in the above commands with you
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<a href="http://rfc7159.net/rfc7159">RFC 7159</a> and
-<a href="http://www.ecma-international.org/publications/standards/Ecma-404.htm">Standard
-ECMA-404 : The JSON Data Interchange Format</a> mention that the first four
-cases are valid even though
-<code>certain previous specifications of JSON constrained a JSON text to be an object or an array</code>
-( See <a href="https://www.ietf.org/rfc/rfc4627.txt">RFC 4627</a> ).
+<a href="https://tools.ietf.org/html/rfc7159">RFC 7159</a> and <a href="http://www.ecma-international.org/publications/standards/Ecma-404.htm">Standard ECMA-404 : The JSON Data Interchange Format</a> mention that the first four cases are valid even though <code>certain previous specifications of JSON constrained a JSON text to be an object or an array</code> ( See <a href="https://www.ietf.org/rfc/rfc4627.txt">RFC 4627</a> ).
 </td>
 </tr>
 </table>
@@ -446,12 +451,10 @@ cases are valid even though
 <div class="sect2">
 <h3 id="is-this-even-a-schema">Is this even a schema ?</h3>
 <div class="paragraph">
-<p>A JSON Schema is just a JSON document that conforms to the
-<a href="http://json-schema.org/schema">JSON Schema&#8217;s Schema</a>.</p>
+<p>A JSON Schema is just a JSON document that conforms to the <a href="http://json-schema.org/schema">JSON Schema&#8217;s Schema</a>.</p>
 </div>
 <div class="paragraph">
-<p>A <code>$schema</code> keyword <strong>can</strong> be used to explicitly specify that a JSON
-document is a schema.</p>
+<p>A <code>$schema</code> keyword <strong>can</strong> be used to explicitly specify that a JSON document is a schema.</p>
 </div>
 <div class="listingblock schema">
 <div class="content">
@@ -467,8 +470,7 @@ document is a schema.</p>
 </table>
 </div>
 <div class="paragraph">
-<p>Note that you can specify the version of the specification or even the
-specification the schema adheres to :</p>
+<p>Note that you can specify the version of the specification or even the specification the schema adheres to :</p>
 </div>
 <div class="ulist">
 <ul>
@@ -478,9 +480,7 @@ specification the schema adheres to :</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>JSON Schema hyperschema written against the
-<a href="http://json-schema.org/latest/json-schema-hypermedia">current
-version of the specification</a>.</p>
+<p>JSON Schema hyperschema written against the <a href="http://json-schema.org/latest/json-schema-hypermedia">current version of the specification</a>.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -490,9 +490,7 @@ version of the specification</a>.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>JSON Schema written against
-<a href="http://tools.ietf.org/html/draft-zyp-json-schema-04">draft 4 of the
-specification</a>.</p>
+<p>JSON Schema written against <a href="http://tools.ietf.org/html/draft-zyp-json-schema-04">draft 4 of the specification</a>.</p>
 </div>
 </div>
 </div>
@@ -550,8 +548,7 @@ specification</a>.</p>
 <div class="sect2">
 <h3 id="choice">You have a choice</h3>
 <div class="paragraph">
-<p>The <code>type</code> keyword can have a value that is an array of the allowed
-types.</p>
+<p>The <code>type</code> keyword can have a value that is an array of the allowed types.</p>
 </div>
 <div class="paragraph">
 <p>Schema :</p>
@@ -579,9 +576,7 @@ types.</p>
 <div class="sect2">
 <h3 id="be-more-specific">Be more specific</h3>
 <div class="paragraph">
-<p>The <code>enum</code> keyword can be used in conjunction with the <code>type</code> keyword to
-restrict the set of valid values to a subset of the valid values for the
-<code>type</code>.</p>
+<p>The <code>enum</code> keyword can be used in conjunction with the <code>type</code> keyword to restrict the set of valid values to a subset of the valid values for the <code>type</code>.</p>
 </div>
 <div class="paragraph">
 <p>Schema :</p>
@@ -611,8 +606,7 @@ restrict the set of valid values to a subset of the valid values for the
 <div class="sect3">
 <h4 id="consistency">Consistency</h4>
 <div class="paragraph">
-<p>If the <code>enum</code> keyword is used in conjunction with the <code>type</code> keyword,
-the values specified should be valid values for the <code>type</code>.</p>
+<p>If the <code>enum</code> keyword is used in conjunction with the <code>type</code> keyword, the values specified should be valid values for the <code>type</code>.</p>
 </div>
 <div class="paragraph">
 <p>Schema :</p>
@@ -639,8 +633,8 @@ the values specified should be valid values for the <code>type</code>.</p>
 <div class="sect3">
 <h4 id="no-type">No Type</h4>
 <div class="paragraph">
-<p>The <code>enum</code> keyword can be used on its own. In this case the set of valid
-values can be of any type.</p>
+<p>The <code>enum</code> keyword can be used on its own.<br>
+In this case the set of valid values can be of any type.</p>
 </div>
 <div class="paragraph">
 <p>Schema :</p>
@@ -687,8 +681,7 @@ values can be of any type.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The last 2 cases are valid because JSON, as opposed to JSON Schema, does
-not make any difference between a <code>number</code> and an <code>integer</code>.
+The last 2 cases are valid because JSON, as opposed to JSON Schema, does not make any difference between a <code>number</code> and an <code>integer</code>.
 </td>
 </tr>
 </table>
@@ -729,8 +722,7 @@ not make any difference between a <code>number</code> and an <code>integer</code
 <div class="sect2">
 <h3 id="excluding-types">Excluding Types</h3>
 <div class="paragraph">
-<p>The <code>not</code> keyword can be used to specify that a document is valid if it
-doesn&#8217;t conform to a certain schema.<br>
+<p>The <code>not</code> keyword can be used to specify that a document is valid if it doesn&#8217;t conform to a certain schema.<br>
 <strong>The value must be a schema.</strong></p>
 </div>
 <div class="paragraph">
@@ -868,18 +860,15 @@ The following are the built-in formats :</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Note that there are significant differences between draft 3 and
-draft 4 of the specification regarding formats.</p>
+<p>Note that there are significant differences between draft 3 and draft 4 of the specification regarding formats.</p>
 </div>
 <div class="paragraph">
-<p>For example, draft 4 of the specification ( the current version at the
-time of the writting ) :</p>
+<p>For example, draft 4 of the specification :</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>doesn&#8217;t mention the <code>date</code>, <code>time</code>, <code>utc-millisec</code>, <code>regex</code>, <code>color</code>,
-<code>style</code> or <code>phone</code> formats,<br></p>
+<p>doesn&#8217;t mention the <code>date</code>, <code>time</code>, <code>utc-millisec</code>, <code>regex</code>, <code>color</code>, <code>style</code> or <code>phone</code> formats,<br></p>
 </li>
 <li>
 <p>renames <code>ip-address</code> to <code>ipv4</code> and <code>host-name</code> to <code>hostname</code>,<br></p>
@@ -903,8 +892,7 @@ time of the writting ) :</p>
 <div class="sect2">
 <h3 id="specifying-constraints">Specifying Constraints</h3>
 <div class="paragraph">
-<p>The following keywords can be used to further constrain the set of valid
-values within the specified <code>type</code>.</p>
+<p>The following keywords can be used to further constrain the set of valid values within the specified <code>type</code>.</p>
 </div>
 <div class="paragraph">
 <p><strong><code>string</code></strong></p>
@@ -1026,8 +1014,7 @@ regex format</a> ]</p>
 <div class="sect2">
 <h3 id="combine">Combining Schemas</h3>
 <div class="paragraph">
-<p>Schemas can be combined to create more complex schemas using the
-<code>allOf</code>, <code>anyOf</code> and <code>oneOf</code> keywords.<br>
+<p>Schemas can be combined to create more complex schemas using the <code>allOf</code>, <code>anyOf</code> and <code>oneOf</code> keywords.<br>
 <strong>The value must be an array of schemas.</strong></p>
 </div>
 <div class="ulist">
@@ -1079,6 +1066,39 @@ regex format</a> ]</p>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"100000"</code></pre>
 </div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The <code>anyOf</code> keyword can be used to allow a single schema to valiadate a list of items or a single item as show below :</p>
+</div>
+<div class="listingblock schema">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+    "definitions": {
+        "plan": {
+            ...
+        }
+    },
+    "anyOf": [
+        {
+            "type": "array",
+            "items": { "$ref": "#/definitions/plan" },
+            "additionalProperties": false
+        },
+        { "$ref": "#/definitions/plan" }
+    ]
+}</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="ulist">
 <ul>
@@ -3379,25 +3399,25 @@ A payer is a person whose <strong>email address is required</strong> for confirm
 <pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
-    "person": {
-        "type": "object",
-        "properties": {
-            "firstName" : { "type": "string" },
-            "lastName" : { "type": "string" },
-            "email" : {
-                "type": "string",
-                "format": "email"
-            }
+        "person": {
+            "type": "object",
+            "properties": {
+                "firstName" : { "type": "string" },
+                "lastName" : { "type": "string" },
+                "email" : {
+                    "type": "string",
+                    "format": "email"
+                }
+            },
+            "required" : [ "firstName", "lastName" ],
+            "additionalProperties": false
         },
-        "required" : [ "firstName", "lastName" ],
-        "additionalProperties": false
-    },
-    "payer" : {
-        "allOf": [ <i class="conum" data-value="1"></i><b>(1)</b>
-            { "$ref": "#/definitions/person" },
-            { "required" : [ "email"] } <i class="conum" data-value="1"></i><b>(1)</b>
-        ]
-    }
+        "payer" : {
+            "allOf": [ <i class="conum" data-value="1"></i><b>(1)</b>
+                { "$ref": "#/definitions/person" },
+                { "required" : [ "email"] } <i class="conum" data-value="1"></i><b>(1)</b>
+            ]
+        }
     },
     "type": "object",
     "properties": {
@@ -4012,7 +4032,7 @@ knowledge of XML Schema ).</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-10-20 08:58:33 EDT
+Last updated 2017-11-04 12:45:29 EDT
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
