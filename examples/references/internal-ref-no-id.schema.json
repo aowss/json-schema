@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "passenger": {
+            "type": "object",
+            "properties": {
+                "name" : {
+                    "type": "string",
+                    "description": "The passenger's first and last name"
+                }
+            }
+        }
+    },
+    "type": "object",
+    "properties": {
+        "passengers": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/passenger"
+            },
+            "uniqueItems": true
+        }
+    },
+    "additionalProperties": false
+}

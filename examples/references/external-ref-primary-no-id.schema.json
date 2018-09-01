@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "type": "object",
+    "properties": {
+        "passengers": {
+            "type": "array",
+            "items": {
+                "$ref": "external-ref-linked-no-id.schema.json#/definitions/passenger"
+            },
+            "uniqueItems": true
+        }
+    },
+    "additionalProperties": false
+}

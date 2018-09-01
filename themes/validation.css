@@ -1,5 +1,7 @@
 @import url("themes/asciidoctor-compact.css");
 
+.listingblock code[data-lang]:before { display: inline; }
+
 div.schema code {
     border-style: solid;
     border-width: 1px;

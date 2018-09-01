@@ -1,0 +1,15 @@
+{
+    "$id": "http://www.aowss.com/json-schema/passenger",
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "type": "object",
+    "properties": {
+        "passengers": {
+            "type": "array",
+            "items": {
+                "$ref": "http://www.aowss.com/json-schema/types#/definitions/passenger"
+            },
+            "uniqueItems": true
+        }
+    },
+    "additionalProperties": false
+}
