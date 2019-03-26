@@ -20,7 +20,7 @@ Thanks to Jason Desrosiers and Clemens Uhlenhut for their clarifications around 
 . Explain how to use https://github.com/everit-org/json-schema[this validator] in xref:libraries[this section]
 . Add a section on `const` before xref:excluding-types[this section]
 . Add a section about definition vs. declaration
-. Check what xref:specifying-formats[formats] are supported by draft 07
+. Check the use of the `$schema` property in xref:current-and-external-schemas[this section]
 
 [[intro]]
 == Introduction
@@ -184,7 +184,7 @@ https://tools.ietf.org/html/rfc7159[RFC 7159] and http://www.ecma-international.
 
 A JSON Schema is just a JSON document that conforms to the http://json-schema.org/schema[JSON Schema's Schema].
 
-A `$schema` keyword *can* be used to explicitly specify that a JSON document is a schema.
+A `$schema` keyword footnote:[See http://json-schema.org/latest/json-schema-core.html#rfc.section.7] *can* be used to explicitly specify that a JSON document is a schema.
 
 [role="schema"]
 [source]
@@ -249,8 +249,9 @@ Schema :
 [role="schema"]
 [source]
 ----
-{ "type": ["number", "string"] }
+{ "type": ["number", "string"] } <1>
 ----
+<1> Note that this specifies that the value can be a number *or* a string. +
 
 Instances :
 
@@ -456,8 +457,8 @@ Instances :
 [[specifying-formats]]
 === Specifying Formats
 
-The `format` keyword can be used to define specific formats. +
-The following are the built-in formats :
+The `format` keyword footnote:[See http://json-schema.org/latest/json-schema-validation.html#rfc.section.7] can be used to define specific formats. +
+All the current built-in formats apply to the `string` type :
 
 * `date-time`
 
@@ -515,14 +516,19 @@ Instances :
 "2015-11-11T23:45:00Z"
 ----
 
-* `email` +
-* `hostname` +
-* `ipv4` and `ipv6` +
-* `uri`
+* `time`
+* `email` and `idn-email`
+* `hostname` and `idn-hostname`
+* `ipv4` and `ipv6`
+* `uri`, `uri-reference`, `iri` and `iri-reference`
+* `uri-template`
+* `json-pointer` and `relative-json-pointer`
+* `regex` footnote:[This should be a valid http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf[ECMA 262] regular expression]
 
 [WARNING]
 ====
-Note that there are significant differences between draft 3 and draft 4 of the specification regarding formats.
+Note that there are significant differences between drafts regarding formats. +
+You should therefore validate that the draft you are using supports the specified `format`.
 
 For example, draft 4 of the specification :
 
