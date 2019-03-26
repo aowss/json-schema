@@ -2,8 +2,8 @@ JSON Schema Tutorial
 ====================
 :Author:                Aowss Ibrahim
 :Email:                 <aowss@yahoo.com>
-:Date:                  November 2017
-:Revision:              version 2.0.1
+:Date:                  January 2019
+:Revision:              version 2.1.0
 :source-highlighter:    highlightjs
 :source-language:       json
 :toc2:
@@ -18,8 +18,9 @@ Thanks to Jason Desrosiers and Clemens Uhlenhut for their clarifications around 
 == To Do
 
 . Explain how to use https://github.com/everit-org/json-schema[this validator] in xref:libraries[this section]
+. Add a section on `const` before xref:excluding-types[this section]
 . Add a section about definition vs. declaration
-. Check what xref:specifying-formats[formats] are supported by draft 6
+. Check what xref:specifying-formats[formats] are supported by draft 07
 
 [[intro]]
 == Introduction
@@ -30,9 +31,9 @@ No specific file extension is defined yet footnote:[`.json` can be used since a 
 
 As explained, in the http://json-schema.org/[JSON Schema web site] or https://github.com/json-schema-org/json-schema-spec[JSON Schema github repository], there are 3 specifications around JSON Schema :
 
-* https://tools.ietf.org/html/draft-wright-json-schema-01[JSON Schema Core] defines the basic foundation of JSON Schema
-* https://tools.ietf.org/html/draft-wright-json-schema-01[JSON Schema Validation] defines the validation keywords of JSON Schema
-* https://tools.ietf.org/html/draft-wright-json-schema-hyperschema-01[JSON Hyper-Schema] defines the hyper-media keywords of JSON Schema
+* https://tools.ietf.org/html/draft-handrews-json-schema-01[JSON Schema Core] defines the basic foundation of JSON Schema
+* https://tools.ietf.org/html/draft-handrews-json-schema-01[JSON Schema Validation] defines the validation keywords of JSON Schema
+* https://tools.ietf.org/html/draft-handrews-json-schema-hyperschema-01[JSON Hyper-Schema] defines the hyper-media keywords of JSON Schema
 
 Confusingly, these 3 documents can also be found at : 
 
@@ -42,7 +43,7 @@ Confusingly, these 3 documents can also be found at :
 
 [WARNING]
 At the time of this writing ( {Date} ), the status of all these specifications is `Internet-Draft`. +
-As explained http://json-schema.org/draft-06/json-schema-migration-faq.html[here], the current draft is `Draft 6`.
+As explained http://json-schema.org/specification.html[here], the current draft is `Draft 07`.
 
 [[conventions]]
 === Conventions
@@ -91,7 +92,7 @@ http://json-schema-validator.herokuapp.com/[Francis Galiegue's validator] only v
 ==== Libraries
 
 The only problem with xref:online-validators[these online validators] is that they can't handle schemas that are split into multiple files. +
-For that you need to use a JSON Schema validation library written in you favourite language. 
+For that you need to use a JSON Schema validation library written in you favourite language footnote:[you can find a list http://json-schema.org/implementations.html#validators[here]].
 
 `Java` :: 
 . https://github.com/fge/json-schema-validator[Francis Galiegue's JSON Schema Validator]
@@ -116,7 +117,7 @@ Unfortunatelly this only validates up to `Draft 4` schemas
 Install using `npm install -g ajv-cli` as mentioned https://www.npmjs.com/package/ajv-cli[here].
 
 * If you have a standalone schema, validate using `ajv -s schemas/standalone.schema.json -d "examples/instance.json"`.
-* If you have xref:reference[a set of shcemas], validate using `ajv -s schemas/primary.schema.json -r schemas/linked.schema.json -d "examples/instance.json"`.
+* If you have xref:reference[a set of schemas], validate using `ajv -s schemas/primary.schema.json -r schemas/linked.schema.json -d "examples/instance.json"`.
 
 [NOTE]
 Don't forget to replace the paths mentioned in the above commands with your own paths !
@@ -188,7 +189,7 @@ A `$schema` keyword *can* be used to explicitly specify that a JSON document is 
 [role="schema"]
 [source]
 ----
-{ "$schema": "http://json-schema.org/draft-06/schema#" } <1>
+{ "$schema": "http://json-schema.org/draft-07/schema#" } <1>
 ----
 <1> The value specifies the version of the specification & the location of the schema
 
@@ -2436,7 +2437,7 @@ Schema :
 }
 ----
 
-<1> The `default` value doesn't have to comply to the schema footnote:[the specification says : It is RECOMMENDED that a default value be valid against the associated schema]. +
+<1> The `default` value doesn't have to comply to the schema footnote:[the specification says : It is RECOMMENDED that a default value be valid against the associated schema] footnote:[the https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#properties[OpenAPI Specification] mandates the compliance : `Unlike JSON Schema, the value MUST conform to the defined type`]. +
 As you can see `Male` is not a valid value for the following :
 `"enum": ["male", "female"]`.
 
@@ -2958,7 +2959,7 @@ Instances :
 . The xref:schema_dependencies[cross validation facilities involving different schemas] need to be changed to avoid these xref:annoying-side-effects[issues].
 +
 It should be possible to set `additionalProperties` to `false`.
-. The xref:default-values[default value] for a property should conform to the schema of that property.
+. The xref:default-values[default value] for a property should conform to the schema of that property as mandated by the https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#properties[OpenAPI Specifiction].
 . Schema inconsistencies should flag the schema as being invalid footnote:[if a property references an inexistant definition, its content can be anything !].
 . It should be possible to indicate xref:tuple_optional[which items are mandatory in a tuple].
 . A mechanism to define or extend existing xref:specifying-formats[formats] should be available. The set of available xref:specifying-formats[formats] should be extended.
